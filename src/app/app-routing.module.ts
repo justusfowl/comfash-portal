@@ -1,7 +1,35 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+import { AppComponent } from './app.component';     // Add this
+
+import { FittingStreamComponent } from './pages/fitting-stream/fitting-stream.component';
+import { MyRoomComponent } from './pages/my-room/my-room.component';
+import { ImgCollectionComponent } from './pages/img-collection/img-collection.component';
+import { ContentComponent } from './pages/content/content.component';
+import { CaptureComponent } from './pages/capture/capture.component';
+
+
+const routes: Routes = [
+  {
+    path: '',
+    component: MyRoomComponent
+  },
+  {
+    path: 'imgCollection',
+    component: ImgCollectionComponent
+  },
+  {
+    path: 'stream',
+    component: FittingStreamComponent
+  },
+  {
+    path: 'content',
+    component: ContentComponent
+  }
+];
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

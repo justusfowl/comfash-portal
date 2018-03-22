@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-my-room',
@@ -8,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 export class MyRoomComponent implements OnInit {
   
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
+
+  goImgCollection(collection) {
+    this.router.navigate(['imgCollection']); 
+  }
+
 
 }

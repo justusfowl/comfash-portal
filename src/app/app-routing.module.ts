@@ -8,6 +8,7 @@ import { MyRoomComponent } from './pages/my-room/my-room.component';
 import { ImgCollectionComponent } from './pages/img-collection/img-collection.component';
 import { ContentComponent } from './pages/content/content.component';
 import { CaptureComponent } from './pages/capture/capture.component';
+import { LoafComponent } from './pages/loaf/loaf.component';
 
 
 const routes: Routes = [
@@ -26,7 +27,13 @@ const routes: Routes = [
   {
     path: 'content',
     component: ContentComponent
+  }, 
+  {
+    path: 'loaf',
+    component: LoafComponent
   }
+
+
 ];
 
 

@@ -8,25 +8,26 @@
             comfash
            </a>                                    
            <ul class="top-ul right">
-              <li class="active-item">            
+              <li class="item" [routerLinkActive]="['active-item']" [routerLinkActiveOptions]="{exact:true}">            
                  <a routerLink="">MyRoom</a>            
               </li>
-              <li>            
+              <li class="item" [routerLinkActive]="['active-item']" [routerLinkActiveOptions]="{exact:true}">            
                  <a routerLink="stream">FittingStream</a>            
               </li>
-              <li>            
-                 <a href="archive.html">Archive</a>            
+
+              <li class="item" [routerLinkActive]="['active-item']" [routerLinkActiveOptions]="{exact:true}">            
+                 <a routerLink="loaf">Loaf</a>            
               </li>
-              <li>            
-                 <a href="contact.html">Contact</a>            
-              </li>
-             
+
            </ul>
         </div>
      </nav>
   </div>
 </header>
 
+<div class="capture">
+    <i class="icon-sli-camrecorder icon2x"></i>
+</div>
 
 <router-outlet></router-outlet>
 

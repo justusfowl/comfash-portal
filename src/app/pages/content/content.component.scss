@@ -16,3 +16,69 @@
 .session-item .post-text{
     background-color: white;
 }
+
+
+.session-slider{
+    width: 100%;
+    
+}
+
+.msg-item.active {
+    background-color: #d8a69e;
+    color:white; 
+}
+
+
+.msg-item.active .msg-icon, .msg-item.active p{
+    color:white !important;
+}
+
+
+
+.compare-pic-comment{
+    position: absolute; 
+    padding: 4px; 
+    background-color: rgba(51, 67, 75, 1);
+    background-image: url('/../assets/img/hanger_white.png');
+    background-size: 20px 20px; 
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 30px; 
+    height: 30px;
+    border-radius: 10px; 
+    opacity: 0.3;
+}
+
+.compare-pic-comment.active{
+    opacity: 1;
+}
+
+.session-post-text{
+    position: absolute; 
+    bottom: 0px; 
+    width: 100%; 
+    background-color: #ffffffcf;
+}
+
+article .content-session-details{
+	padding: 10px; 
+	color: #33434b;
+    font-size: 12px; 
+    text-align: right;
+}
+
+.content-session-details.right-align{
+    right: unset; 
+    text-align: left !important;
+	left: 0 !important;
+}
+
+.content-session-details span{
+    padding-left: 5px;
+    font-size: 2em;
+}
+
+.content-session-details .article-detail-icon{
+    font-size: 1.25em;
+    color: #a4a4a4;
+}

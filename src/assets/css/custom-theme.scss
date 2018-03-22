@@ -1,0 +1,53 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+/* For use in src/lib/core/theming/_palette.scss */
+$md-comfash: (
+    50 : #faf4f3,
+    100 : #f3e4e2,
+    200 : #ecd3cf,
+    300 : #e4c1bb,
+    400 : #deb3ad,
+    500 : #d8a69e,
+    600 : #d49e96,
+    700 : #ce958c,
+    800 : #c88b82,
+    900 : #bf7b70,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #ffd9d4,
+    A700 : #ffc3ba,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$my-app-primary: mat-palette($md-comfash);
+$my-app-accent:  mat-palette($md-comfash);
+
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent);
+
+
+@include angular-material-theme($my-app-theme);
+
+.alternate-theme {
+  $alternate-primary: mat-palette($md-comfash);
+  $alternate-accent:  mat-palette($md-comfash);
+
+  $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent);
+
+  @include angular-material-theme($alternate-theme);
+}

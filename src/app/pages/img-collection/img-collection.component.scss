@@ -1,0 +1,88 @@
+.post-image .post-image-div{
+    height: 350px;
+    background-size: cover; 
+    background-position: top center;
+}
+
+article .session-details{
+	position: absolute; 
+	bottom: 0; 
+	right: 0px; 
+	padding: 10px; 
+	width: 250px;
+	color: #33434b;
+    font-size: 12px; 
+    text-align: right;
+}
+
+.session-details.right-align{
+    right: unset; 
+    text-align: left !important;
+	left: 0 !important;
+}
+
+.session-details span{
+    padding-left: 5px;
+    font-size: 2em;
+}
+
+.session-details .article-detail-icon{
+    font-size: 1.25em;
+    color: #a4a4a4;
+}
+
+.article-detail-icon.trash{
+    padding-left: 10px;
+}
+
+.session-item .post-text{
+    background-color: white;
+}
+
+#article-section article.session-item{
+    background-color: unset;
+    margin-bottom: 20px;
+    padding: 0; 
+    margin-left: 1%; 
+    margin-right: 1%; 
+    box-shadow: 0px 0px 7px rgba(0,0,0,0.225);
+}
+
+
+.session-vote{
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #cdcdcd;
+    padding-top: 8px;
+}
+
+.session-vote.highlight{
+    background-color: #d8a69e;
+}
+
+.session-vote span{
+    font-size: 30px; 
+}
+
+.session-compare{
+    height: 50px; 
+    align-items: center; 
+    display: flex; 
+    background-color: #cdcdcd;
+}
+
+.session-compare .article-detail-icon{
+    color: black; 
+    font-size: 20px;
+    width: 100%; 
+    text-align: center;
+}
+
+.session-compare.active{
+    background-color: #d8a69e;
+}
+
+.active .article-detail-icon, .active .article-detail-icon {
+    color: white;
+}

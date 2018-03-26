@@ -19,6 +19,7 @@ import { MaterialAppModule } from './material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { CommentDialogComponent } from './comp/comment-dialog/comment-dialog.component'
+import { FileDropModule } from 'ngx-file-drop';
 
 
 
@@ -40,7 +41,8 @@ import { CommentDialogComponent } from './comp/comment-dialog/comment-dialog.com
     FormsModule,
     ReactiveFormsModule,
     MaterialAppModule,
-    AppRoutingModule
+    AppRoutingModule, 
+    FileDropModule
     
   ],
   providers: [

@@ -4,67 +4,95 @@
  
  <section id="home-section" class="line">
            
-    <div class="s-12 m-3 l-3 ">
-      <aside class="loaf-menu">
-
-
-        <div class="menu-row">
-            <mat-form-field>
-              <mat-select placeholder="Camera" [(value)]="videoDeviceSelected" (change)="getStream()">
-                <mat-option *ngFor="let vidDevice of videoDevices" [value]="vidDevice">
-                  {{ vidDevice.text }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-        </div>
-         
-        
-
-        <div class="menu-row ">
-            <div class="menu-label">Select collection</div>
-
-            <div class="collection-select-row">
-                <div class="select-collection-container" *ngFor="let c of collections" >
-              
-                    <div class="select-collection-item " (click)="collectionSelected(c)">
-                        <div class="select-collection-img" [style.backgroundImage]="'url(' + c.imgPath + ')'">
-                        </div> 
-                    </div>
-                      <div class=" select-collection-text">
-      
-                          <mat-checkbox (change)="collectionSelected(c)" [(ngModel)]="c.collectionIsSelected"></mat-checkbox>
-      
-                          {{c.collectionTitle}}
-                      </div>
-                    </div>
-            </div>
-        </div>
- 
-      </aside>
-    </div>
-
-    <div class="s-12 m-9 l-9 ">
+    <div class="s-12 m-12 l-12 margin-bottom add-select-container " [hidden]="captureContainerHidden">
        
-         <article class=" s-12 m-12 l-12 margin-bottom ">
+          <div class="s-6 m-6 l-6 ">
+            <div>
+                <h1 class="title-upload-choice">UPLOAD</h1>
+              <div>
+                  <file-drop headertext="Drop outfit here" (onFileDrop)="dropped($event)" 
+                  (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" class="btn-upload-choice" customstyle="upload-style">
+                      
+                  </file-drop>
 
-            <button class="mat-button-filter" (click)="startRecord()" mat-button>Start</button>
-            <button class="mat-button-filter" (click)="stopRecord()" mat-button>Stop</button>
-            <button class="mat-button-filter" (click)="testInterval()" mat-button>test</button>
+              </div>
+            </div>
+            
+          </div>
 
-            <video id="captureVideo" class="captureVideo" autoplay></video>
-
-            <video id="outVideo" autoplay preload="auto" type="video/mp4" src="assets/test2_.mp4" class="captureVideo"></video>
-
-
-              <mat-slider (change)="stopSlide()" (input)="changeNewSessionSlider($event)" class="new-session-slider" min="1" max="100" step="5"></mat-slider>
-
-
-         </article>
-
+          <div class="s-6 m-6 l-6 ">
+              <h1 class="title-capture-choice">CAPTURE</h1>
+              <div class="capture-container" >
+                  <div>
+                      <div class="btn-capture-choice" (click)="selectCapture()">
+                          <i class="icon-sli-camera icon2x tag-icon"></i>
+                      </div>
+                </div>
+              </div>
+                
+          </div>
 
     </div>
 
+    <div class="s-12 m-12 l-12 previewImg-container" [hidden]="previewImgHidden"  >
+       <img id="previewImg">
+    </div>
     
+
+    <div class="s-12 m-12 l-12 previewImg-container" [hidden]="previewVideoHidden"  >
+        <video id="previewVideo" autoplay preload="auto" type="video/mp4" class="captureVideo"></video>
+     </div>
+
+
+
+
+     <div class="s-12 m-12 l-12 " [hidden]="captureVideoHidden"  >
+
+
+            <div class="s-12 m-3 l-3 capture-options " [hidden]="captureVideoHidden"  >
+                <mat-form-field>
+                    <mat-select placeholder="Camera" [(value)]="videoDeviceSelected" (change)="getStream()">
+                        <mat-option *ngFor="let vidDevice of videoDevices" [value]="vidDevice">
+                        {{ vidDevice.text }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+           
+
+            <div class="s-12 m-3 l-3 right " >
+                <button class="mat-button-vid-capture" mat-button (click)="takePicture()"> <i class="icon-sli-camera icon2x tag-icon"></i></button>
+                <button class="mat-button-vid-capture" mat-button (click)="takeVideo()"> <i class="icon-sli-camrecorder icon2x tag-icon"></i></button>
+            </div>
+    
+     </div>
+
+
+
+     
+
+
+
+     <div class="s-12 m-12 l-12 " >
+        <video id="captureVideo" class="captureVideo"></video>
+     </div>
+
+
+
+    <div class="s-1 m-1 l-1 preview-item-add" [hidden]="previewItems.length == 0">
+
+        <file-drop headertext="Drop outfit here" (onFileDrop)="dropped($event)" 
+        (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" >
+        </file-drop>
+
+    </div>
+    <div class="s-11 m-11 l-11 preview-Slider">
+
+        <div *ngFor="let item of previewItems" class="preview-item" [style.backgroundImage]="'url(' + item.srcThumbnail + ')'" (click)="selectPreviewItem(item)">
+      <!-- <div *ngFor="let item of previewItems" class="preview-item"  [style.backgroundImage]="'url(' + item.srcThumbnail + ')'"> -->
+      </div>
+    </div>
 
 </section>
 

@@ -20,6 +20,7 @@
 }
 
 .select-collection-text{
+    color: white;
     font-size: 14px;
     padding: 5px;
 }
@@ -34,10 +35,147 @@
 }
 /* optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
-    background: #FF0000;
+    background: #33434b;
 }
 
 .new-session-slider{
     width: 100%; 
     
+}
+
+
+.add-select-container{
+    height: 70vh;
+}
+
+.capture-container{
+    margin-top: 30%;
+    border-left: 1px solid #33434b;
+}
+
+.title-capture-choice, .title-upload-choice{
+    text-align: center;
+    margin-top: 40px;
+    color: #33434b;
+    font-weight: 100;
+}
+
+.btn-upload-choice{
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 30%;
+    text-align: center;
+    height: 200px;
+    color: #6b6b6b;
+    display: table;
+    border: 3px dashed #cccccc;
+    background: #d6d6d6;
+}
+
+.btn-capture-choice{
+    width: 50%;
+    text-align: center;
+    height: 200px;
+    color: #6b6b6b;
+    display: table;    
+    background-color: #33434b;
+    opacity: 0.8;
+    margin-left: 25%;
+    margin-bottom: 10px;
+}
+
+.btn-capture-choice:hover{
+    opacity: 1;
+}
+
+.btn-capture-choice.active{
+    background-color: #d8a69e; 
+}
+
+
+
+
+.btn-capture-choice i{
+    vertical-align: middle;
+    display: table-cell;
+    font-size: 68px;
+}
+
+.btn-upload-choice i{
+    font-style: normal;
+    color: #cccccc;
+    vertical-align: middle;
+    display: table-cell;
+    font-size: 68px;
+}
+
+
+.mat-expansion-panel-header-description, .mat-expansion-panel-header-title{
+    font-size: 12px;
+}
+
+
+
+#previewImg {
+    height: 60vh; 
+    width: 100%; 
+    object-fit: contain;
+    object-position: center;
+}
+
+.preview-Slider{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    position: relative; 
+    padding-left: 20px;
+}
+
+
+.previewImg-container{
+    position: relative;
+    margin-bottom: 20px;
+}
+
+
+.preview-item{
+    height: 150px; 
+    width: 120px; 
+    background-position: center center; 
+    background-size: cover; 
+    background-repeat: no-repeat;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.preview-item-add{
+    border: 3px dashed #cccccc;
+    background: #d6d6d6;
+    height: 150px;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+.capture-options .mat-form-field{
+    width: 100%; 
+}
+
+.capture-options.btn{
+    height: 20px; 
+    font-size: 12px;
+}
+
+
+.mat-button-vid-capture{
+    background-color: #33434b;
+    height: 50px;
+    width: 48%; 
+}
+
+
+.mat-button-vid-capture .tag-icon{
+
+    font-size: 20px;
+
 }

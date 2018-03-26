@@ -176,8 +176,8 @@ aside .mat-input-container{
 }
 
 .menu-label{
-   color: rgba(0, 0, 0, 0.54);
-   font-size: 13px;
+   color: rgb(107, 107, 107);
+   font-size: 12px;
    font-family: Roboto, "Helvetica Neue", sans-serif;
    font-weight: 500;
    padding-bottom: 5px;
@@ -225,3 +225,28 @@ aside .mat-input-container{
 
 
 // ### LOAFING END ####
+
+
+// #### CAPTURE #####
+
+
+/deep/ #dropZone, .upload-style{
+    height: 100% !important; 
+    border: unset;
+    border-radius: unset;
+}
+
+/deep/ #dropZone{
+    height: 100% !important; 
+    border: unset;
+    border-radius: unset;
+}
+
+/deep/  .content{
+    height: 100% !important; 
+    color: #33434b  !important;
+}
+
+
+
+// ### CAPTURE END ####

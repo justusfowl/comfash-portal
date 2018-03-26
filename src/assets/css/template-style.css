@@ -14,8 +14,7 @@ a.logo {
 	font-size: 2.3rem;
 	font-weight: 100;
 	letter-spacing: -1px;
-	padding: 0.55em;
-	padding-top: 0.8em;
+	padding: 0.4em;
 }
 a.logo span {
 	color: #d12767;
@@ -205,7 +204,7 @@ footer {
 	align-items: center;
 	margin-bottom: 0;
 	margin-top: 1.25rem;
-	padding: 1.7rem;
+	padding: 0.7rem;
 	position: relative;
 	width: 100%;
 }

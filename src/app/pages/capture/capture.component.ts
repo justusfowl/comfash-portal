@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 
+
+import { DomSanitizer } from '@angular/platform-browser';
 
 declare var MediaRecorder: any;
 declare var window : any;
@@ -16,7 +19,24 @@ declare var window : any;
 
 export class CaptureComponent implements OnInit  {
 
-  constructor() { }
+  constructor(public san : DomSanitizer, private ref: ChangeDetectorRef) { }
+
+  captureMode = {
+    mode : 0,  // 1 = upload, 2 = capture
+    type : 0, // 1 = image, 2 = video
+    src : ""
+  }
+
+
+  captureContainerHidden = false; 
+  captureVideoHidden = true;
+  previewVideoHidden = true;
+  previewImgHidden = true;
+
+
+
+  previewItems = [];
+
 
   constraints = { 
       video: {
@@ -24,6 +44,10 @@ export class CaptureComponent implements OnInit  {
         height: { ideal: 2160 } 
     } 
     };
+
+
+
+
   chunks = [];
 
   mediaRecorder : any;
@@ -100,6 +124,30 @@ export class CaptureComponent implements OnInit  {
 
   }
 
+  /**
+   * Set the capture mode of adding a new session 
+   * @param mode  1 = upload, 2 = capture
+   * @param type  1 = image, 2 = video
+   */
+  setCaptureMode ( mode, type ) {
+
+    this.captureMode.mode = mode;
+    this.captureMode.type = type;
+
+
+  }
+
+  addPreviewItem(src, type){
+
+    let newItem = {
+      "createdAt" : new Date(), 
+      "srcThumbnail" : src, 
+      "type" : type
+    }
+
+    this.previewItems.push(newItem);
+  }
+
 
   collectionSelected ( collection ){
     let selectedCollectionId = collection.collectionId; 
@@ -165,8 +213,6 @@ export class CaptureComponent implements OnInit  {
 
   gotStream(stream) {
 
-
-
     let comp = this; 
 
     window["stream"] = stream; // make stream available to console
@@ -213,6 +259,17 @@ export class CaptureComponent implements OnInit  {
   }
 
 
+  selectCapture(){
+
+    this.setCaptureMode(2,2);
+
+    this.captureContainerHidden = true; 
+    this.captureVideoHidden = false;
+    this.previewVideoHidden = true;
+    this.previewImgHidden = true;
+
+    this.getStream();
+  }
 
 
   startRecord(){
@@ -233,74 +290,127 @@ export class CaptureComponent implements OnInit  {
     this.currentPrc = evt.value;
 
     
-    this.setVideoTime();
-    
 
   }
 
-  setVideoTime(){
+  setStepHidden(step){
+
+    if (step == 1){
+
+      this.captureContainerHidden = true; 
+      this.captureVideoHidden = true;
+      this.previewVideoHidden = true;
+      this.previewImgHidden = true;
 
 
-    let comp = this;
-    const outVideo : any = document.getElementById("outVideo");
 
-    outVideo.pause(); 
-
-    let newTime = parseFloat(((comp.currentPrc / 100) * outVideo.duration).toFixed(3));
-
-    console.log(newTime);
-
-    if (outVideo.currentTime != newTime){
-      outVideo.currentTime = newTime;
-     
     }
 
-     // comp.requestId = requestAnimationFrame(this.setVideoTime.bind(this));
 
   }
 
-  stopSlide(){
-    let comp = this;
-    const outVideo : any = document.getElementById("outVideo");
-
-    outVideo.pause(); 
-    
-    let newTime = parseFloat(((comp.currentPrc / 100) * outVideo.duration).toFixed(2));
-
-    console.log(newTime);
-
-    if (outVideo.currentTime != newTime){
-      outVideo.currentTime = newTime;
-     
-    }
-
-     // comp.requestId = requestAnimationFrame(this.setVideoTime.bind(this));
-  }
+  /* file drag and drop */ 
 
 
-  testInterval(){
+  public files: UploadFile[] = [];
+ 
+  public dropped(event: UploadEvent) {
+    this.files = event.files;
 
     let comp = this; 
 
-    this.myVar = setInterval(function(){
-      const outVideo : any = document.getElementById("outVideo");
-      if (comp.currentPrc < 100){
+    
+    this.captureContainerHidden = true; 
+    this.previewImgHidden = false;
 
-       let newTime = parseFloat(((comp.currentPrc / 100) * outVideo.duration).toFixed(2));
-       outVideo.currentTime = newTime;
+    for (const droppedFile of event.files) {
+ 
+      // Is it a file?
+      if (droppedFile.fileEntry.isFile) {
+        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+        fileEntry.file((file: File) => {
+          
+         let preview = document.getElementById("previewImg") as any; 
 
-       comp.currentPrc++;
+          // Here you can access the real file
+          console.log(droppedFile.relativePath, file);
+          
+          const reader  = new FileReader();
 
-      }else{
-          comp.currentPrc = 1;
+
+          reader.onloadend = function () {
+            comp.setCaptureMode(1,1);
+
+            comp.addPreviewItem(reader.result, 1);
+
+            comp.previewImgHidden = false;
+
+            preview.src = reader.result;
+
+            console.log("dne");
+            console.log(comp);
+
+            comp.ref.detectChanges();
+
+            console.log("detect changes...")
+            
+          
+          }
+         
+          if (file) {
+           reader.readAsDataURL(file);
+          }
+
+          /**
+          // You could upload it like this:
+          const formData = new FormData()
+          formData.append('logo', file, relativePath)
+ 
+          // Headers
+          const headers = new HttpHeaders({
+            'security-token': 'mytoken'
+          })
+ 
+          this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
+          .subscribe(data => {
+            // Sanitized logo returned from backend
+          })
+          **/
+ 
+        });
+      } else {
+        // It was a directory (empty directories are added, otherwise only files)
+        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+        console.log(droppedFile.relativePath, fileEntry);
       }
-      
-    }, 100);
+    }
+  }
+ 
+  public fileOver(event){
+    console.log(event);
+  }
+ 
+  public fileLeave(event){
+    console.log(event);
+  }
+
+
+  selectPreviewItem(item){
+
+    console.log(item);
 
 
   }
 
-  
+
+  takePicture(){
+    console.log("takePic");
+  }
+
+  takeVideo(){
+
+    console.log("takeVid");
+  }
 
 
 

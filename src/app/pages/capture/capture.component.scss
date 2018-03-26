@@ -1,0 +1,43 @@
+.captureVideo{
+    width: 100%;
+}
+
+.collection-select-row{
+    height: 50vh; 
+    overflow-y: scroll; 
+}
+
+.select-collection-container{
+    background-color: #33434b;
+    margin-bottom: 10px;
+}
+
+.select-collection-img{
+    height: 100px; 
+    background-position: top center; 
+    background-size: cover; 
+    background-repeat: no-repeat;
+}
+
+.select-collection-text{
+    font-size: 14px;
+    padding: 5px;
+}
+
+/deep/ .select-collection-container .mat-checkbox-frame{
+    border-color: white !important;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+.new-session-slider{
+    width: 100%; 
+    
+}

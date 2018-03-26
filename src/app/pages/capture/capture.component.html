@@ -1,3 +1,77 @@
-<p>
-  capture works!
-</p>
+
+
+ 
+ 
+ <section id="home-section" class="line">
+           
+    <div class="s-12 m-3 l-3 ">
+      <aside class="loaf-menu">
+
+
+        <div class="menu-row">
+            <mat-form-field>
+              <mat-select placeholder="Camera" [(value)]="videoDeviceSelected" (change)="getStream()">
+                <mat-option *ngFor="let vidDevice of videoDevices" [value]="vidDevice">
+                  {{ vidDevice.text }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+         
+        
+
+        <div class="menu-row ">
+            <div class="menu-label">Select collection</div>
+
+            <div class="collection-select-row">
+                <div class="select-collection-container" *ngFor="let c of collections" >
+              
+                    <div class="select-collection-item " (click)="collectionSelected(c)">
+                        <div class="select-collection-img" [style.backgroundImage]="'url(' + c.imgPath + ')'">
+                        </div> 
+                    </div>
+                      <div class=" select-collection-text">
+      
+                          <mat-checkbox (change)="collectionSelected(c)" [(ngModel)]="c.collectionIsSelected"></mat-checkbox>
+      
+                          {{c.collectionTitle}}
+                      </div>
+                    </div>
+            </div>
+        </div>
+ 
+      </aside>
+    </div>
+
+    <div class="s-12 m-9 l-9 ">
+       
+         <article class=" s-12 m-12 l-12 margin-bottom ">
+
+            <button class="mat-button-filter" (click)="startRecord()" mat-button>Start</button>
+            <button class="mat-button-filter" (click)="stopRecord()" mat-button>Stop</button>
+            <button class="mat-button-filter" (click)="testInterval()" mat-button>test</button>
+
+            <video id="captureVideo" class="captureVideo" autoplay></video>
+
+            <video id="outVideo" autoplay preload="auto" type="video/mp4" src="assets/test2_.mp4" class="captureVideo"></video>
+
+
+              <mat-slider (change)="stopSlide()" (input)="changeNewSessionSlider($event)" class="new-session-slider" min="1" max="100" step="5"></mat-slider>
+
+
+         </article>
+
+
+    </div>
+
+    
+
+</section>
+
+
+
+
+
+
+
+       

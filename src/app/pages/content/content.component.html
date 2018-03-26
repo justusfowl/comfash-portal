@@ -82,7 +82,34 @@
                 <mat-slider class="session-slider" min="1" max="100" step="1" value="20"></mat-slider>
 
              </div>
-            
+
+
+             
+
+             <div class=" s-12 m-12 l-12 margin-bottom ">
+                <div class="comment-container">
+
+                    <div id="addComment" class="dragComment">
+
+                    </div>
+
+                    <div id="addTag" class="dragComment" (mouseup)="openCommentAdd()">
+                            <i class="icon-sli-tag icon2x tag-icon"></i>
+                    </div>
+
+
+
+                    <!--     
+                    <div id="addTag" class="drag-comment ">
+                        <i class="icon-sli-tag icon2x menu-icon tag-icon drag-comment"></i>
+                    </div>
+
+                    <div id="addAccessoire" class="drag-comment ">
+                        <i class="icon-sli-tag icon2x menu-icon tag-icon drag-comment"></i>
+                    </div>
+                     -->
+                </div>
+            </div>
          </div>
 
 

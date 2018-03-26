@@ -31,6 +31,10 @@ const routes: Routes = [
   {
     path: 'loaf',
     component: LoafComponent
+  }, 
+  {
+    path: 'capture',
+    component: CaptureComponent
   }
 
 

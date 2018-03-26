@@ -1,3 +1,158 @@
-<p>
-  loaf works!
-</p>
+
+ 
+ 
+ 
+ <section id="home-section" class="line">
+
+    <mat-form-field class="loafing-search">
+        <input matInput placeholder="Search" >
+      </mat-form-field>
+
+           
+    <div class="s-12 m-3 l-3 ">
+      <aside class="loaf-menu">
+
+          <div class="menu-row">
+              <mat-form-field>
+                  <mat-select placeholder="Clothing" [formControl]="toppings" multiple>
+                    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+          </div>
+        
+
+        <div class="menu-row">
+            <mat-form-field>
+              <mat-select placeholder="Occasion">
+                <mat-option *ngFor="let occ of occasions" [value]="occ">
+                  {{ occ }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+         
+        
+
+        <div class="menu-row">
+            <div class="menu-label">Sex</div>
+
+            <div class="select-container">
+                <div class="gender-select">
+                    <i class="icon-sli-user icon2x menu-icon"></i>
+    
+                    <mat-checkbox 
+                      
+                    [(ngModel)]="filterSexMale"
+                      ></mat-checkbox>
+                </div>
+    
+                <div class="gender-select">
+                    <i class="icon-sli-user-female icon2x menu-icon"></i>
+                    <mat-checkbox [(ngModel)]="filterSexFemale"></mat-checkbox>
+                  </div>
+            </div>
+        </div>
+
+
+            
+        <div class="menu-row">
+            <div class="menu-label">Primary color</div>
+
+            <div class="color-container">
+
+              <div class="color-item" *ngFor="let c of colors" [style.background-color]="c">
+
+              </div>
+
+            </div>
+        </div>
+
+        <div class="menu-row">
+            <div class="menu-label">Contains purchase tags</div>
+
+            <div class="select-container">
+    
+                <div class="gender-select">
+                  <i class="icon-sli-tag icon2x menu-icon tag-icon"></i>
+                  <mat-checkbox [(ngModel)]="filterHasPurchaseTags"></mat-checkbox>
+                </div>
+            </div>
+
+            <div class="menu-row" *ngIf="filterHasPurchaseTags">
+
+                <mat-form-field>
+                  <mat-select placeholder="Brands" [formControl]="filterBrands" multiple>
+                    <mat-option *ngFor="let brand of brands" [value]="topping">{{brand}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="menu-row">
+            <button class="mat-button-filter" mat-button>Filter</button>
+        </div>
+
+        
+
+            
+
+      </aside>
+    </div>
+
+    <div class="s-12 m-9 l-9 ">
+
+
+      <!-- ARTICLE 1     -->           
+      <article *ngFor="let s of sessionResponses" class=" s-12 m-4 l-4 margin-bottom response session-item">
+        <div class="post-1 line">
+            <!-- image -->                 
+            <div class="s-12 l-10 post-image">                   
+                <div class="post-image-div" [style.backgroundImage]="'url(' + s.imgPath + ')'">
+                </div>   
+
+            </div>
+            <!-- date -->                 
+            <div class="s-12 l-2 post-date">
+              <p class="date">{{s.dateDay}}</p>
+              <p class="month">{{s.dateMonth}}</p>
+
+              <div class="session-vote ">
+                  <span>{{s.voteStats.avg}}%</span>
+                  <i class="icon-sli-like icon2x article-detail-icon "></i>
+              </div>
+
+            </div>
+        </div>
+        <!-- text -->                  
+        <div class="post-text"> 
+
+              <div class="session-details right-align">
+                  <button class="response-hanger" [class.active]="s.tagged" mat-button>
+                      <i class="icon-sli-tag icon2x article-detail-icon "></i>
+                  </button>
+              </div>
+
+            <div class="session-details">
+
+                <span>{{s.likes}}</span> 
+                <i class="icon-sli-like icon2x article-detail-icon "></i>
+
+                <span>{{s.comments}}</span> 
+                <i class="icon-sli-bubbles icon2x article-detail-icon "></i>
+            </div>
+
+        </div>
+      </article>
+
+    </div>
+
+    
+
+</section>
+

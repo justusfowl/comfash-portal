@@ -34,6 +34,28 @@
 }
 
 
+.dragComment{
+    border-radius: 10px; 
+    height: 50px; 
+    width: 50px; 
+    background-color: rgba(51, 67, 75, 1); 
+    position: absolute;
+    display: flex; 
+    align-items: center;
+}
+
+.dragComment.isDragged{
+    transform : rotate(-3deg) skew(5deg);
+    box-shadow: 2px 4px 13px #000000;
+}
+
+.tag-icon{
+    width: 100%; 
+    text-align: center;
+    font-size:20px;
+    background-color:unset;
+}
+
 
 .compare-pic-comment{
     position: absolute; 
@@ -82,3 +104,20 @@ article .content-session-details{
     font-size: 1.25em;
     color: #a4a4a4;
 }
+
+.comment-container{
+    width: 100%; 
+}
+
+#addComment{
+    background-image: url('/../assets/img/hanger_white.png');
+    background-size: 30px 30px; 
+    background-repeat: no-repeat;
+    background-position: center center;
+
+}
+
+#addTag{
+    left: 120px;
+}
+

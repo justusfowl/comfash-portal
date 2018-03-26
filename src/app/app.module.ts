@@ -13,7 +13,12 @@ import { CaptureComponent } from './pages/capture/capture.component';
 import { LoafComponent } from './pages/loaf/loaf.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import {  GestureConfig, MatSliderModule } from '@angular/material';
+import { GestureConfig} from '@angular/material';
+
+import { MaterialAppModule } from './material.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
+import { CommentDialogComponent } from './comp/comment-dialog/comment-dialog.component'
 
 
 
@@ -26,18 +31,24 @@ import {  GestureConfig, MatSliderModule } from '@angular/material';
     ImgCollectionComponent,
     ContentComponent,
     CaptureComponent,
-    LoafComponent
+    LoafComponent, 
+    CommentDialogComponent
   ],
   imports: [
     BrowserAnimationsModule, 
-    MatSliderModule,
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialAppModule,
     AppRoutingModule
     
   ],
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig } 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent], 
+  entryComponents: [
+    CommentDialogComponent
+  ]
 })
 export class AppModule { }

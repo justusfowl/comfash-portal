@@ -100,10 +100,10 @@ section p {
 	padding-top: 40px;
 }
 .post-date .date {
-	font-size: 3rem;
+	font-size: 2rem;
 }
 .post-date .month {
-	font-size: 1.6rem;
+	font-size: 1rem;
 	margin-bottom: 1rem;
 	margin-top: -0.7rem;
 }
@@ -112,6 +112,7 @@ section p {
 	opacity: 0.3;
 	text-align: center;
 	padding-right: 5px;
+	padding-top: 20px;
 }
 
 .session-item .post-date {
@@ -264,6 +265,7 @@ article .item-details{
 }
 #article-section .post-date p {
 	color: #fff;
+	opacity: 0.5;
 }
 #article-section blockquote {
 	border-left: 2px solid #637693;

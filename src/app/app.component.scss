@@ -8,5 +8,220 @@
     left: 0; 
     background-color: #d8a69e;
     padding: 20px;
+    z-index:120;
 }
 
+
+
+
+.post-image .post-image-div{
+    height: 350px;
+    background-size: cover; 
+    background-position: top center;
+}
+
+article .session-details{
+	position: absolute; 
+	bottom: 0; 
+	right: 0px; 
+	padding: 10px; 
+	width: 250px;
+	color: #33434b;
+    font-size: 12px; 
+    text-align: right;
+}
+
+.session-details.right-align{
+    right: unset; 
+    text-align: left !important;
+	left: 0 !important;
+}
+
+.session-details span{
+    padding-left: 5px;
+    font-size: 2em;
+}
+
+.session-details .article-detail-icon{
+    font-size: 1.25em;
+    color: #a4a4a4;
+}
+
+.article-detail-icon.trash{
+    padding-left: 10px;
+}
+
+.session-item .post-text{
+    background-color: white;
+    position: relative; 
+}
+
+ article.session-item{
+    background-color: unset;
+    margin-bottom: 20px;
+    padding: 0; 
+    margin-left: 1%; 
+    margin-right: 1%; 
+    box-shadow: 0px 0px 7px rgba(0,0,0,0.225);
+}
+
+
+.session-vote{
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #cdcdcd;
+    padding-top: 12px;
+}
+
+.session-vote.highlight{
+    background-color: #d8a69e;
+}
+
+.session-vote span{
+    font-size: 20px; 
+}
+
+.session-compare{
+    height: 50px; 
+    align-items: center; 
+    display: flex; 
+    background-color: #cdcdcd;
+}
+
+.session-compare .article-detail-icon{
+    color: black; 
+    font-size: 20px;
+    width: 100%; 
+    text-align: center;
+}
+
+.session-compare.active{
+    background-color: #d8a69e;
+}
+
+.active .article-detail-icon, .active .article-detail-icon {
+    color: white;
+}
+
+
+.compare{
+    position: fixed; 
+    top: 10%; 
+    right: 0; 
+    background-color: #d8a69e;
+    padding: 20px;
+    z-index:120;
+
+}
+
+
+
+// #### LOAFING ##### 
+
+
+.loafing-search{
+    width: 100%;
+    padding: 0 10vw 20px 10vw;
+
+}
+
+
+.loaf-menu {
+    padding: 20px; 
+    background-color: white;
+    margin-right: 10px;
+}
+
+aside .mat-input-container{
+    width: 100%; 
+}
+
+/deep/ .mat-input-element {
+    color: #33434b !important;    /* replace this color with your accent color hex code */
+}
+
+
+.select-container{
+    display: flex; 
+
+}
+
+.gender-select{
+    padding-left: 20px;
+}
+
+.color-container{
+    display: flex; 
+    flex-flow: row wrap;
+}
+
+.color-item{
+    margin: 3px;
+    height: 30px; 
+    width: 30px;
+}
+
+.color-item:hover{
+    transform: scale(1.1);
+}
+
+.color-item.active{
+    border: 3px dashed black;
+}
+
+.menu-row{
+    margin-top: 20px; 
+    margin-bottom: 20px;
+}
+
+.menu-label{
+   color: rgba(0, 0, 0, 0.54);
+   font-size: 13px;
+   font-family: Roboto, "Helvetica Neue", sans-serif;
+   font-weight: 500;
+   padding-bottom: 5px;
+}
+
+.mat-button-filter{
+    color: #d8a69e;
+    width: 100%; 
+    font-size: 14px;
+    margin-top: 20px;
+    background-color: #f3f3f3
+}
+
+.response-hanger.active{
+    background-color: #d8a69e;
+}
+
+
+.response .date{
+   
+    font-size: 1.6rem;
+
+}
+
+.response .month{
+    padding-top: 5px;
+    font-size: 0.7rem;
+
+}
+
+.response .session-vote{
+    height: 60px;
+}
+
+.response .session-details{
+    width: unset;
+}
+
+.tag-icon{
+    position: relative; 
+    top: 5px; 
+    padding-right: 5px; 
+    font-size: 20px;
+}
+
+
+// ### LOAFING END ####

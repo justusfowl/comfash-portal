@@ -1,0 +1,93 @@
+
+@import "../../../assets/css/variables.scss";
+
+.profile-container{
+    background-image: url(../../../assets/img/hangersbg.png);
+    background-size: cover; 
+    background-position: center 27%;
+    background-repeat: no-repeat; 
+    height: 30vh; 
+    width: 100%;
+    position: relative;
+    margin-bottom: 10%;
+}
+
+.profile-container .profile {
+
+    position: absolute; 
+    top: 40%; 
+    left: 10%; 
+
+}
+
+.profile .avatar{
+    height: 26vh;
+    -o-object-fit: cover;
+    object-fit: cover;
+    min-height: 150px;
+    min-width: 100px;
+    max-width: 60%;
+    display: inline-block;
+}
+
+.profile .user-details{
+    display: inline-block;
+    /* margin-top: 22px; */
+    padding-bottom: 20px;
+    padding-left: 20px;
+    color: #33434b;
+}
+
+.user-details .user-name{
+    padding-bottom: 4px;
+    font-size: 29px;
+    font-weight: 800;
+    font-family: Roboto;
+}
+
+.user-details .details{
+    padding-bottom: 10px;
+    font-size: 12px;
+}
+
+
+
+
+/deep/ .mat-tab-header{
+    background-color: white !important;
+}
+
+.profile-content .menu-icon{
+    color: $primary-blue;
+    font-weight: 800;
+}
+
+
+.collection-thumb-container{
+    display: flex; 
+    flex-flow: row wrap;
+}
+
+.collection-thumb{
+    height: 250px;
+    width: 200px;
+    background-size: cover; 
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: relative;
+    margin: 15px;
+
+}
+
+.collection-thumb .details{
+    position: absolute; 
+    bottom: 0; 
+    width: 100%; 
+    background-color: rgba($background-color, 0.9);
+    color: $primary-blue;
+    padding: 15px;
+}
+
+.collection-thumb .details i{
+    font-size: 10px;
+}

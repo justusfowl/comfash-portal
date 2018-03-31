@@ -1,68 +1,29 @@
-  <!-- MAIN SECTION -->                  
-  <section id="article-section" class="line archive">
+<div class="main-container">
       <div class="margin">
          <!-- ARTICLES -->             
 
          <div class="s-12 m-7 l-9">
-         
-            <!-- ARTICLE 1 -->               
-            <article class=" s-12 m-6 l-6 margin-bottom session-item">
-               <div class="post-1 line">
-                  <!-- image -->                 
-                  <div class="s-12 l-12 post-image">                   
-                      <div class="post-image-div" style="background-image: url('../../assets/img/6.jpg');">
-
-                       
-
-                        <div class="session-post-text">   
-        
-                          <div class="content-session-details">
-        
-                              <span>2</span> 
-                              <i class="icon-sli-like icon2x article-detail-icon "></i>
-        
-                              <span>2</span> 
-                              <i class="icon-sli-bubbles icon2x article-detail-icon "></i>
-                          </div>
-        
-                       </div>
-
-                      </div>   
-
-                  </div>
-               </div>
-
-            </article>
-             <!-- ARTICLE 1 -->               
-             <article class=" s-12 m-6 l-6 margin-bottom session-item">
-                <div class="post-1 line">
+                      
+             <article *ngFor="let session of sessionCompare" class=" s-12 m-6 l-6 margin-bottom session-item session-item-selected">
+                <div class="">
                    <!-- image -->                 
                    <div class="s-12 l-12 post-image">                   
-                       <div class="post-image-div" style="background-image: url('../../assets/img/7.jpg');">
+                       <div class="post-image-div" [style.backgroundImage]="'url(' + session.sessionItemPath + ')'">
 
-                        <div class="compare-pic-comment " style="top: 24%; left: 55%;" >
-                          </div>
-
-                        <div class="compare-pic-comment" style="top: 65%; left: 33%;" >
-                          </div>
-  
-                          <div class="compare-pic-comment" style="top: 73%; left: 44%;" >
-                          </div>
-
-                          <div class="compare-pic-comment active" style="top: 42%; left: 55%;" >
-                          </div>
-  
-                          <div class="compare-pic-comment" style="top: 71%; left: 88%;" >
+                        <div class="compare-pic-comment " [class.active]="tag.isActive" *ngFor="let tag of purchaseTags" [style]="san.bypassSecurityTrustStyle(tag.location)">
                           </div>
 
                           <div class="session-post-text">   
         
                               <div class="content-session-details">
-            
-                                  <span>1</span> 
+                                <div class="btn-add-collection">
+                                    Anprobe
+                                </div>
+
+                                  <span>{{session.voteStats.voteCnt}}</span> 
                                   <i class="icon-sli-like icon2x article-detail-icon "></i>
             
-                                  <span>5</span> 
+                                  <span>{{session.voteStats.commentCnt}}</span> 
                                   <i class="icon-sli-bubbles icon2x article-detail-icon "></i>
                               </div>
             
@@ -81,73 +42,142 @@
               
                 <mat-slider class="session-slider" min="1" max="100" step="1" value="20"></mat-slider>
 
-             </div> <div class=" s-12 m-12 l-12 margin-bottom">
-              
-                <mat-slider class="session-slider" min="1" max="100" step="1" value="20"></mat-slider>
-
              </div>
-
-
-             
-
-             <div class=" s-12 m-12 l-12 margin-bottom ">
-                <div class="comment-container">
-
-                    <div id="addComment" class="dragComment">
-
-                    </div>
-
-                    <div id="addTag" class="dragComment" (mouseup)="openCommentAdd()">
-                            <i class="icon-sli-tag icon2x tag-icon"></i>
-                    </div>
-
-
-
-                    <!--     
-                    <div id="addTag" class="drag-comment ">
-                        <i class="icon-sli-tag icon2x menu-icon tag-icon drag-comment"></i>
-                    </div>
-
-                    <div id="addAccessoire" class="drag-comment ">
-                        <i class="icon-sli-tag icon2x menu-icon tag-icon drag-comment"></i>
-                    </div>
-                     -->
-                </div>
-            </div>
          </div>
 
 
               <!-- SIDEBAR -->             
-     <div class="s-12 m-5 l-3">
-        <aside>
-           <!-- NEWS 1 -->
-           <div class="aside-block margin-bottom msg-item active">
-                <i class="icon-sli-arrow-right icon2x msg-icon"></i>
-              <p>This one looks really cool!</p>
-              <p class="msg-details"><b>@Lara</b>, 5min ago, <b>#Weddingdresses</b></p>
-           </div>
+     <div class="s-12 m-5 l-3 side-panel">
+        <div class="panel-menu">
+            <ul>
+                <li [class.active]="panelStep == 1" (click)="setPanelStep(1)">
+                    <i class="icon-sli-tag icon2x menu-icon"></i>
+                </li>
+                
+                <li [class.active]="panelStep == 2"  (click)="setPanelStep(2)">
+                    <i class="icon-sli-bubbles icon2x menu-icon"></i>
+                </li>
+                
+                <li class="back" (click)="close()">
+                    <i class="icon-sli-close icon2x menu-icon"></i>
+                </li>
 
-           <div class="aside-block margin-bottom msg-item">
-                <i class="icon-sli-arrow-right icon2x msg-icon"></i>
-              <p>I like how this shirt works together with your pair of shoes.</p>
-              <p class="msg-details"><b>@Tim</b>, 15min ago, <b>#CasualMine</b></p>
-           </div>
 
-          <div class="aside-block margin-bottom msg-item">
-                <i class="icon-sli-arrow-right icon2x msg-icon"></i>
-              <p>Maybe you could also try another tone of blue?</p>
-              <p class="msg-details"><b>@Eva</b>, 2d ago, <b>#CasualMine</b></p>
-          </div>
+            </ul>
+        </div>
+    
+        <div class="panel-content">
 
-          <div class="aside-block margin-bottom msg-item">
-                <i class="icon-sli-arrow-right icon2x msg-icon"></i>
-              <p>I have that pair of pants and it goes really well with a black belt also.</p>
-              <p class="msg-details"><b>@Jon</b>, 4d ago, <b>#OfficeVibes</b></p>
-          </div>
+            <div class="session-item-details-container">
 
-        </aside>
+                <div class="avatar-pic">
+
+                </div>
+
+                <div class="details">
+                    @schnulli#Wedding-Dresses
+                    <p>
+                        76%
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div [hidden]="panelStep != 1">
+
+                <mat-divider></mat-divider>
+
+                <p class="panel-subtitle">Purchase tags</p>
+
+                <div class="purchase-tag-list">
+                    <div *ngFor="let tag of purchaseTags" class="list-item" (mouseenter) ="hoverInTag(tag)"  (mouseleave) ="hoverOutTag(tag)">
+
+                        <div class="tag-pic" [style.backgroundImage]="'url(' + tag.picUrl + ')'">
+        
+                        </div>
+        
+                        <div class="item-details">
+                            {{tag.seller}}
+                            <p class="category">
+                                {{tag.category}}
+                            </p>
+                        </div>
+
+                        <div class="item-link">
+                            <a  target="_blank" [href]="tag.url">
+                                    <i class="icon-sli-tag menu-icon"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+           
+
+                <mat-divider></mat-divider>
+
+                <p class="panel-subtitle">Similar outfits</p>
+
+                <div class="similar-outfits-list">
+
+                    <div class="item" *ngFor="let simItem of similarOutfits" [style.backgroundImage]="'url(' + simItem.imgPath + ')'">
+                        
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <p class="panel-subtitle">Comment</p>
+
+            <mat-form-field class="input-comment">
+                <textarea matInput></textarea>
+            </mat-form-field>
+
+            <button color="primary" class="mat-button-comment" mat-button>Comment</button>
+
+
+            <div [hidden]="panelStep != 2">
+
+                <mat-divider></mat-divider>
+                
+                <div class="comment-list">
+                    <div *ngFor="let comment of commentList" class="list-item">
+
+                        <div class="avatar-pic" [style.backgroundImage]="'url(' + comment.ownerAvatarPath + ')'">
+        
+                        </div>
+        
+                        <div class="item-details">
+                            {{comment.commentText}}
+                            <p class="category">
+                                <span class="owner">{{comment.commentOwner}}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
      </div>
 
     </div>
 
-   </section>
+
+    <div class="content-history">
+
+        <div class="item" *ngFor="let histItem of similarOutfits" [style.backgroundImage]="'url(' + histItem.imgPath + ')'">
+                
+
+        </div>
+
+
+    </div>
+
+</div>

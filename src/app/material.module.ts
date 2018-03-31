@@ -9,11 +9,13 @@ import {
     MatSelectModule, 
     MatCheckboxModule, 
     MatDialogModule,
-    MatExpansionModule
+    MatExpansionModule, 
+    MatDividerModule, 
+    MatTabsModule
 } from '@angular/material';
 
 @NgModule({
-  imports: [MatExpansionModule, MatSliderModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule, MatDialogModule],
-  exports: [MatExpansionModule, MatSliderModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDialogModule]
+  imports: [MatTabsModule, MatDividerModule, MatExpansionModule, MatSliderModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule, MatDialogModule],
+  exports: [MatTabsModule, MatDividerModule, MatExpansionModule, MatSliderModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDialogModule]
 })
 export class MaterialAppModule { }

@@ -14,7 +14,10 @@ a.logo {
 	font-size: 2.3rem;
 	font-weight: 100;
 	letter-spacing: -1px;
-	padding: 0.4em;
+	margin-top: 0.6em;
+	padding-left: 0.4em;
+	padding-right: 0.4em;
+	border-right: 1px solid #f1f1f136;
 }
 a.logo span {
 	color: #d12767;
@@ -102,9 +105,9 @@ section p {
 	font-size: 2rem;
 }
 .post-date .month {
-	font-size: 1rem;
+	font-size: 11px;
 	margin-bottom: 1rem;
-	margin-top: -0.7rem;
+	margin-top: 0rem;
 }
 .post-date {
 	font-weight: 100;
@@ -237,7 +240,8 @@ article .item-details{
 }
 
 .item-details span{
-	padding-left: 5px;
+	padding-left: 12px;
+    font-size: 14px;
 }
 
 #article-section article {
@@ -260,7 +264,7 @@ article .item-details{
 	font-weight: 300;
 }
 #article-section .post-text {
-	padding: 1rem 3rem 3rem;
+	padding: 1rem 2rem 2rem;
 }
 #article-section .post-date p {
 	color: #fff;

@@ -1,0 +1,70 @@
+
+<div class="login">
+
+  <div class="background-container">
+    <div class="logo">
+      comfash
+    </div>
+    <div class="background">
+
+    </div>
+  </div>
+
+  <div class="login-container">
+
+      <div class="qr-container">
+            <img id="qr-code-login" src="https://upload.wikimedia.org/wikipedia/commons/1/1e/QR-Code_Willkommen_bei_Wikipedia.png">
+        
+            <div class="instruction">
+              1. Öffne comfash auf deinem Handy
+            </div>  
+            <div class="instruction">
+              2. Über das Menu, öffne "Login via Web"
+            </div>  
+            <div class="instruction">
+              3. Richte Dein Handy auf den QR Code
+            </div>  
+     
+          </div>
+        
+        
+        
+        <div class="form-container" >
+            <div class="s-12 m-12 l-12">
+                    
+              <div class="custom-btn fb">
+                  <i class="icon-sli-social-facebook "></i>
+                  <span>Facebook</span>
+              </div>
+  
+              <div class="custom-btn google">
+                  <i class="icon-sli-social-google  "></i>
+                  <span>Google</span>
+              </div>
+  
+              <span>Or</span>
+  
+  
+              <form [class.hasError]="hasError" [formGroup]="loginForm" novalidate (ngSubmit)="login(loginForm.value, loginForm.valid)" class="login-form">
+                <mat-form-field class="field">
+                  <input matInput placeholder="Email" formControlName="email">
+                </mat-form-field>
+  
+                <mat-form-field class="field">
+                  <input matInput type="password" placeholder="Password" formControlName="password">
+                  <mat-hint class="error-msg" *ngIf="hasError">Something went wrong, please try again.</mat-hint>
+                </mat-form-field>
+  
+                  <button type="submit" color="primary" class="sign-in-btn" mat-button>Sign In</button>
+                  <div class="register">New to comfash? Sign up <span>here</span></div>
+              </form>
+  
+  
+            </div>
+        </div>
+  
+  </div>
+</div>
+
+
+

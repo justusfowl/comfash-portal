@@ -1,0 +1,46 @@
+<article class="line" [class.right-align]="!(index % 2 == 0)">
+                    
+    <div class="s-12 l-6">                   
+    <div class="comment-image-div" [style.backgroundImage]="'url(' + context?.imgPath + ')'">
+    </div>                  
+    </div>
+
+    <div class="s-12 l-6 comment-area">
+
+        <div class="commentator-container">
+            <div class="avatar" [style.backgroundImage]="'url(' + context?.imgPath + ')'">
+
+            </div>
+
+            <div class="comment-owner">
+                @schnulli
+                <p >{{context?.commentCreated}}</p>
+            </div>
+        </div>
+
+        <div class="comment-text">
+            <div class="comment-icon">
+                <i class="icon-sli-bubbles "></i>
+            </div>
+                {{context?.commentText}}
+        </div>
+
+        <div class="collection-info">
+            <span class="collection-owner">@harald</span><span class="collection-title">#Wedding-dress</span>
+            
+            <p>collectionDescription goes here</p>
+        </div>
+
+        <div class="item-details">
+
+                <span>55</span>
+                <i popover="votePopover" (onVoted)="voteHandler($event)" class="icon-sli-like icon2x article-detail-icon "></i>
+        
+        
+                <span>44</span> 
+                <i class="icon-sli-bubbles icon2x article-detail-icon "></i>
+            </div>
+    </div>
+
+
+</article>

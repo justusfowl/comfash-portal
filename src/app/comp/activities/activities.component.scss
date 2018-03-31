@@ -1,0 +1,101 @@
+
+
+@import "../../../assets/css/variables.scss";
+
+
+.activity-item{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 20px;
+    margin-bottom: 35px;
+
+}
+
+.comment-image-div{
+    height: 350px;
+    background-size: cover; 
+    background-position: top center;
+}
+
+
+.comment-area{
+    padding : 10px; 
+    position: relative;
+    background-color: $primary-blue;
+}
+
+.commentator-container, .follower-container{
+    padding: 10px;
+    display: block;
+    border-bottom: 1px solid #ffffff54;
+}
+
+.commentator-container .avatar, .follower-container .avatar{
+    height: 40px;
+    width: 40px;
+    background-size: cover;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 100px;
+}
+
+.commentator-container .comment-owner, 
+.follower-container .follower
+{
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 10px;
+    font-weight: 500;
+}
+
+.follower-container .follower p,
+.commentator-container .comment-owner p{
+    font-size: 10px;
+    padding-top: 5px;
+}
+
+
+.comment-icon{
+    width: 40px;
+    height: 40px;
+    background-color: $background-color;
+    border-radius: 20px;
+    position: absolute;
+    top: -20px;
+    right: -7px;
+    display: flex;
+    align-items: center;
+}
+
+.comment-icon i{
+    width: 100%;
+    text-align: center;
+    color: $primary-blue;
+    font-size: 25px;
+}
+
+.comment-text{
+    background-color: gainsboro;
+    padding: 10px;
+    color: #33434b;
+    text-align: center;
+    display: flex;
+    align-items: right;
+    position: relative;
+    margin-top: 7px;
+}
+
+.collection-info{
+    padding-top: 10px;
+}
+
+.collection-info .collection-owner, 
+.collection-info .collection-title{
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.collection-info p{
+    padding-top: 5px;
+    padding-bottom: 30px;
+}

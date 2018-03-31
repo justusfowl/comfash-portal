@@ -1,0 +1,36 @@
+<article class="line">
+
+
+        <div class="s-12 l-12 message-area">
+            
+            <div class="follower-container">
+                <div class="avatar" [style.backgroundImage]="'url(' + context?.followerUserAvatarPath + ')'">
+                </div>
+    
+                <div class="follower">
+                    @{{context?.followerUser}} now follows
+                    <p >{{context?.followDate}}</p>
+                </div>
+            </div>
+            
+        </div>
+
+        
+
+
+        <div class="s-12 l-12 followed-area" [style.backgroundImage]="'url(' + context?.followedProfilePicPath + ')'">
+    
+        </div>
+
+        <div class="followed-container">
+            <div class="avatar" [style.backgroundImage]="'url(' + context?.followerUserAvatarPath + ')'">
+            </div>
+
+            <div class="followed">
+                @{{context?.followedUser}}
+            </div>
+        </div>
+    
+    
+    </article>
+

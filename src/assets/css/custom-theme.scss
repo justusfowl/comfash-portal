@@ -51,3 +51,12 @@ $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent);
 
   @include angular-material-theme($alternate-theme);
 }
+
+.search-bar {
+    $alternate-primary: mat-palette($md-comfash);
+    $alternate-accent:  mat-palette($md-comfash);
+  
+    $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent);
+  
+    @include angular-material-theme($alternate-theme);
+  }

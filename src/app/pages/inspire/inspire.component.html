@@ -13,11 +13,11 @@
       <aside class="loaf-menu">
 
           <div class="menu-row">
-              <mat-form-field>
-                  <mat-select placeholder="Clothing" [formControl]="toppings" multiple>
-                    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
+            <mat-form-field>
+                <mat-select placeholder="Clothing" [formControl]="toppings" multiple>
+                <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                </mat-select>
+            </mat-form-field>
           </div>
         
 
@@ -107,17 +107,63 @@
 
     <div class="s-12 m-9 l-9 ">
 
+         <!-- ARTICLE 1     -->           
+         <article *ngFor="let s of sessionResponses" class=" s-12 m-4 l-4 margin-bottom session-item">
+                <div class="post-1 line">
+                   <!-- image -->                 
+                   <div class="s-12 l-10 post-image">                   
+                       <div class="post-image-div" [style.backgroundImage]="'url(' + s.imgPath + ')'">
+                       </div>   
+ 
+                   </div>
+                   <!-- date -->                 
+                   <div class="s-12 l-2 post-date">
+                      <p class="date">{{s.dateDay}}</p>
+                      <p class="month">{{s.dateMonth}} '{{s.dateYear}}</p>
+                      
+                      <div class="session-compare active">
+                         <i class="icon-sli-shuffle icon2x article-detail-icon "></i>
+                      </div>
+ 
+                      <div class="session-vote" [class.highlight]="s.voteStats.avg > 70">
+                         <p>{{s.voteStats.avg}}%</p>
+                         <i class="icon-sli-like icon2x article-detail-icon "></i>
+                      </div>
+ 
+                   </div>
+                </div>
+                <!-- text -->                  
+                <div class="post-text"> 
+ 
+                     <div class="session-details right-align">
+                         <i class="icon-sli-trash icon2x article-detail-icon trash "></i>
+                     </div>
+ 
+                   <div class="session-details">
+ 
+                       <span>{{s.likes}}</span> 
+                       <i class="icon-sli-like icon2x article-detail-icon "></i>
+ 
+                       <span>{{s.comments}}</span> 
+                       <i class="icon-sli-bubbles icon2x article-detail-icon "></i>
+                   </div>
+ 
+                </div>
+             </article>
 
-      <!-- ARTICLE 1     -->           
+
+
+
+<!--         
       <article *ngFor="let s of sessionResponses" class=" s-12 m-4 l-4 margin-bottom response session-item">
         <div class="post-1 line">
-            <!-- image -->                 
+                        
             <div class="s-12 l-10 post-image">                   
                 <div class="post-image-div" [style.backgroundImage]="'url(' + s.imgPath + ')'">
                 </div>   
 
             </div>
-            <!-- date -->                 
+                           
             <div class="s-12 l-2 post-date">
               <p class="date">{{s.dateDay}}</p>
               <p class="month">{{s.dateMonth}}</p>
@@ -128,8 +174,7 @@
               </div>
 
             </div>
-        </div>
-        <!-- text -->                  
+        </div>                
         <div class="post-text"> 
 
               <div class="session-details right-align">
@@ -148,7 +193,7 @@
             </div>
 
         </div>
-      </article>
+      </article> -->
 
     </div>
 

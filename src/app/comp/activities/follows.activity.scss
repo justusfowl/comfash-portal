@@ -1,0 +1,44 @@
+
+@import "../../../assets/css/variables.scss";
+
+
+.message-area{
+    background-color: $primary-blue;
+    padding: 10px;
+}
+
+.followed-area{
+    height: 160px; 
+    opacity: 0.5;
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center center; 
+}
+
+
+.followed-container{
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+    font-weight: 400;
+}
+
+.followed-container .avatar{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 80px;
+    width: 80px;
+    border-radius: 25px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.followed-container .followed{
+    display: inline-block;
+    padding: 21px;
+    border-radius: 5px;
+    margin: 4px;
+    color: $primary-blue;
+    font-size: 30px;
+}

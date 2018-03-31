@@ -1,0 +1,29 @@
+
+
+.view-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #eeeeee;
+    opacity: 0.9;
+    z-index: 19999;
+}
+    
+
+.primary-container{
+    width: 80%;
+    position: relative;
+    float: left;
+    height: 100vh;
+}
+
+.side-panel{
+    width: 20%;
+    position: relative;
+    float: right;
+    height: 100vh;
+    border-left: 1px solid #b9b9b9;
+}
+

@@ -8,12 +8,18 @@ import { MyRoomComponent } from './pages/my-room/my-room.component';
 import { ImgCollectionComponent } from './pages/img-collection/img-collection.component';
 import { ContentComponent } from './pages/content/content.component';
 import { CaptureComponent } from './pages/capture/capture.component';
-import { LoafComponent } from './pages/loaf/loaf.component';
+import { InspireComponent } from './pages/inspire/inspire.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { LoginComponent } from './pages/login/login.component';
 
 
 const routes: Routes = [
   {
     path: '',
+    component: MyRoomComponent
+  },
+  {
+    path: 'room',
     component: MyRoomComponent
   },
   {
@@ -29,14 +35,21 @@ const routes: Routes = [
     component: ContentComponent
   }, 
   {
-    path: 'loaf',
-    component: LoafComponent
+    path: 'inspire',
+    component: InspireComponent
   }, 
   {
     path: 'capture',
     component: CaptureComponent
+  }, 
+  {
+    path: 'profile',
+    component: ProfileComponent
+  }, 
+  {
+    path: 'login',
+    component: LoginComponent
   }
-
 
 ];
 

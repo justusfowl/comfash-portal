@@ -1,5 +1,72 @@
-<h1 mat-dialog-title>Add your comment:</h1>
 
-<mat-form-field class="example-full-width">
-  <textarea matInput placeholder="Leave a comment"></textarea>
-</mat-form-field>
+
+
+<h1 mat-dialog-title>Add tag information</h1>
+
+
+    <form  class="addTag-container" [formGroup]="newTag" (ngChange)="previewTag(newTag.value)" (ngSubmit)="previewTag(newTag.value)" >
+
+        <mat-form-field class="field small">
+            <input #tagUrl matInput placeholder="Paste URL"  formControlName="tagUrl">
+        </mat-form-field>
+    
+        <button [hidden]="tagUrl.value.length == 0" color="primary" class="checkUrl-btn" mat-button (click)="pasteUrl()" >CheckUrl</button>
+        
+        <div [hidden]="!lookupFinished">
+            <mat-form-field class="field">
+                <input matInput placeholder="Tag title"  formControlName="tagTitle">
+            </mat-form-field>
+    
+            <mat-form-field class="field">
+                <input matInput placeholder="Image url"  formControlName="tagImage">
+            </mat-form-field>
+    
+            <mat-form-field class="field">
+                <input matInput placeholder="Tag Seller"  formControlName="tagSeller">
+            </mat-form-field>
+        </div>
+
+        <div class="tag-details" hidden>
+            <mat-form-field class="field">
+              <mat-select placeholder="Category"  formControlName="tagCategory">
+                <mat-option value="option">Blouse</mat-option>
+                <mat-option value="option">Jeans</mat-option>
+                <mat-option value="option">Jacket</mat-option>
+                <mat-option value="option">Option2</mat-option>
+                <mat-option value="option">Option3</mat-option>
+              </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field class="field">
+              <input matInput #amount placeholder="Amount"  formControlName="tagAmount" type="number">
+              <span matPrefix>€&nbsp;</span>
+              <span matSuffix>.00</span>
+            </mat-form-field>
+        </div>
+       
+      </form>
+
+
+      <div class="tag-preview" [hidden]="!lookupFinished">
+
+          <div class="tag">
+              <img [src]="previewTagItem.tagImage">
+              <div class="tag-container">
+                <p class="title">{{previewTagItem.tagTitle}}</p>
+                <p class="seller">{{previewTagItem.tagSeller}}</p>
+              </div>
+            </div>
+    
+      </div>
+
+
+
+    <button class="cancel-btn" mat-button (click)="cancel()" >Cancel</button>
+    <button color="primary" class="accept-btn" mat-button (click)="addTag()" >Save tag</button>
+      
+     
+      
+
+
+
+

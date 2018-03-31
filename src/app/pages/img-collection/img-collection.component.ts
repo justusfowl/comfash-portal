@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
+
+import { MatDialog } from '@angular/material';
+
 
 @Component({
   selector: 'app-img-collection',
@@ -15,8 +18,9 @@ export class ImgCollectionComponent implements OnInit {
       "imgPath" : "../../assets/img/6.jpg", 
       "dateDay" : "07", 
       "dateMonth" : "mar", 
+      "dateYear" : "18",
       "likes" : 9, 
-      "comments" : 12, 
+      "comments" : 4, 
       "voteStats" : {
         "avg" : 76
       }
@@ -25,45 +29,48 @@ export class ImgCollectionComponent implements OnInit {
       "imgPath" : "../../assets/img/8.jpg", 
       "dateDay" : "12", 
       "dateMonth" : "feb", 
-      "likes" : 9, 
-      "comments" : 12, 
+      "dateYear" : "18",
+      "likes" : 29, 
+      "comments" : 2, 
       "voteStats" : {
-        "avg" : 76
+        "avg" : 61
       }
     },
     {
       "imgPath" : "../../assets/img/9.jpg", 
       "dateDay" : "12", 
       "dateMonth" : "feb", 
-      "likes" : 9, 
-      "comments" : 12, 
+      "dateYear" : "17",
+      "likes" : 19, 
+      "comments" : 112, 
       "voteStats" : {
-        "avg" : 76
+        "avg" : 89
       }
     },
     {
       "imgPath" : "../../assets/img/10.jpg", 
       "dateDay" : "12", 
       "dateMonth" : "feb", 
-      "likes" : 9, 
-      "comments" : 12, 
+      "dateYear" : "17",
+      "likes" : 15, 
+      "comments" : 5, 
       "voteStats" : {
-        "avg" : 76
+        "avg" : 51
       }
     },
     {
       "imgPath" : "../../assets/img/3.jpg", 
       "dateDay" : "12", 
       "dateMonth" : "feb", 
-      "likes" : 9, 
-      "comments" : 12, 
+      "likes" : 29, 
+      "comments" : 1, 
       "voteStats" : {
-        "avg" : 76
+        "avg" : 81
       }
     }
   ]
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private dialog : MatDialog) { }
 
   ngOnInit() {
   }
@@ -71,5 +78,6 @@ export class ImgCollectionComponent implements OnInit {
   goToContent(collection) {
     this.router.navigate(['content']); 
   }
+
 
 }

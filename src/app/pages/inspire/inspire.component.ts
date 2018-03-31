@@ -3,11 +3,11 @@ import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-loaf',
-  templateUrl: './loaf.component.html',
-  styleUrls: ['./loaf.component.scss',
+  templateUrl: './inspire.component.html',
+  styleUrls: ['./inspire.component.scss',
                '../../app.component.scss']
-})
-export class LoafComponent implements OnInit {
+}) 
+export class InspireComponent implements OnInit {
 
   public sessionResponses = [
     {

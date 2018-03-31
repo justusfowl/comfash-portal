@@ -1,5 +1,17 @@
+@import "../assets/css/variables.scss";
+
+
+
+
 .logo{
     font-family: Ubuntu
+}
+
+.room-owner{
+    font-size: 10px;
+    color: $primary;
+    position: absolute;
+    bottom: 25%;
 }
 
 .capture{
@@ -12,7 +24,71 @@
 }
 
 
+.user-avatar{
+    display: inline-block;
+    height: 50px;
+    padding-left: 10px;
+    position: relative;
+}
 
+.user-avatar .no-notifications{
+    position: absolute;
+    top: -8px;
+    background-color: #d8a69e;
+    padding: 3px;
+    border-radius: 20px;
+    text-align: center;
+    right: -11px;
+    min-width: 17px;
+    font-size: 9px;
+}
+
+.top-menu-search{
+    padding-left: 30px;
+}
+
+.notification-list{
+    position: absolute;
+    width: 250px;
+    z-index: 200;
+    background-color: white;
+    padding: 15px;
+}
+
+.notification-list .item{
+    color: #33434b;
+    padding: 9px;
+    border-bottom: 1px solid #d4d4d4;
+    position: relative;
+}
+
+.notification-list .item:hover{
+    background-color: #efefef;
+}
+
+
+.notification-list i{
+    position: absolute;
+    right: 10px;
+    top: 30%;
+}
+
+.notification-list span{
+    display: inline-block;
+    font-size: 12px;
+    width: 80%;
+}
+
+.notification-list .msg-details{
+    font-size: 8px; 
+    padding-top: 6px;
+}
+
+
+
+
+
+// #### app END ######
 
 .post-image .post-image-div{
     height: 350px;
@@ -39,11 +115,11 @@ article .session-details{
 
 .session-details span{
     padding-left: 5px;
-    font-size: 2em;
+    font-size: 16px;
 }
 
 .session-details .article-detail-icon{
-    font-size: 1.25em;
+    font-size: 12px;
     color: #a4a4a4;
 }
 
@@ -66,20 +142,23 @@ article .session-details{
 }
 
 
+
+
 .session-vote{
     height: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: #cdcdcd;
-    padding-top: 12px;
 }
 
 .session-vote.highlight{
     background-color: #d8a69e;
 }
 
-.session-vote span{
-    font-size: 20px; 
+.session-vote p{
+    font-size: 19px;
+    color: white;
+    opacity: 1 !important;
 }
 
 .session-compare{
@@ -116,6 +195,17 @@ article .session-details{
 }
 
 
+.btn-camera{
+    position: fixed; 
+    top: 10%; 
+    right: 0; 
+    background-color: #d8a69e;
+    padding: 20px;
+    z-index:120;
+}
+
+
+
 
 // #### LOAFING ##### 
 
@@ -140,6 +230,22 @@ aside .mat-input-container{
 /deep/ .mat-input-element {
     color: #33434b !important;    /* replace this color with your accent color hex code */
 }
+
+/deep/ .top-menu-search .mat-input-element {
+    color: white !important;    /* replace this color with your accent color hex code */
+}
+
+/deep/  .top-menu-search .mat-input-placeholder{
+    color: #ffffff66 !important;    /* replace this color with your accent color hex code */
+}
+
+/deep/  .top-menu-search .mat-form-field-underline{
+    background-color: rgba(255, 255, 255, 0.42) !important;    /* replace this color with your accent color hex code */
+}
+
+
+
+
 
 
 .select-container{
@@ -250,3 +356,98 @@ aside .mat-input-container{
 
 
 // ### CAPTURE END ####
+
+
+// ### SIDE PANEL ####
+
+
+.panel-subtitle{
+    padding: 20px;
+    color: #33434b;
+    
+}
+
+
+// ### SIDE PANEL END ###
+
+
+// ### TAG style ###
+
+
+
+.tag{
+    background-color: #e1e1e1;
+    padding: 5px;
+    border: 1px solid #d1d1d1;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.tag.inFocus{
+   background-color: #d8a69e40;
+}
+
+.tag-container p{
+    padding: 5px;
+    text-overflow: ellipsis;
+    text-align: justify;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #33434b;
+    font-size: 12px;
+}
+
+.tag-container p.title{
+    font-size: 14px; 
+}
+
+.tag-container p.seller{
+    font-size: 10px; 
+    font-weight: 800;
+}
+
+.tag img{
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #cdcdcd;
+    height: 40px;
+    object-fit: cover;
+    width: 30px;
+    width: 10%;
+    min-width: 30px;
+}
+
+.tag .tag-container{
+    width: 80%;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    padding-left: 5px;
+}
+
+.tag:hover .action-panel{
+    visibility: visible;
+}
+
+.tag .action-panel{
+    position: absolute;
+    bottom: 0;
+    right: 0px;
+    visibility: hidden;
+}
+
+.tag .action-panel .action-icon{
+    padding: 2px;
+    color: #cbcbcb;
+    font-size: 14px;
+}
+
+
+.tag .action-panel .action-icon:hover{
+    background-color: #aeaeae;
+    color: #3f3f3f;
+}
+
+
+// ## TAG END ###

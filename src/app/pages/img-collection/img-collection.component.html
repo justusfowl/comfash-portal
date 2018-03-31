@@ -7,7 +7,7 @@
       <div class="margin">
 
          <!-- ARTICLE 1     -->           
-         <article *ngFor="let s of sessions" class=" s-12 m-4 l-4 margin-bottom session-item">
+         <article *ngFor="let s of sessions" class=" s-12 m-3 l-3 margin-bottom session-item">
                 <div class="post-1 line">
                    <!-- image -->                 
                    <div class="s-12 l-10 post-image">                   
@@ -18,14 +18,14 @@
                    <!-- date -->                 
                    <div class="s-12 l-2 post-date">
                       <p class="date">{{s.dateDay}}</p>
-                      <p class="month">{{s.dateMonth}}</p>
+                      <p class="month">{{s.dateMonth}} '{{s.dateYear}}</p>
                       
                       <div class="session-compare active">
                          <i class="icon-sli-shuffle icon2x article-detail-icon "></i>
                       </div>
  
-                      <div class="session-vote ">
-                         <span>{{s.voteStats.avg}}%</span>
+                      <div class="session-vote" [class.highlight]="s.voteStats.avg > 70">
+                         <p>{{s.voteStats.avg}}%</p>
                          <i class="icon-sli-like icon2x article-detail-icon "></i>
                       </div>
  

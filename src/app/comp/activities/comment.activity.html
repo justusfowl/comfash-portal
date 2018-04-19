@@ -1,20 +1,20 @@
 <article class="line" [class.right-align]="!(index % 2 == 0)">
                     
     <div class="s-12 l-6">                   
-    <div class="comment-image-div" [style.backgroundImage]="'url(' + context?.imgPath + ')'">
+    <div class="comment-image-div" [style.backgroundImage]="'url(' + util.wrapHostPath(context?.sessionThumbnailPath) + ')'">
     </div>                  
     </div>
 
     <div class="s-12 l-6 comment-area">
 
         <div class="commentator-container">
-            <div class="avatar" [style.backgroundImage]="'url(' + context?.imgPath + ')'">
+            <div class="avatar" [style.backgroundImage]="'url(' + util.wrapHostPath(context?.itemCreatorAvatarPath) + ')'">
 
             </div>
 
             <div class="comment-owner">
-                @schnulli
-                <p >{{context?.commentCreated}}</p>
+                <span linkUsername [username]='context?.userId'>@{{context?.itemCreator}}</span>
+                <p >{{util.formatDateDiffToNow(context?.commentCreated)}}</p>
             </div>
         </div>
 
@@ -26,18 +26,16 @@
         </div>
 
         <div class="collection-info">
-            <span class="collection-owner">@harald</span><span class="collection-title">#Wedding-dress</span>
-            
-            <p>collectionDescription goes here</p>
+                <span class="collection-owner" linkUsername [username]='context?.colOwnerId'>@{{context?.colOwner}}</span>
+                <span class="collection-title" linkCollection [username]='context?.colOwnerId'  [collectionId]='context?.collectionId'>#{{context?.collectionTitle}}</span>
         </div>
 
         <div class="item-details">
 
-                <span>55</span>
-                <i popover="votePopover" (onVoted)="voteHandler($event)" class="icon-sli-like icon2x article-detail-icon "></i>
+                <span>{{util.formatCnt(context?.votesCnt)}}</span>
+                <i popover="votePopover"  [myVote]="context?.myVoteType" (onVoted)="voteItem($event, context)" class="icon-sli-like vote-icon "></i>
         
-        
-                <span>44</span> 
+                <span>{{util.formatCnt(context?.commentCnt)}}</span> 
                 <i class="icon-sli-bubbles icon2x article-detail-icon "></i>
             </div>
     </div>

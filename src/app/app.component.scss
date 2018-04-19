@@ -1,6 +1,21 @@
 @import "../assets/css/variables.scss";
 
+// ### universal styles ###
 
+.featureHidden{
+    display: none !important;
+}
+
+
+.fixed-header{
+    position: fixed; 
+    top: 0; 
+    width: 100vw; 
+    z-index: 120;
+    background-color: $primary-blue;
+    height: 72px;
+    overflow: hidden;
+}
 
 
 .logo{
@@ -27,28 +42,37 @@
 .user-avatar{
     display: inline-block;
     height: 50px;
-    padding-left: 10px;
+    //padding-left: 10px;
     position: relative;
+}
+
+#user-avatar {
+    height: 72px;
+}
+
+.activeRoute{
+    background: none repeat scroll 0 0 rgba(27, 38, 43, 1);
 }
 
 .user-avatar .no-notifications{
     position: absolute;
-    top: -8px;
+    top: 5px;
     background-color: #d8a69e;
     padding: 3px;
     border-radius: 20px;
     text-align: center;
-    right: -11px;
+    right: 5px;
     min-width: 17px;
     font-size: 9px;
 }
 
 .top-menu-search{
     padding-left: 30px;
+    padding-top: 20px;
 }
 
 .notification-list{
-    position: absolute;
+    position: fixed;
     width: 250px;
     z-index: 200;
     background-color: white;
@@ -62,15 +86,29 @@
     position: relative;
 }
 
-.notification-list .item:hover{
+.notification-list .item:hover, 
+.notification-list .load-more:hover, 
+.msg-item:hover{
     background-color: #efefef;
+    cursor: pointer;
 }
 
 
-.notification-list i{
+.notification-list .msg-icon{
     position: absolute;
     right: 10px;
     top: 30%;
+}
+
+.notification-list .load-more{
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.notification-list .load-more i{
+    width: 100%; 
+    text-align: center;
 }
 
 .notification-list span{
@@ -84,11 +122,50 @@
     padding-top: 6px;
 }
 
+/deep/ .vote-button{
+    padding-left: 5px;
+}
 
+/deep/ .vote-button.active, /deep/ .vote-button:hover{
+	color: #d8a69e !important;
+	transform: scale(1.3) !important;
+    cursor: pointer;
+    font-size: 14px !important;
+}
+
+/deep/  .link-username:hover, 
+/deep/ .link-collection:hover{
+    color: $primary; 
+    cursor: pointer;
+}
+
+.link-username{
+    padding: unset !important;
+}
 
 
 
 // #### app END ######
+
+// #### notifications formatting ####
+
+/deep/ .simple-notification.success{
+    background: $primary-blue !important;
+}
+
+/deep/ .simple-notification.success .sn-progress-loader span{
+    background: $primary !important;
+}
+
+/deep/ .simple-notification.info{
+    background: $primary !important;
+}
+
+/deep/ .simple-notification.info .sn-progress-loader span{
+    background: $primary-blue !important;
+}
+
+// #### notifications formatting END ###
 
 .post-image .post-image-div{
     height: 350px;
@@ -101,7 +178,6 @@ article .session-details{
 	bottom: 0; 
 	right: 0px; 
 	padding: 10px; 
-	width: 250px;
 	color: #33434b;
     font-size: 12px; 
     text-align: right;
@@ -123,8 +199,10 @@ article .session-details{
     color: #a4a4a4;
 }
 
-.article-detail-icon.trash{
-    padding-left: 10px;
+.article-detail-icon.trash:hover{
+    font-size: 14px;
+    background-color: #e8e8e8;
+    cursor: pointer;
 }
 
 .session-item .post-text{
@@ -156,26 +234,33 @@ article .session-details{
 }
 
 .session-vote p{
-    font-size: 19px;
+    font-size: 15px;
     color: white;
     opacity: 1 !important;
 }
 
-.session-compare{
+.session-tags{
+    margin-top: 10px;
+}
+
+.session-compare, 
+.session-tags{
     height: 50px; 
     align-items: center; 
     display: flex; 
     background-color: #cdcdcd;
 }
 
-.session-compare .article-detail-icon{
-    color: black; 
+.session-compare .article-detail-icon, 
+.session-tags .article-detail-icon {
+    color: white; 
     font-size: 20px;
     width: 100%; 
     text-align: center;
 }
 
-.session-compare.active{
+.session-compare.active,
+.session-tags{
     background-color: #d8a69e;
 }
 
@@ -183,17 +268,25 @@ article .session-details{
     color: white;
 }
 
-
-.compare{
+.float-menu{
     position: fixed; 
-    top: 10%; 
-    right: 0; 
     background-color: #d8a69e;
     padding: 20px;
     z-index:120;
-
+    
 }
 
+
+.compare{
+    right : 0;
+    top: 10%
+    
+}
+
+.add-collection{
+    top: 20%;
+    left: 0;
+}
 
 .btn-camera{
     position: fixed; 

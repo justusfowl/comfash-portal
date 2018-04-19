@@ -1,0 +1,69 @@
+
+
+
+<h1 mat-dialog-title>Add collection</h1>
+
+
+<form  class="collection-container" [formGroup]="collectionForm" (ngSubmit)="saveCollection()" >
+
+    <mat-form-field class="field major">
+        <input #collectionTitle matInput [placeholder]="'COLLECTION.TITLE' | translate"  formControlName="collectionTitle">
+    </mat-form-field>
+
+      <mat-form-field class="field minor">
+          <mat-select [placeholder]="'COLLECTION.PRIVACY' | translate" formControlName="privacyStatus">
+
+                <mat-option 
+                    *ngFor="let o of privacyOptions" 
+                    [value]="o.value" 
+                >
+                
+                {{o.option}}
+
+                </mat-option>
+
+          </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <input #collectionDescription matInput [placeholder]="'COLLECTION.DESCRIPTION' | translate"  formControlName="collectionDescription">
+    </mat-form-field>
+    
+     
+  </form>
+
+  <div class="invite-container">
+
+      <input class="search-friends" type="search" matInput inputDebounce delay="500"  [placeholder]="'COLLECTION.INVITE_FRIENDS' | translate" (outputValue)="searchChanged($event)">
+
+
+      <div class="invitees-list">
+          <div *ngFor="let friend of sharedWithUsers; let i = index;" class="friend-token">
+              {{friend.userName}}
+              <i class="icon-sli-close" (click)="removeFriend(friend, i)"></i>
+          </div>
+      </div>
+
+      <div class="search-results">
+            <div *ngFor="let result of tmpSearchlist; let i = index;" class="result-item" (click)="toggleFriend(result, i)">
+                <i class="icon-sli-check" [hidden]="getIfCheckedHidden(result)" (click)="removeFriend(friend, i)"></i>
+                {{result.userName}}
+            </div>
+ 
+      </div>
+  </div>
+
+<button class="cancel-btn" mat-button (click)="cancel()" >{{'CANCEL' | translate}}</button>
+<button class="" mat-button (click)="askDelete()" [hidden]="newCollection" >{{'DELETE' | translate}}</button>
+
+
+<button color="primary" class="accept-btn right" mat-button (click)="saveCollection()" >{{'SAVE' | translate}}</button>
+
+<button class="delete-btn" mat-button (click)="delete()" [class.hide]="!reallyDelete" >{{'REALLY_DELETE' | translate}}</button>
+  
+ 
+  
+
+
+
+

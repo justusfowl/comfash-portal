@@ -1,0 +1,28 @@
+
+@import "../../../assets/css/variables.scss";
+
+.catchall-container{
+    height: 40vh;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    align-items: center;
+}
+
+.logo{
+    width: 100%;
+    text-align: center;
+    font-size: 100px;
+    font-family: Ubuntu;
+    color: #c7c7c7;
+}
+
+.message{
+    width: 100%;
+    text-align: center;
+    color: $primary-blue;
+}
+
+
+.message.small{
+    font-size: 10px;
+}

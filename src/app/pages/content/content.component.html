@@ -4,26 +4,33 @@
 
          <div class="s-12 m-7 l-9">
                       
-             <article *ngFor="let session of sessionCompare" class=" s-12 m-6 l-6 margin-bottom session-item session-item-selected">
+             <article *ngFor="let session of sessions" 
+             [class]="getSessionSizeClass() + 'margin-bottom session-item '" 
+             [class.session-item-selected]="isSessionSelected(session)"
+             (click)="selectSession(session)">
                 <div class="">
                    <!-- image -->                 
-                   <div class="s-12 l-12 post-image">                   
-                       <div class="post-image-div" [style.backgroundImage]="'url(' + session.sessionItemPath + ')'">
+                   <div class="s-12 l-12 post-image">              
+                       <div class="post-image-div large" [style.backgroundImage]="'url(' + util.wrapHostPath(session.getSessionItemPath()) + ')'">
 
-                        <div class="compare-pic-comment " [class.active]="tag.isActive" *ngFor="let tag of purchaseTags" [style]="san.bypassSecurityTrustStyle(tag.location)">
-                          </div>
+                            <div *ngIf="sessions.length > 1" class="compare-pic-close" (click)="closeCompareItem(session.getId())">
+                                <i class="icon-sli-close icon2x "></i>
+                            </div>
+
+                        <div class="compare-pic-comment " [class.active]="tag.isActive" *ngFor="let tag of session.tags" [style]="san.bypassSecurityTrustStyle(loadLocation(tag))">
+                        </div>
 
                           <div class="session-post-text">   
         
                               <div class="content-session-details">
-                                <div class="btn-add-collection">
+                                <div class="btn-add-collection" [hidden]="util.hiddenFeature('Anprobe button')">
                                     Anprobe
                                 </div>
 
-                                  <span>{{session.voteStats.voteCnt}}</span> 
-                                  <i class="icon-sli-like icon2x article-detail-icon "></i>
+                                  <span>{{session.voteCnt}}</span> 
+                                  <i popover="votePopover"  [myVote]="voteHdl.getSessionVoteType(session)" (onVoted)="voteHdl.handleVote($event, session)" class="icon-sli-like icon2x article-detail-icon voting-icon "></i>
             
-                                  <span>{{session.voteStats.commentCnt}}</span> 
+                                  <span>{{session.commentCnt}}</span> 
                                   <i class="icon-sli-bubbles icon2x article-detail-icon "></i>
                               </div>
             
@@ -38,7 +45,7 @@
              </article>
 
 
-             <div class=" s-12 m-12 l-12 margin-bottom">
+             <div class=" s-12 m-12 l-12 margin-bottom" hidden>
               
                 <mat-slider class="session-slider" min="1" max="100" step="1" value="20"></mat-slider>
 
@@ -70,14 +77,15 @@
 
             <div class="session-item-details-container">
 
-                <div class="avatar-pic">
+                <div class="avatar-pic"  [style.backgroundImage]="'url(' + util.wrapHostPath(getCurrSessionUserAvatar()) + ')'" >
 
                 </div>
 
                 <div class="details">
-                    @schnulli#Wedding-Dresses
+                    <span linkUsername [username]='getCurrSessionUserId()'>@{{getCurrSessionUserName()}}</span>
+                    <span linkCollection [username]='getCurrSessionUserId()'  [collectionId]='getCurrSessionCollectionId()'>#{{getCurrSessionCollectionTitle()}}</span>
                     <p>
-                        76%
+                        {{util.formatPrcVote(getCurrSessionVote())}}
                     </p>
                 </div>
 
@@ -85,33 +93,34 @@
 
 
             <div [hidden]="panelStep != 1">
+                <div *ngIf="purchaseTags.length > 0" >
 
-                <mat-divider></mat-divider>
+                    <mat-divider></mat-divider>
 
-                <p class="panel-subtitle">Purchase tags</p>
+                    <p class="panel-subtitle">Purchase tags</p>
 
-                <div class="purchase-tag-list">
-                    <div *ngFor="let tag of purchaseTags" class="list-item" (mouseenter) ="hoverInTag(tag)"  (mouseleave) ="hoverOutTag(tag)">
+                    <div class="purchase-tag-list">
+                        <div *ngFor="let tag of purchaseTags" class="list-item" (mouseenter)="hoverInTag(tag)"  (mouseleave) ="hoverOutTag(tag)">
 
-                        <div class="tag-pic" [style.backgroundImage]="'url(' + tag.picUrl + ')'">
-        
-                        </div>
-        
-                        <div class="item-details">
-                            {{tag.seller}}
-                            <p class="category">
-                                {{tag.category}}
-                            </p>
-                        </div>
+                            <div class="tag-pic" [style.backgroundImage]="'url(' + tag.tagImage + ')'">
+            
+                            </div>
+            
+                            <div class="item-details">
+                                {{tag.tagTitle}}
+                                <p class="category">
+                                    {{tag.tagSeller}}
+                                </p>
+                            </div> 
 
-                        <div class="item-link">
-                            <a  target="_blank" [href]="tag.url">
+                            <div class="item-link">
+                                <a  target="_blank" [href]="tag.tagUrl">
                                     <i class="icon-sli-tag menu-icon"></i>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-
            
 
                 <mat-divider></mat-divider>
@@ -134,10 +143,10 @@
             <p class="panel-subtitle">Comment</p>
 
             <mat-form-field class="input-comment">
-                <textarea matInput></textarea>
+                <textarea matInput [(ngModel)]="commentText"></textarea>
             </mat-form-field>
 
-            <button color="primary" class="mat-button-comment" mat-button>Comment</button>
+            <button color="primary" class="mat-button-comment" (click)="addComment()" mat-button>Comment</button>
 
 
             <div [hidden]="panelStep != 2">
@@ -147,14 +156,14 @@
                 <div class="comment-list">
                     <div *ngFor="let comment of commentList" class="list-item">
 
-                        <div class="avatar-pic" [style.backgroundImage]="'url(' + comment.ownerAvatarPath + ')'">
+                        <div class="avatar-pic" [style.backgroundImage]="'url(' + util.wrapHostPath(comment.commentUserAvatarPath) + ')'">
         
                         </div>
         
                         <div class="item-details">
                             {{comment.commentText}}
                             <p class="category">
-                                <span class="owner">{{comment.commentOwner}}</span>
+                                <span linkUsername [username]='comment.commentUserName'>@{{comment.commentUserName}}</span>
                             </p>
                         </div>
                     </div>
@@ -172,9 +181,10 @@
 
     <div class="content-history">
 
-        <div class="item" *ngFor="let histItem of similarOutfits" [style.backgroundImage]="'url(' + histItem.imgPath + ')'">
+        <div class="item" *ngFor="let histSession of api.compareSessions" 
+        [style.backgroundImage]="'url(' + util.wrapHostPath(histSession.getSessionItemPath()) + ')'"
+        (click)="loadSessionFromHistory(histSession)">
                 
-
         </div>
 
 

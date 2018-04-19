@@ -1,11 +1,13 @@
-import { Directive, HostListener, ComponentRef, ViewContainerRef, ComponentFactoryResolver, ComponentFactory, Input, OnChanges, SimpleChange, Output, EventEmitter } from "@angular/core";
+import { Directive, HostListener, ElementRef, ComponentRef, ViewContainerRef, ComponentFactoryResolver, ComponentFactory, 
+    Input, OnChanges, OnInit, SimpleChange, Output, EventEmitter } from "@angular/core";
 import {PopoverContent} from "./PopoverContent";
+import { VoteHandler } from "./HandleVote";
 
 @Directive({
     selector: "[popover]",
     exportAs: "popover"
 })
-export class Popover implements OnChanges {
+export class Popover implements OnChanges, OnInit {
 
     // -------------------------------------------------------------------------
     // Properties
@@ -14,12 +16,18 @@ export class Popover implements OnChanges {
     protected popover: ComponentRef<PopoverContent>;
     protected visible: boolean;
 
+    
     // -------------------------------------------------------------------------
     // Constructor
     // -------------------------------------------------------------------------
-    constructor(protected viewContainerRef: ViewContainerRef,
-                protected resolver: ComponentFactoryResolver) {
+    constructor(
+        private el: ElementRef,
+        protected viewContainerRef: ViewContainerRef,
+        protected resolver: ComponentFactoryResolver, 
+        private voteHdl : VoteHandler) {
+
     }
+
 
     // -------------------------------------------------------------------------
     // Inputs / Outputs
@@ -39,8 +47,13 @@ export class Popover implements OnChanges {
     @Input()
     popoverTitle: string;
 
+    @Input("myVote")
+    myVote: any;
+
+    hasVote : boolean = false;
+
     @Input()
-    popoverOnHover: boolean = false;
+    popoverOnHover: boolean = false; 
 
     @Input()
     popoverCloseOnClickOutside: boolean;
@@ -51,7 +64,7 @@ export class Popover implements OnChanges {
     @Input()
     popoverDismissTimeout: number = 0;
 
-    @Output()
+    @Output() 
     onShown = new EventEmitter<Popover>();
 
     @Output()
@@ -88,12 +101,39 @@ export class Popover implements OnChanges {
         this.hide();
     }
 
+    ngOnInit() {
+        this.el.nativeElement.classList.add("vote-button");
+        console.log(this.myVote);
+        if (this.myVote){
+            this.hasVote = true;
+        }
+        this.setVoteIcon();
+    }
+
     ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
         if (changes["popoverDisabled"]) {
             if (changes["popoverDisabled"].currentValue) {
                 this.hide();
             }
         }
+    }
+
+    setVoteIcon(){
+        let element = this.el.nativeElement;
+        let vote = this.myVote;
+        let iconClass = this.voteHdl.getVoteStyleClass(vote);
+
+        var cn = element.className;
+
+        cn = cn.substring(cn.indexOf(" "), cn.length);
+        element.className = iconClass + " " + cn;
+
+        if (this.hasVote){
+            element.classList.add("active")
+        }else{
+            element.classList.remove("active")
+        }
+
     }
 
     // -------------------------------------------------------------------------
@@ -120,6 +160,10 @@ export class Popover implements OnChanges {
             const popover = this.popover.instance as PopoverContent;
             popover.popover = this;
             popover.content = this.content as string;
+
+            if (this.myVote !== undefined)
+            popover.vote = this.myVote; 
+
             if (this.popoverPlacement !== undefined)
                 popover.placement = this.popoverPlacement;
             if (this.popoverAnimation !== undefined)
@@ -139,6 +183,10 @@ export class Popover implements OnChanges {
         } else {
             const popover = this.content as PopoverContent;
             popover.popover = this;
+
+            if (this.myVote !== undefined)
+                popover.vote = this.myVote; 
+
             if (this.popoverPlacement !== undefined)
                 popover.placement = this.popoverPlacement;
             if (this.popoverAnimation !== undefined)
@@ -163,7 +211,16 @@ export class Popover implements OnChanges {
     }
 
     hasVoted(value){
-        this.onVoted.emit(value)
+        this.myVote = value;
+
+        if (value == -1){
+            this.hasVote = false;
+        }else{
+            this.hasVote = true;
+        }
+        
+        this.setVoteIcon();
+        this.onVoted.emit(value);
         this.hide()
 
     }

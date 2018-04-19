@@ -125,7 +125,9 @@ nav {
   overflow: hidden;
   visibility:hidden;
 }
-.top-nav ul {padding:8px;}
+.top-nav ul {
+  /*padding:8px;*/
+}
 .top-nav ul ul {
   position:absolute;
   background:#152732;

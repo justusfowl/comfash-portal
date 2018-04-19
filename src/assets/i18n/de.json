@@ -1,0 +1,58 @@
+{
+  "PAGE_NOT_FOUND" : "Uups - die gesuchte Seite konnte nicht gefunden werden",
+  "CARD": {
+    "NAME": "Celiz Morante Matias Nahuel",
+    "TITLE": "Full Stack JS Developer",
+    "EMAIL": "mceliz@....it.com.ar",
+    "PHONE": "+549....",
+    "SKYPE": "enl...",
+    "ADDRESS": "Jo.. Inge... ...40",
+    "GITHUB": "https://github.com/G33N",
+    "LINKEDIN": "https://www.linkedin.com/in/matias-nahuel-celiz-morante-994719149/"
+  },
+  "EXPERIENCE": {
+    "TITLE": "Erfahrung"
+  },
+  "EDUCATION": {
+    "TITLE": "Harald"
+  },
+  "PORTFOLIO": {
+    "TITLE": "Portfolio"
+  },
+  "COLLECTION": {
+    "ADD" : "Neu hinzufügen",
+    "TITLE" : "Titel", 
+    "PRIVACY" : "Sichtbarkeit",
+    "DESCRIPTION" : "Beschreibung",
+    "INVITE_FRIENDS" : "Freunde einladen..."
+  },
+
+  "NOTIFY" : {
+    "COMMENT_ADDED" : "Kommentar hinzugefügt", 
+    "CONTENT_DISPLAY_LIMIT_SESSIONS" : "Es können max. 3 Sessions angezeigt werden.", 
+    "HAS_VOTED" : "Eine Session wurde bewertet"
+  },
+
+  "ERROR" : {
+    "API_ERROR" : "Ein Fehler ist aufgetreten.",
+    "API_ERROR_404" : "Kein Zugriff auf diese Resource möglich"
+  },
+  
+  "01" : "jan",
+  "02" : "feb",
+  "03" : "mar",
+  "04" : "apr",
+  "05" : "mai",
+  "06" : "jun",
+  "07" : "jul",
+  "08" : "aug",
+  "09" : "sep",
+  "10" : "okt",
+  "11" : "nov",
+  "12" : "dez",
+
+  "DELETE" : "löschen",
+  "REALLY_DELETE" : "Kollektion wirklich löschen? - Kann nicht rückgängig gemacht werden!",
+  "SAVE": "speichern", 
+  "CANCEL" : "abbruch"
+}

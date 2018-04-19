@@ -6,10 +6,10 @@
         <div class="profile-container">
 
           <div class="profile">
-            <img class="avatar" src="../../../assets/img/7.jpg" >
+            <img class="avatar" [src]="util.wrapHostPath(profile?.userAvatarPath)" >
             <div class="user-details">
               <div class="user-name">
-                @schnulli
+                @{{ profile?.userName }}
               </div>
               <div class="details">
                 since, Mar '17'
@@ -33,42 +33,36 @@
                       <i class="icon-sli-share menu-icon"></i>
                     </ng-template>
                     
-                    <activity-content *ngFor="let item of activityItems; let i = index;" [type]="item.type" [context]="item" [index]="i"></activity-content>
-                   
+                    <div style="padding-top: 20px">
+                        <activity-content *ngFor="let item of activityItems; let i = index;" [type]="item.itemType" [context]="item" [index]="i"></activity-content>
+                    </div>
+                    
                    
                     <!-- <activity-content type="sample2" [context]="context"></activity-content>
                     <activity-content type="some-other-type" [context]="context"></activity-content>
                      -->
 
               </mat-tab>
-              <mat-tab label="Tab 1">
-                  <ng-template mat-tab-label>
-                      <i class="icon-sli-camera menu-icon"></i>
+              <mat-tab label="Collections">
+                  <ng-template mat-tab-label >
+                      <i class="icon-sli-camera menu-icon" (click)="loadCollections()"></i>
                     </ng-template>
                     
                     <div class="collection-thumb-container">
                        <div class="collection-thumb" 
                       [class.right-align]="!(i % 2 == 0)" 
-                      [style.backgroundColor]="c.primColor"
-                      [style.backgroundImage]="'url(' + c.imgPath + ')'"
+                      [style.backgroundColor]="c.getPrimeColor()"
+                      [style.backgroundImage]="'url(' + util.wrapHostPath(c.getThumbnail())  + ')'"
 
-                      *ngFor="let c of myCollections; let i = index;">
+                      *ngFor="let c of profileCollections; let i = index;">
 
                        <div class="details" >
-                          <span>{{c.collectionTitle}} <br>{{c.sessionCnt}} <i class="icon-sli-picture menu-icon"></i></span>
+                          <span linkCollection [username]='profileUserId'  [collectionId]='c.getId()'>#{{c.collectionTitle}}</span>
+
+                          <span><br>{{c.getNoSessions()}} <i class="icon-sli-picture menu-icon"></i></span>
                        </div>
                       </div>
                     </div>
-                   
-
-
-
-              </mat-tab>
-              <mat-tab label="Friends">
-                  <ng-template mat-tab-label>
-                      <i class="icon-sli-people menu-icon"></i>
-                    </ng-template>
-                    List of friends
               </mat-tab>
             </mat-tab-group>
        </div>

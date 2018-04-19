@@ -1,0 +1,58 @@
+{
+  "PAGE_NOT_FOUND" : "Oops - the page you are looking for could not be found",
+  "CARD": {
+    "NAME": "Celiz Morante Matias Nahuel",
+    "TITLE": "Full Stack JS Developer",
+    "EMAIL": "mceliz@....it.com.ar",
+    "PHONE": "+549....",
+    "SKYPE": "enl...",
+    "ADDRESS": "Jo.. Inge... ...40",
+    "GITHUB": "https://github.com/G33N",
+    "LINKEDIN": "https://www.linkedin.com/in/matias-nahuel-celiz-morante-994719149/"
+  },
+  "EXPERIENCE": {
+    "TITLE": "Experience"
+  },
+  "EDUCATION": {
+    "TITLE": "Education"
+  },
+  "PORTFOLIO": {
+    "TITLE": "Portfolio"
+  },
+  "COLLECTION": {
+    "ADD" : "Add new collection",
+    "TITLE" : "Title", 
+    "PRIVACY" : "Privacy",
+    "DESCRIPTION" : "Description",
+    "INVITE_FRIENDS" : "Invite friends..."
+  },
+
+  "NOTIFY" : {
+    "COMMENT_ADDED" : "Comment added", 
+    "CONTENT_DISPLAY_LIMIT_SESSIONS" : "A maximum of three sessions can be displayed at once.", 
+    "HAS_VOTED" : "A session has been rated"
+  },
+
+  "ERROR" : {
+    "API_ERROR" : "Ein Fehler ist aufgetreten.",
+    "API_ERROR_404" : "No access possible for this resource."
+  },
+
+    "01" : "jan",
+    "02" : "feb",
+    "03" : "mar",
+    "04" : "apr",
+    "05" : "may",
+    "06" : "jun",
+    "07" : "jul",
+    "08" : "aug",
+    "09" : "sep",
+    "10" : "oct",
+    "11" : "nov",
+    "12" : "dec", 
+
+    "DELETE" : "delete",
+    "REALLY_DELETE" : "Really delete collection? Cannot be undone!",
+    "SAVE": "save", 
+    "CANCEL" : "cancel"
+}

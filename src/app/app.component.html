@@ -1,38 +1,55 @@
+<div id="header-placeholder">
 
-<header class="margin-bottom">
+</div>
+<header class="margin-bottom fixed-header">
   <div class="line">
      <nav>
         <div class="top-nav">
            <p class="nav-text"></p>
-           <a class="logo" href="index.html">            
+           <a class="logo left"  routerLink="/">            
             comfash
            </a>
-           <div id="user-avatar" class="user-avatar" (click)="goToProfile()" (mouseenter) ="showNotification()"  (mouseleave) ="hideNotification()">
-            <i class="icon-sli-user icon2x avatar-detail-icon"></i>
-            <div class="no-notifications">
-              52
-            </div>
-           </div>
-           
-          <mat-form-field class="top-menu-search">
+
+           <ul class="top-ul left">
+              <li class="item" [class.activeRoute]="isLinkActive('/profile')">            
+                <a id="user-avatar" class="user-avatar"(click)="goToProfile()" (mouseenter) ="showNotification()" 
+                (mouseleave) ="hideNotification()">
+                    <i class="icon-sli-user icon2x avatar-detail-icon"></i>
+                    <div class="no-notifications">
+                        {{api.cntUnread}}
+                      </div>
+                </a>
+                        
+              </li>
+          </ul>
+
+          <mat-form-field class="top-menu-search" [class.featureHidden]="util.hiddenFeature('Search bar')">
             <input color="accent" matInput placeholder="Search" >
           </mat-form-field>
 
 
            <ul class="top-ul right">
-              <li class="item" [routerLinkActive]="['active-item']" [routerLinkActiveOptions]="{exact:true}">            
-                 <a routerLink="room">MyRoom
-                    <p class="room-owner">@schnulli</p>
+              <li class="item" [class.active-item]="isLinkActive('/room')">            
+                 <a (click)="goToRoom()">MyRoom
+                    <p class="room-owner">@{{ profile?.nickname }}</p>
                  </a>
                          
               </li>
-              <li class="item" [routerLinkActive]="['active-item']" [routerLinkActiveOptions]="{exact:true}">            
+              <li class="item" [class.activeRoute]="isLinkActive('/stream')">            
                  <a routerLink="stream">FittingStream</a>            
               </li>
 
-              <li class="item" [routerLinkActive]="['active-item']" [routerLinkActiveOptions]="{exact:true}">            
+              <li class="item"  [class.activeRoute]="isLinkActive('/inspire')" [class.featureHidden]="util.hiddenFeature('Inspire search')">            
                  <a routerLink="inspire">Inspire</a>            
               </li>
+
+
+              <li class="item" *ngIf="auth.isAuthenticated()" (click)="auth.logout()">            
+                  <a>
+                    <i class="icon-sli-logout"></i>
+                  </a>            
+              </li>
+
 
            </ul>
         </div>
@@ -42,35 +59,27 @@
 
 
 <div class="notification-list" [style.left]="hideNotificationboxLeft + 'px'" [style.top]="hideNotificationboxTop + 'px'" [hidden]="hideNotificationbox" (mouseenter) ="showNotification()"  (mouseleave) ="hideNotification()">
-    <div class="item">
-        <i class="icon-sli-arrow-right  msg-icon"></i>
-      <span>This one looks really cool!</span>
-      <p class="msg-details"><b>@Lara</b>, 5min ago, <b>#Weddingdresses</b></p>
+    <ng-container *ngFor="let m of api.messages; let i = index;">
+        <div class="item" (click)="messageClick(m)">
+            <i class="icon-sli-arrow-right  msg-icon"></i>
+          <span>{{notify.getMessageBody(m.messageBody)}}</span>
+          <p class="msg-details"><b>@{{m.senderName}}</b>, {{util.formatDateDiffToNow(m.messageCreated)}}, <b>@{{m.collectionTitle}}</b></p>
+        </div>
+    </ng-container>
+
+    <div class="load-more" (click)="api.getMoreMessages()">
+        <i class="icon-sli-options"></i>
     </div>
-    <div class="item">
-        <i class="icon-sli-arrow-right  msg-icon"></i>
-      <span>I like how this shirt works together with your pair of shoes.</span>
-      <p class="msg-details"><b>@Tim</b>, 15min ago, <b>#CasualMine</b></p>
-    </div>
-  <div class="item">
-        <i class="icon-sli-arrow-right  msg-icon"></i>
-      <span>Maybe you could also try another tone of blue?</span>
-      <p class="msg-details"><b>@Eva</b>, 2d ago, <b>#CasualMine</b></p>
-  </div>
-  <div class="item">
-        <i class="icon-sli-arrow-right  msg-icon"></i>
-      <span>I have that pair of pants and it goes really well with a black belt also.</span>
-      <p class="msg-details"><b>@Jon</b>, 4d ago, <b>#OfficeVibes</b></p>
-  </div>
+ 
 </div>
 
 
 
-<div class="capture" (click)="goToCapture()">
-    <i class="icon-sli-camrecorder icon2x"></i>
+<div class="capture" (click)="goToCapture()" [hidden]="isLinkActive('/capture')">
+    <i class="icon-sli-camera icon2x"></i>
 </div>
 
-<router-outlet></router-outlet>
+<router-outlet class="main-outlet"></router-outlet>
 
 
  <!-- FOOTER -->       
@@ -102,3 +111,4 @@
 
 
 <ng4-loading-spinner> </ng4-loading-spinner>
+<simple-notifications></simple-notifications>

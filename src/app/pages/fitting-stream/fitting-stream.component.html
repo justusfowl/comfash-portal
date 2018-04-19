@@ -1,3 +1,33 @@
-<p>
-  fitting-stream works!
-</p>
+
+
+
+<section id="home-section" class="line">
+    <div class="margin">
+
+    <div class="s-12 m-9 l-9 fitting-stream" 
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="50"
+      (scrolled)="onScroll()">
+
+        <activity-content *ngFor="let item of activityItems; let i = index;" [type]="item.itemType" [context]="item" [index]="i"></activity-content>
+
+    </div>
+              
+    <div class="s-12 m-3 l-3">
+      <aside>
+          <div *ngFor="let m of api.messages; let i = index;" class="aside-block margin-bottom msg-item" 
+          (click)="messageClick(m)">
+
+             <i class="icon-sli-arrow-right icon2x msg-icon"></i>
+            <p>{{notify.getMessageBody(m.messageBody)}}</p>
+            <p class="msg-details"><b>@{{m.senderName}}</b>, {{util.formatDateDiffToNow(m.messageCreated)}},  <b>@{{m.collectionTitle}}</b></p>
+          </div>
+
+      </aside>
+    </div>
+
+
+
+  </div>
+</section>

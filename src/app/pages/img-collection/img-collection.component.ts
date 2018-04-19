@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
+
 
 import { MatDialog } from '@angular/material';
+import { ApiService } from '../../services/api.service';
+import { Collection, Session, Vote } from '../../models/datamodel';
+import { UtilService } from '../../services/util.service';
+import { AuthenticationService } from '../../services/auth.service';
 
+import { VoteHandler } from '../../comp/vote';
 
 @Component({
   selector: 'app-img-collection',
@@ -12,6 +18,7 @@ import { MatDialog } from '@angular/material';
 })
 export class ImgCollectionComponent implements OnInit {
 
+  public collection: any;
 
   public sessions = [
     {
@@ -70,14 +77,90 @@ export class ImgCollectionComponent implements OnInit {
     }
   ]
 
-  constructor(private router: Router, private dialog : MatDialog) { }
+  collectionId : number;
+  public roomUserId : string;
+
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute,
+    private dialog : MatDialog, 
+    public api: ApiService, 
+    public util: UtilService, 
+    private auth: AuthenticationService, 
+    private voteHdl : VoteHandler
+  ) { 
+    this.route.params.subscribe(params => this.loadCollection(params)); // Object {}
+  }
 
   ngOnInit() {
+
   }
 
-  goToContent(collection) {
-    this.router.navigate(['content']); 
+  loadCollection(params: any){
+
+    let collectionId = params.collectionId; 
+    let userId = params.userId;
+
+    this.roomUserId = userId;
+
+    this.api.loadCollection(collectionId).subscribe(
+      (data) => {
+        
+        try{
+
+          let tmpCollection = new Collection(data[0]);
+          tmpCollection.castSessions();
+
+          this.collection = tmpCollection;
+
+
+        }
+        catch(err){
+          console.log(err);
+          return null;
+        } 
+
+      },
+      error => {
+        this.api.handleAPIError(error);
+      }
+    )
   }
+
+  goToContent() {
+
+    let compareSessionsIds = this.api.compareSessionsIds; 
+
+    this.router.navigate(['/content'], { queryParams: { session: compareSessionsIds } }); 
+  }
+  
+  
+  toggleSessionCompare(session: Session){
+    this.api.toggleSessionIdCompare(session.getId())
+  }
+
+  deleteSession(session : Session){
+    
+    let sessionId = session.getId();
+
+    this.api.deleteSession(session).subscribe(
+      (data) => {
+        
+        try{
+          this.collection.removeSession(sessionId);
+        }
+        catch(err){
+          console.log(err);
+          return null;
+        } 
+
+      },
+      error => {
+        this.api.handleAPIError(error);
+      }
+    )
+  }
+	
 
 
 }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';     // Add this
+import { AppComponent } from './app.component';
 
 import { FittingStreamComponent } from './pages/fitting-stream/fitting-stream.component';
 import { MyRoomComponent } from './pages/my-room/my-room.component';
@@ -11,20 +11,30 @@ import { CaptureComponent } from './pages/capture/capture.component';
 import { InspireComponent } from './pages/inspire/inspire.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { LoginComponent } from './pages/login/login.component';
+import { AuthGuard } from './services/auth-guard.service';
 
+import { CatchallComponent } from './pages/catchall/catchall.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: MyRoomComponent
-  },
-  {
-    path: 'room',
-    component: MyRoomComponent
-  },
-  {
-    path: 'imgCollection',
-    component: ImgCollectionComponent
+
+    {        
+      path: 'room',
+      children: [
+          {
+              path: ':userId',
+              children: [
+                  {
+                      path: '',    
+                      component: MyRoomComponent,
+                  },
+                  {
+                      
+                      path: ':collectionId',
+                      component: ImgCollectionComponent
+                  }
+              ]
+          }
+      ]    
   },
   {
     path: 'stream',
@@ -43,13 +53,24 @@ const routes: Routes = [
     component: CaptureComponent
   }, 
   {
-    path: 'profile',
+    path: 'profile/:userId',
     component: ProfileComponent
   }, 
   {
     path: 'login',
     component: LoginComponent
+  },
+  
+  {
+    path: "",
+    pathMatch: 'full',
+    redirectTo: 'stream',
+  },
+  {
+    path: "**",
+    component: CatchallComponent,
   }
+  
 
 ];
 

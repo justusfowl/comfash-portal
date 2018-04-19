@@ -86,7 +86,6 @@ export class CommentDialogComponent implements OnInit {
     this.api.getUrlPreview(this.newTag.value.tagUrl).subscribe(
       (data : any) => {
 
-        console.log("daa");
 
           this.newTag.patchValue({"tagSeller" : data.url.substring(5, 15)});
           this.newTag.patchValue({"tagImage" : data.image});

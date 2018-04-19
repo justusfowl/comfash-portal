@@ -1,10 +1,10 @@
 
-<div class="btn-camera" (click)="selectCapture()">
+<div class="btn-camera" [hidden]="!captureContainerHidden" (click)="selectCapture()">
     <i class="icon-sli-camera icon2x"></i>
 </div>
 
 
-<div class="side-panel-menu-container">
+<div class="side-panel-menu-container" [hidden]="previewImgHidden">
     <div class="btn-menu" (click)="toggleMenu()" >
         <i class="icon-sli-menu icon2x"></i>
     </div>
@@ -114,16 +114,20 @@
 
         <div class="s-12 m-3 l-3 capture-options " >
             <mat-form-field>
-                <mat-select placeholder="Collection" [(value)]="selectedCollection">
+                <mat-select placeholder="Collection" [(value)]="selectedCollection" (change)="collectionChange($event)">
                     <mat-option *ngFor="let coll of collectionList" [value]="coll">
-                    {{ coll }}
+                    #{{ coll.collectionTitle }}
+                    </mat-option>
+
+                    <mat-option [value]="-1">
+                        {{"COLLECTION.ADD" | translate}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>           
 
-        <div class="s-12 m-3 l-3 right " >
-            <button class="mat-button-vid-capture" mat-button (click)="addToCollection()"> 
+        <div class="s-12 m-3 l-3 right " [hidden]="getSelectedPreviewItem('isAdded') || false" >
+            <button class="mat-button-vid-capture" mat-button (click)="addToCollection()" > 
                 <i class="icon-sli-plus icon2x tag-icon"></i>
             </button>
             <!-- <button class="mat-button-vid-capture"  mat-button (click)="takeVideo()"> <i class="icon-sli-camrecorder icon2x tag-icon"></i></button> -->
@@ -190,8 +194,8 @@
 
             </div>
 
-            <div class="details">
-                <i class="icon-sli-trash trash-icon" (click)="deletePreviewIcon($event, i)"></i>
+            <div class="details" >
+                <i [hidden]="item.isAdded || false" class="icon-sli-trash trash-icon" (click)="deletePreviewIcon($event, i)"></i>
             </div>
 
         </div>

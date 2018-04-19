@@ -1,23 +1,26 @@
 import {CommonModule} from "@angular/common";
 import {Popover} from "./Popover";
 import {PopoverContent} from "./PopoverContent";
+import {VoteHandler} from "./HandleVote";
 import {NgModule} from "@angular/core";
 
 export * from "./Popover";
 export * from "./PopoverContent";
+export * from "./HandleVote";
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
     ],
     declarations: [
         PopoverContent,
-        Popover,
+        Popover
     ],
     exports: [
         PopoverContent,
-        Popover,
+        Popover
     ],
+    providers: [ VoteHandler, Popover ],
     entryComponents: [
         PopoverContent
     ]

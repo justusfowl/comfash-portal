@@ -1,4 +1,4 @@
-<div class="compare" (click)="goToContent()">
+<div class="compare float-menu"  (click)="goToContent()">
     <i class="icon-sli-shuffle icon2x"></i>
 </div>
 
@@ -7,25 +7,29 @@
       <div class="margin">
 
          <!-- ARTICLE 1     -->           
-         <article *ngFor="let s of sessions" class=" s-12 m-3 l-3 margin-bottom session-item">
+         <article *ngFor="let s of collection?.sessions" class=" s-12 m-3 l-3 margin-bottom session-item">
                 <div class="post-1 line">
                    <!-- image -->                 
                    <div class="s-12 l-10 post-image">                   
-                       <div class="post-image-div" [style.backgroundImage]="'url(' + s.imgPath + ')'">
+                       <div class="post-image-div" [style.backgroundImage]="'url(' + util.wrapHostPath(s.getThumbnail()) + ')'">
                        </div>   
  
                    </div>
                    <!-- date -->                 
                    <div class="s-12 l-2 post-date">
-                      <p class="date">{{s.dateDay}}</p>
-                      <p class="month">{{s.dateMonth}} '{{s.dateYear}}</p>
+                      <p class="date">{{s.getDayCreated()}}</p>
+                      <p class="month">{{ s.getMonthCreated() | translate}} '{{s.getYearCreated()}}</p>
                       
-                      <div class="session-compare active">
+                      <div class="session-compare" (click)="toggleSessionCompare(s)" [class.active]="api.isSessionCompared(s.getId())">
                          <i class="icon-sli-shuffle icon2x article-detail-icon "></i>
                       </div>
+
+                      <div class="session-tags" *ngIf="s.tags.length > 0">
+                        <i class="icon-sli-tag icon2x article-detail-icon"></i>
+                      </div>
  
-                      <div class="session-vote" [class.highlight]="s.voteStats.avg > 70">
-                         <p>{{s.voteStats.avg}}%</p>
+                      <div class="session-vote" [class.highlight]="s.voteAvg > 70" [hidden]="s.voteCnt == 0">
+                         <p>{{util.formatPrcVote(s.voteAvg)}}</p>
                          <i class="icon-sli-like icon2x article-detail-icon "></i>
                       </div>
  
@@ -34,16 +38,16 @@
                 <!-- text -->                  
                 <div class="post-text"> 
  
-                     <div class="session-details right-align">
-                         <i class="icon-sli-trash icon2x article-detail-icon trash "></i>
+                     <div class="session-details right-align" [hidden]="auth.hideIfNotOwner(roomUserId)">
+                         <i (click)="deleteSession(s)" class="icon-sli-trash icon2x article-detail-icon trash "></i>
                      </div>
  
                    <div class="session-details">
  
-                       <span>{{s.likes}}</span> 
-                       <i class="icon-sli-like icon2x article-detail-icon "></i>
+                       <span>{{s.voteCnt}}</span> 
+                       <i popover="votePopover"  [myVote]="voteHdl.getSessionVoteType(s)" (onVoted)="voteHdl.handleVote($event, s)" class="icon-sli-like icon2x article-detail-icon voting-icon "></i>
  
-                       <span>{{s.comments}}</span> 
+                       <span>{{s.commentCnt}}</span> 
                        <i class="icon-sli-bubbles icon2x article-detail-icon "></i>
                    </div>
  

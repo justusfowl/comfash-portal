@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../services/auth.service';
+import { UtilService } from '../../services/util.service';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../../services/api.service';
+import { Collection } from '../../models/datamodel';
 
 @Component({
   selector: 'app-profile',
@@ -7,63 +12,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  public myCollections = [
-    {
-      "imgPath" : "../../assets/img/1.jpg",
-	  "primColor" : "#33434b",
-      "collectionTitle" : "#Wedding-dresses", 
-	  "collectionDescription" : "Comparing dresses for the life's most important day :)", 
-	  "createdDay" : "01",
-	  "createdMonth" : "mar", 
-    "createdYear" : "17",
-    "sessionCnt" : 4,
-	  "voteStats" : {
-      "voteCnt" : 23, 
-      "commentCnt" : 55
-      }
-    },{
-      "imgPath" : "../../assets/img/2.jpg",
-	  "primColor" : "#54592d",
-      "collectionTitle" : "#Casual-Mine", 
-	  "collectionDescription" : "Collecting some outfits for every day use but with neat details to them.", 
-	  "createdDay" : "01",
-	  "createdMonth" : "mar", 
-	  "createdYear" : "17",
-    "sessionCnt" : 5,
-	  "voteStats" : {
-      "voteCnt" : 23, 
-      "commentCnt" : 55
-      }
-    },{
-      "imgPath" : "../../assets/img/3.jpg",
-	  "primColor" : "#86908b",
-      "collectionTitle" : "#Office-Vibes", 
-	  "collectionDescription" : "Gathering ideas for the perfect office dressup, ranging from top to bottom, glasses to shoes.", 
-	  "createdDay" : "01",
-	  "createdMonth" : "mar", 
-	  "createdYear" : "17",
-    "sessionCnt" : 17,
-	  "voteStats" : {
-      "voteCnt" : 23, 
-      "commentCnt" : 55
-      }
-    },{
-    "imgPath" : "../../assets/img/6.jpg",
-	  "primColor" : "#007680",
-    "collectionTitle" : "#Promnight", 
-	  "collectionDescription" : "Hunting a special outfit for a very special night :)", 
-	  "createdDay" : "01",
-	  "createdMonth" : "mar", 
-	  "createdYear" : "17",
-    "sessionCnt" : 8,
-	  "voteStats" : {
-      "voteCnt" : 23, 
-      "commentCnt" : 55
-      }
-    }
-  ]
+  public profileCollections : Collection[] = [];
 
-  activityItems : any = [
+  activityItems : any = [];
+  
+  /*[
     {
       "type" : "follows",
       "followDate" : "20min ago",
@@ -101,15 +54,104 @@ export class ProfileComponent implements OnInit {
       "commentCreated" : "2min ago"
     }
   ]
+  */
 
-  constructor() { }
+  profileUserId : string; 
+  profile : any;
+
+  constructor(
+    public auth: AuthenticationService, 
+    public util: UtilService, 
+    private route : ActivatedRoute, 
+    public api : ApiService) {
+
+   }
 
   context: any = {
       text: 'test'
   }
 
+
   ngOnInit() {
+
+    this.route.params.subscribe(params => this.loadProfile(params.userId)); // Object {}
+
   }
+
+  loadProfile(userId : string){
+    this.profileUserId = userId; 
+    this.api.getUserProfileBase(userId).subscribe(
+      (data: any) => {
+        this.profile = data;
+      },
+      error => {
+        this.api.handleAPIError(error);
+      }
+    )
+
+    this.loadCollections();
+    this.getActivities();
+
+  }
+
+  loadCollections(){
+
+    let userId = this.profileUserId;
+
+    if (this.profileCollections.length == 0){
+       this.api.loadRoom(userId).subscribe(
+      (data) => {
+        
+        try{
+
+          let outData = data.map(function(val){
+            let tmpCollection = new Collection(val);
+            tmpCollection.castSessions();
+
+            return tmpCollection;
+          })
+
+        this.profileCollections = outData;
+
+        }
+        catch(err){
+          console.log(err);
+          return null;
+        } 
+
+      },
+      error => {
+        this.api.handleAPIError(error);
+      }
+    )
+    }
+
+   
+  }
+
+  getActivities(){
+    // as of now: do not skip any records from the activities
+    // @TODO: Pagination noch offen
+    this.api.getStream(99999, 0, true).subscribe(
+      (data) => {
+        
+        try{
+
+        this.activityItems = data;
+
+        }
+        catch(err){
+          console.log(err);
+          return null;
+        } 
+
+      },
+      error => {
+        this.api.handleAPIError(error);
+      }
+    )
+  }
+
 
   voteHandler(evt){
     console.log("event from voting")

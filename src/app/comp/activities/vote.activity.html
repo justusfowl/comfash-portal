@@ -1,0 +1,51 @@
+<article class="line" [class.right-align]="!(index % 2 == 0)">
+                    
+        <div class="s-12 l-6">                   
+        <div class="comment-image-div" [style.backgroundImage]="'url(' + util.wrapHostPath(context?.sessionThumbnailPath) + ')'">
+        </div>                  
+        </div>
+    
+        <div class="s-12 l-6 comment-area">
+    
+            <div class="commentator-container">
+                <div class="avatar" [style.backgroundImage]="'url(' + util.wrapHostPath(context?.itemCreatorAvatarPath) + ')'">
+    
+                </div>
+    
+                <div class="comment-owner">
+                     <span linkUsername [username]='context?.userId'>@{{context?.itemCreator}}</span>
+                    <p >{{util.formatDateDiffToNow(context?.voteChanged)}}</p>
+                </div>
+            </div>
+    
+            <div class="comment-text">
+                <div class="comment-icon">
+                    <i [class]="getIcon(context?.voteType)"></i>
+                </div>
+                {{ "NOTIFY.HAS_VOTED" | translate}}
+            </div>
+    
+            <div class="collection-info">
+
+                <span class="collection-owner" linkUsername [username]='context?.colOwnerId'>@{{context?.colOwner}}</span>
+                
+                <span class="collection-title" linkCollection [username]='context?.colOwnerId'  [collectionId]='context?.collectionId'>#{{context?.collectionTitle}}</span>
+            </div>
+
+            
+                    
+    
+            <div class="item-details">
+    
+                    <span>{{util.formatCnt(context?.votesCnt)}}</span>
+
+                    <i popover="votePopover"  [myVote]="context?.myVoteType" (onVoted)="voteItem($event, context)" class="icon-sli-like voting-icon"></i>
+                    
+                    <span>{{util.formatCnt(context?.commentCnt)}}</span> 
+                    <i class="icon-sli-bubbles icon2x article-detail-icon "></i>
+                </div>
+        </div>
+    
+    
+    </article>
+    

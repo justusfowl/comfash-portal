@@ -15,10 +15,13 @@ import {Popover} from "./Popover";
     <div class="arrow"></div> 
     <h3 class="popover-title" [hidden]="!title">{{ title }}</h3>
     <div class="popover-content">
+    <i  [hidden]="!vote || vote == -1" class="icon-sli-trash icon2x vote-icon trash" (click)="voteClick(-1)"></i>
+    <div  [hidden]="!vote  || vote == -1" class="divider"></div>
     <i class="icon-sli-dislike icon2x vote-icon" (click)="voteClick(-50)"></i>
     <i class="icon-sli-emotsmile icon2x vote-icon" (click)="voteClick(25)"></i>
     <i class="icon-sli-like icon2x vote-icon" (click)="voteClick(75)"></i>
     <i class="icon-sli-diamond icon2x vote-icon " (click)="voteClick(100)"></i>
+   
     </div> 
 </div>
 `,
@@ -36,6 +39,17 @@ import {Popover} from "./Popover";
 .popover .vote-icon{
     padding: 4px;
     font-size: 16px;
+    transition: all 300ms;
+}
+
+.trash{
+    opacity: 0.8;
+}
+
+.divider{
+    width: 1px;
+    border-right: 1px solid;
+    opacity: 0.5;
 }
 
 .popover-content .vote-icon:hover{
@@ -83,6 +97,9 @@ export class PopoverContent implements AfterViewInit, OnDestroy {
 
     @Input()
     title: string;
+
+    @Input()
+    vote: number;
 
     @Input()
     animation: boolean = true;
@@ -191,6 +208,7 @@ export class PopoverContent implements AfterViewInit, OnDestroy {
         this.left = -10000;
         this.isIn = true;
     }
+
 
     // -------------------------------------------------------------------------
     // Protected Methods

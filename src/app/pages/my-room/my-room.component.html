@@ -1,50 +1,59 @@
+<div class="add-collection float-menu" (click)="addCollection()">
+    <i class="icon-sli-plus icon2x"></i>
+</div>
+
 <section id="home-section" class="line">
   <div class="margin">
                 
-     <div class="s-12 m-7 l-9">
+     <div class="s-12 m-12 l-12">
                      
         <article class="line" 
         [class.right-align]="!(i % 2 == 0)" 
-        [style.backgroundColor]="c.primColor"
+        [style.backgroundColor]="c.getPrimeColor()"
         
-        *ngFor="let c of myCollections; let i = index;">
+        *ngFor="let c of roomCollections; let i = index;">
                          
            <div class="s-12 l-6 post-image">                   
-            <div class="post-image-div" [style.backgroundImage]="'url(' + c.imgPath + ')'">
+            <div class="post-image-div" [style.backgroundImage]="'url(' + util.wrapHostPath(c.getThumbnail()) + ')'">
             </div>                  
            </div>
 
            <div class="s-12 l-5 post-text">
-              <a (click)="goImgCollection(1)">
-                 <h2>{{c.collectionTitle}}</h2>
+              <a (click)="goImgCollection(c.collectionId)">
+                 <h2>#{{c.collectionTitle}}</h2>
               </a>
-              <p>{{c.collectionDescription}}             
+              <p>
+                  {{c.collectionDescription}}             
               </p>
               
            </div>
              
            <div class="s-12 l-1 post-date">
-              <p class="date">{{c.createdDay}}</p>
-              <p class="month">{{c.createdMonth}}</p>
+              <p class="date">{{c.getDayCreated()}}</p>
+              <p class="month"> {{ c.getMonthCreated() | translate}} '{{c.getYearCreated()}}</p>
            </div>
+
+           
 
            <div class="item-details" [class.right-align]="!(i % 2 == 0)">
 
-              <span>{{c.voteStats.voteCnt}}</span>
-              <i  popover="votePopover" (onVoted)="voteHandler($event)" class="icon-sli-like icon2x article-detail-icon "></i>
+              <span>{{c.getNoVotes()}}</span>
+              <i class="icon-sli-like icon2x article-detail-icon"></i>
 
 
-              <span>{{c.voteStats.commentCnt}}</span> 
-              <i class="icon-sli-bubbles icon2x article-detail-icon "></i>
+              <span>{{c.getNoComments()}}</span> 
+              <i class="icon-sli-bubbles icon2x article-detail-icon"></i>
+
+              <i class="icon-sli-options-vertical collection-settings" [hidden]="auth.hideIfNotOwner(roomUserId)" (click)="collectionSettings(c)"></i>
+
            </div>
         </article>
 
      </div>
-     <!-- SIDEBAR -->             
+     <!-- SIDEBAR             
      <div class="s-12 m-5 l-3">
         <aside>
-           <!-- NEWS 1 -->
-           <div class="aside-block margin-bottom msg-item">
+           <div  class="aside-block margin-bottom msg-item">
                 <i class="icon-sli-arrow-right icon2x msg-icon"></i>
               <p>This one looks really cool!</p>
               <p class="msg-details"><b>@Lara</b>, 5min ago, <b>#Weddingdresses</b></p>
@@ -70,5 +79,6 @@
 
         </aside>
      </div>
+     --> 
   </div>
 </section>

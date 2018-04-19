@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
-
+import { AddCollectionComponent } from '../../comp/add-collection/add-collection.component';
 
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgZone } from '@angular/core';
@@ -10,10 +10,13 @@ import { forEach } from '@angular/router/src/utils/collection';
 
 import { MatDialog } from '@angular/material';
 import { CommentDialogComponent } from '../../comp/comment-dialog/comment-dialog.component'
+import { NotificationsService } from 'angular2-notifications';
+import { ApiService } from '../../services/api.service';
+import { AuthenticationService } from '../../services/auth.service';
+import { Collection } from '../../models/datamodel';
 
 declare var MediaRecorder: any;
 declare var window : any;
- 
 
 @Component({
   selector: 'app-capture',
@@ -22,8 +25,6 @@ declare var window : any;
   '../../app.component.scss']
 })
 
-
-
 export class CaptureComponent implements OnInit  {
 
   constructor(
@@ -31,7 +32,10 @@ export class CaptureComponent implements OnInit  {
     private ref: ChangeDetectorRef,
     private zone: NgZone,
     private spinnerService: Ng4LoadingSpinnerService,
-    private dialog : MatDialog
+    private dialog : MatDialog,
+    private _service: NotificationsService, 
+    private api: ApiService, 
+    private auth: AuthenticationService
   
   ) { }
 
@@ -41,13 +45,10 @@ export class CaptureComponent implements OnInit  {
     src : ""
   }
 
-
   captureContainerHidden = false; 
   captureVideoHidden = true;
   previewVideoHidden = true;
   previewImgHidden = true;
-
-
 
   previewItems = [];
 
@@ -58,7 +59,6 @@ export class CaptureComponent implements OnInit  {
 
   selectedPreviewItemIndex : number = 0;
 
-
   constraints = { 
       video: {
         width: { ideal: 4096 },
@@ -67,7 +67,6 @@ export class CaptureComponent implements OnInit  {
     };
 
   tmpPictureTaken : any; 
-
 
   chunks = [];
 
@@ -78,78 +77,100 @@ export class CaptureComponent implements OnInit  {
 
   videoDeviceSelected : any;
 
-  collectionList = ["#Weddding", "#Harald"]; 
+  collectionList : Collection[] = []; 
+
   selectedCollection : any; 
 
   currentPrc : number = 1; 
 
   requestId : any;
 
-  // test for interval 
+  // test variables 
   myVar : any; 
 
-  public collections = [
-    {  
-      "collectionId" : 1,
-      "collectionIsSelected" : true,
-      "collectionTitle" : "#Wedding-dresses",
-      "imgPath" : "../../assets/img/1.jpg", 
-      "dateDay" : "07", 
-      "dateMonth" : "mar", 
-      "likes" : 9, 
-      "comments" : 12, 
-      "voteStats" : {
-        "avg" : 76
-      }
-    },
-    {
-      "collectionId" : 2,
-      "collectionIsSelected" : false,
-      "collectionTitle" : "#CasualMine",
-      "imgPath" : "../../assets/img/2.jpg", 
-      "dateDay" : "12", 
-      "dateMonth" : "feb", 
-      "likes" : 9, 
-      "comments" : 12, 
-      "voteStats" : {
-        "avg" : 76
-      }
-    },
-    {"collectionId" : 3,
-      "collectionIsSelected" : false,
-      "collectionTitle" : "#OfficeVibes",
-      "imgPath" : "../../assets/img/3.jpg", 
-      "dateDay" : "12", 
-      "dateMonth" : "feb", 
-      "likes" : 9, 
-      "comments" : 12, 
-      "voteStats" : {
-        "avg" : 76
-      }
-    },
-    {"collectionId" : 4,
-      "collectionIsSelected" :false,
-      "collectionTitle" : "#Promnight",
-      "imgPath" : "../../assets/img/6.jpg", 
-      "dateDay" : "12", 
-      "dateMonth" : "feb", 
-      "likes" : 9, 
-      "comments" : 12, 
-      "voteStats" : {
-        "avg" : 76
-      }
-    }
-  ]
-  
+  testFiles = [];
+
 
   ngOnInit() {
 
+    this.loadCollections();
 
     // dragType 1 = purchase tag, 2 = comment
-      this.dragElement(document.getElementById(("addTag")), 1);      
+    this.dragElement(document.getElementById(("addTag")), 1);      
 
-        navigator.mediaDevices.enumerateDevices().then(this.gotDevices.bind(this)).catch(this.handleError);
-        // window.requestAnimationFrame(this.slideFrame.bind(this));
+    navigator.mediaDevices.enumerateDevices().then(this.gotDevices.bind(this)).catch(this.handleError);
+    // window.requestAnimationFrame(this.slideFrame.bind(this));
+  }
+
+
+  loadCollections(){
+
+    let userId = this.auth.getUserId();
+
+
+       this.api.loadRoom(userId).subscribe(
+      (data) => {
+        
+        try{
+
+          let outData = data.map(function(val){
+            let tmpCollection = new Collection(val);
+            tmpCollection.castSessions();
+
+            return tmpCollection;
+
+          })
+
+        this.collectionList = outData;
+
+        }
+        catch(err){
+          console.log(err);
+          return null;
+        } 
+
+      },
+      error => {
+        this.api.handleAPIError(error);
+      }
+    )
+   
+  }
+
+  addCollection(){
+
+		let comp = this; 
+
+    let dialog = this.dialog.open(AddCollectionComponent, {
+        data: { collection: "dropCoords" }
+    });
+  
+    dialog.afterClosed()
+      .subscribe(collection => {
+        if (collection) {
+          this.loadCollections()
+        } else {
+          // User clicked 'Cancel' or clicked outside the dialog
+        }
+      });
+  }
+
+  collectionChange (event){
+
+    if (event.value == -1){
+      this.addCollection();
+    }
+  }
+  
+
+
+  selectCapture(){
+
+    this.setCaptureMode(2,2);
+
+    this.setStepHidden(2);
+
+    this.getStream();
   }
 
   /**
@@ -162,36 +183,22 @@ export class CaptureComponent implements OnInit  {
     this.captureMode.mode = mode;
     this.captureMode.type = type;
 
-
   }
 
-  addPreviewItem(thumbnailSrc, src, type){
+  addPreviewItem(thumbnailSrc, src, type, originalName){
 
     let newItem = {
       "createdAt" : new Date(), 
       "srcThumbnail" : thumbnailSrc,
       "src" : src,
       "type" : type, 
-      "newTags" : []
+      "newTags" : [], 
+      "originalName" : originalName
     }
 
     this.previewItems.push(newItem);
 
     this.ref.detectChanges();
-  }
-
-
-  collectionSelected ( collection ){
-    let selectedCollectionId = collection.collectionId; 
-
-    for (var i  = 0 ; i<this.collections.length; i++){
-      if (this.collections[i].collectionId == selectedCollectionId){
-        this.collections[i].collectionIsSelected = true; 
-      }else{
-        this.collections[i].collectionIsSelected = false; 
-      }
-    }
-
   }
 
 
@@ -279,7 +286,9 @@ export class CaptureComponent implements OnInit  {
       var videoURL = window.URL.createObjectURL(blob);
       //videoOut.src = videoURL;
 
-      comp.addPreviewItem(comp.tmpPictureTaken, videoURL, 2);
+      let fileName = Date.now() + "_video.mp4";
+
+      comp.addPreviewItem(comp.tmpPictureTaken, videoURL, 'video/mp4', fileName);
 
       videoOut.onloadedmetadata = function(e) {
         console.log("meta loaded")
@@ -304,16 +313,6 @@ export class CaptureComponent implements OnInit  {
       console.log("data is being pushed...")
     }
     
-  }
-
-
-  selectCapture(){
-
-    this.setCaptureMode(2,2);
-
-    this.setStepHidden(2);
-
-    this.getStream();
   }
 
 
@@ -398,17 +397,22 @@ export class CaptureComponent implements OnInit  {
 
           // Here you can access the real file
           console.log(droppedFile.relativePath, file);
+
+          this.testFiles.push(file);
           
           const reader  = new FileReader();
 
           comp.setStepHidden(3);
+
+          let fileName = file.name;
+          let fileType = file.type;
 
 
           this.zone.runOutsideAngular(() => {
             reader.onloadend = function () {
               comp.setCaptureMode(1,1);
   
-              comp.addPreviewItem(reader.result, reader.result, 1);
+              comp.addPreviewItem(reader.result, reader.result, fileType, fileName);
   
               if (comp.selectedPreviewItem){
                 comp.selectedPreviewItem = comp.previewItems[0];
@@ -515,9 +519,7 @@ export class CaptureComponent implements OnInit  {
     canvas.height = height;
     context.drawImage(videoInput, 0, 0, width, height);
   
-    var data = canvas.toDataURL('image/png');
-
-    console.log(data);
+    var data = canvas.toDataURL('image/png')
 
     return data;
 
@@ -527,7 +529,9 @@ export class CaptureComponent implements OnInit  {
 
     let pictureData = this.takePicture();
 
-    this.addPreviewItem(pictureData, pictureData, 1);
+    let fileName = Date.now() + "_image.png";
+
+    this.addPreviewItem(pictureData, pictureData, 'image/png', fileName);
 
     
 
@@ -586,15 +590,76 @@ export class CaptureComponent implements OnInit  {
     //window.requestAnimationFrame(this.slideFrame.bind(this));
   }
 
+  urltoFile(url, filename, mimeType){
+      return (fetch(url)
+          .then(function(res){return res.arrayBuffer();})
+          .then(function(buf){return new File([buf], filename, {type:mimeType});})
+      );
+  }
+
 
   addToCollection(){
 
-    let selectedItem = this.getSelectedPreviewItem();
+    let self = this;
 
-    selectedItem["isAdded"] = true;
+    if (this.selectedCollection){
 
-    console.log("post item to collection in the selection item");
+      let selectedItem = this.getSelectedPreviewItem();
 
+      selectedItem["isAdded"] = true;
+
+      let newFile = this.urltoFile(selectedItem.src, selectedItem.originalName, selectedItem.type).then(function(file){
+          console.log(file);
+
+          // You could upload it like this:
+          var formData = new FormData()
+          formData.append('file', file);
+          formData.append('newTags', JSON.stringify(selectedItem.newTags));
+
+
+        console.log(file);
+
+        self.api.addImageSession(self.selectedCollection.collectionId, formData).subscribe(
+          (data) => {
+            
+            try{
+              console.log(data);
+              
+              const toast = self._service.success('Item added!', '#'+self.selectedCollection.collectionTitle, {
+                timeOut: 2000,
+                showProgressBar: true,
+                pauseOnHover: true,
+                clickToClose: true,
+                clickIconToClose: true
+              });
+  
+            }
+            catch(err){
+              console.log(err);
+              return null;
+            } 
+    
+          },
+          error => {
+            self.api.handleAPIError(error);
+          }
+        )
+
+      })
+
+  
+
+  
+    }else{
+      const toast = this._service.info('Info', 'Select a collection first', {
+        timeOut: 2000,
+        showProgressBar: true,
+        pauseOnHover: true,
+        clickToClose: true,
+        clickIconToClose: true
+      });
+    }
+    
   }
 
   deletePreviewIcon(event, i){
@@ -751,14 +816,6 @@ export class CaptureComponent implements OnInit  {
         comp.resetCommentDrag(elmnt);
         
         if (imgIsInFocus){
-
-          console.log("dragType");
-
-          console.log(dragType);
-          
-          
-    
-          console.log("mouse up");
 
           let previewImg = document.getElementById("previewImg"); 
           previewImg.classList.remove("isInFocus")

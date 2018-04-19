@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ConfigService } from '../../services/config.service';
+import { AuthenticationService } from '../../services/auth.service';
+
+
+
 
 @Component({
   
@@ -15,7 +20,10 @@ export class LoginComponent implements OnInit {
   public hasError : boolean = false;
   
 
-  constructor(private _fb: FormBuilder) { }
+  constructor(
+    private _fb: FormBuilder, 
+    public config : ConfigService, 
+    public auth : AuthenticationService) { }
 
   ngOnInit() {
 
@@ -42,6 +50,8 @@ export class LoginComponent implements OnInit {
     // if valid, call API to save customer
     console.log(model, isValid);
     this.hasError = true;
+
+    this.auth.login();
 
 }
 

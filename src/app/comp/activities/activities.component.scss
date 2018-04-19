@@ -5,8 +5,7 @@
 
 .activity-item{
     margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 20px;
+    margin-right: 2%;
     margin-bottom: 35px;
 
 }
@@ -22,6 +21,7 @@
     padding : 10px; 
     position: relative;
     background-color: $primary-blue;
+    min-height: 220px;
 }
 
 .commentator-container, .follower-container{
@@ -83,6 +83,7 @@
     align-items: right;
     position: relative;
     margin-top: 7px;
+    margin-bottom: 7px;
 }
 
 .collection-info{
@@ -91,7 +92,7 @@
 
 .collection-info .collection-owner, 
 .collection-info .collection-title{
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 400;
 }
 

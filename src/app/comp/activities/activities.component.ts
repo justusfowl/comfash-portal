@@ -5,6 +5,9 @@ import {
   ComponentFactoryResolver, ComponentRef
 } from '@angular/core';
 import {Router} from "@angular/router";
+import { UtilService } from '../../services/util.service';
+import { VoteHandler, Popover } from '../vote/index';
+import { Session } from '../../models/datamodel';
 
 @Component({
   selector: 'activity-content',
@@ -30,7 +33,8 @@ export class DynamicActivityComponent implements OnInit, OnDestroy {
   index: any;
 
   private mappings = {
-      'comment': ActivityComponentComment,
+      '1': ActivityComponentVote,
+      '2': ActivityComponentComment,
       'follows': ActivityComponentFollows
   };
 
@@ -77,6 +81,35 @@ export abstract class DynamicComponent {
 }
 
 @Component({
+  selector: 'activity-vote',
+  templateUrl: './vote.activity.html', 
+  styleUrls : ['./activities.component.scss', './follows.activity.scss']
+})
+export class ActivityComponentVote extends DynamicComponent {
+
+
+  constructor(
+    private router: Router, 
+    public util : UtilService, 
+    private voteHdl : VoteHandler) {
+    super();
+  }
+
+  voteItem(event, context){
+
+    let s = new Session(context);
+
+    this.voteHdl.handleVote(event, s)
+
+  }
+
+  getIcon(vote){
+    return this.voteHdl.getVoteStyleClass(vote);
+  }
+  
+}
+
+@Component({
   selector: 'activity-comment',
   templateUrl: './comment.activity.html', 
   styleUrls : ['./activities.component.scss', './follows.activity.scss']
@@ -85,7 +118,9 @@ export class ActivityComponentComment extends DynamicComponent {
 
 
   constructor(
-    private router: Router) {
+    private router: Router, 
+    public util : UtilService, 
+    private voteHdl : VoteHandler) {
     super();
 }
 
@@ -93,8 +128,12 @@ export class ActivityComponentComment extends DynamicComponent {
     this.router.navigate(['imgCollection']); 
   }
 
-  voteHandler(value){
-    console.log(value);
+  voteItem(event, context){
+
+    let s = new Session(context);
+
+    this.voteHdl.handleVote(event, s)
+
   }
   
 }

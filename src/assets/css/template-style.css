@@ -14,7 +14,7 @@ a.logo {
 	font-size: 2.3rem;
 	font-weight: 100;
 	letter-spacing: -1px;
-	margin-top: 0.6em;
+	margin-top: 15px;
 	padding-left: 0.4em;
 	padding-right: 0.4em;
 	border-right: 1px solid #f1f1f136;
@@ -41,6 +41,11 @@ header h1 {
 .top-nav .active-item a, .top-nav .active-item a:hover {
 	background: none repeat scroll 0 0 rgba(27, 38, 43, 1);
 }
+
+.top-ul.left{
+	padding-left: 8px;
+}
+
 .social {
 	padding: 0 /*1.6rem */;
 }
@@ -94,7 +99,8 @@ section p {
 		-webkit-transition: opacity 0.20s linear 0s;
 }
 #home-section .post-text h2:hover {
-	opacity:0.4;
+	opacity:0.5;
+	cursor: pointer;
 }
 #home-section .post-text p {
 	font-size: 1.1rem;
@@ -103,11 +109,13 @@ section p {
 }
 .post-date .date {
 	font-size: 2rem;
+	text-align: center;
 }
 .post-date .month {
 	font-size: 11px;
 	margin-bottom: 1rem;
 	margin-top: 0rem;
+	text-align: center;
 }
 .post-date {
 	font-weight: 100;
@@ -115,6 +123,7 @@ section p {
 	text-align: center;
 	padding-right: 5px;
 	padding-top: 20px;
+	
 }
 
 .session-item .post-date {
@@ -222,6 +231,7 @@ article {
 
 article .article-detail-icon {
 	font-size: 12px;
+	padding: 4px;
 }
 
 article .item-details{
@@ -232,6 +242,8 @@ article .item-details{
 	width: 150px;
 	background-color: rgba(182, 174, 174, 0.596);
 	font-size: 12px; 
+	display: flex; 
+	align-items: center;
 }
 
 .item-details.right-align{
@@ -243,6 +255,19 @@ article .item-details{
 	padding-left: 12px;
     font-size: 14px;
 }
+
+.collection-settings{
+	margin-left: 15px;
+	padding: 2px;
+	opacity: 0.4;
+}
+
+.collection-settings:hover{
+	opacity: 1;
+	background-color: #acaeae24;
+	cursor: pointer;
+}
+
 
 #article-section article {
 	background: none repeat scroll 0 0 #fff;

@@ -10,6 +10,8 @@
     </div>
   </div>
 
+  {{config.getEnvironment()}}
+
   <div class="login-container">
 
       <div class="qr-container">
@@ -29,8 +31,8 @@
         
         
         
-        <div class="form-container" >
-            <div class="s-12 m-12 l-12">
+        <div class="form-container"  >
+            <div class="s-12 m-12 l-12" hidden>
                     
               <div class="custom-btn fb">
                   <i class="icon-sli-social-facebook "></i>
@@ -42,7 +44,7 @@
                   <span>Google</span>
               </div>
   
-              <span>Or</span>
+              <span>or</span>
   
   
               <form [class.hasError]="hasError" [formGroup]="loginForm" novalidate (ngSubmit)="login(loginForm.value, loginForm.valid)" class="login-form">
@@ -58,10 +60,15 @@
                   <button type="submit" color="primary" class="sign-in-btn" mat-button>Sign In</button>
                   <div class="register">New to comfash? Sign up <span>here</span></div>
               </form>
-  
+
+              
   
             </div>
+            <button (click)="login(null,null)" type="submit" color="primary" class="sign-in-btn" mat-button>Sign In</button>
+  
         </div>
+
+        
   
   </div>
 </div>

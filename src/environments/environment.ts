@@ -16,7 +16,7 @@ export const environment = {
       responseType: 'token id_token',
       audience: 'https://comfash.eu.auth0.com/api/v2/',
       redirectUri: 'http://localhost:8899/',
-      scope: 'openid profile email' 
+      scope: 'openid profile email app_metadata' 
     }
   }
 };

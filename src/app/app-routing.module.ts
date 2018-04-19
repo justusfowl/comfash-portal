@@ -44,7 +44,7 @@ const routes: Routes = [
     path: 'content',
     component: ContentComponent
   }, 
-  {
+  { 
     path: 'inspire',
     component: InspireComponent
   }, 

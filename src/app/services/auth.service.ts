@@ -63,7 +63,7 @@ export class AuthenticationService {
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
 
-    let userId = authResult.idTokenPayload.email; 
+    let userId = authResult.idTokenPayload["https://app.comfash.com/cf_id"]; 
 
     localStorage.setItem('userId',userId)
 

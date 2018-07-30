@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Responsee CSS - v4.1 - 2017-05-14
  * https://www.myresponsee.com
  * Copyright 2016, Vision Design - graphic zoo
@@ -51,6 +51,8 @@ img {
   height:auto;
   max-width:100%;
   width:auto;
+  /* z-index: -1; */
+  /* position: relative; */
 }
 .owl-item img, .full-img {
   max-width: none;

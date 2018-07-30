@@ -1,0 +1,90 @@
+<div class="small-prob">{{displayProb(adressForm.controls.prob.value)}}</div>
+<div [formGroup]="adressForm" class="labels-container">
+
+    <div class="form-group label-item">
+        <mat-form-field class="example-full-width">
+
+            <input type="text" placeholder="attr_type"
+            aria-label="attr_type" matInput formControlName="attr_type" [matAutocomplete]="attrType">
+            
+            <mat-autocomplete #attrType="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredAttrTypeOptions" [value]="option.name">
+                {{ option.name }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+    </div>
+    
+    <div class="form-group label-item">
+       
+        <mat-form-field class="example-full-width" *ngIf="boolIsSex">
+           
+            <input type="text" placeholder="Labels" aria-label="Labels" matInput formControlName="sex" [matAutocomplete]="Labels">
+            
+            <mat-autocomplete #Labels="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptionsLabel | async" [value]="option.label">
+                {{ option.label }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" *ngIf="!boolIsSex">
+           
+            <input type="text" placeholder="Labels" aria-label="Labels" matInput formControlName="attr_category" [matAutocomplete]="Labels">
+            
+            <mat-autocomplete #Labels="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptionsLabel | async" [value]="option.label">
+                {{ option.label }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+    </div>
+
+    <div class="form-group label-item">
+        <mat-form-field class="example-full-width" *ngIf="!boolIsSex">
+
+            <input type="text" placeholder="color"
+             [style.backgroundColor]="adressForm.controls.attr_color.value"
+            aria-label="color" matInput formControlName="attr_color" [matAutocomplete]="Color">
+            
+            <mat-autocomplete #Color="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptionsColor | async" [value]="option.name">
+                {{ option.name }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+    </div>
+
+    <div class="form-group label-item">
+        <mat-form-field class="example-full-width" *ngIf="!boolIsSex">
+
+            <input type="text" placeholder="fabric"
+            aria-label="attr_fabric" matInput formControlName="attr_fabric" [matAutocomplete]="Fabric">
+            
+            <mat-autocomplete #Fabric="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptionsFabric | async" [value]="option.label">
+                {{ option.label }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+    </div>
+
+    <div class="form-group label-item">
+        <mat-form-field class="example-full-width" *ngIf="!boolIsSex">
+
+            <input type="text" placeholder="texture"
+            aria-label="attr_texture" matInput formControlName="attr_texture" [matAutocomplete]="Texture">
+            
+            <mat-autocomplete #Texture="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptionsTexture | async" [value]="option.label">
+                {{ option.label }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+    </div>
+</div>

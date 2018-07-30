@@ -15,6 +15,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CatchallComponent } from './pages/catchall/catchall.component';
 
+import { SearchMetaComponent } from './pages/admin/search-meta/search-meta.component';
+import { SearchMetaItemComponent } from './pages/admin/search-meta/search-meta-item/search-meta-item.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { GestureConfig} from '@angular/material';
@@ -91,6 +93,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProfileComponent,
     LoginComponent,
     CatchallComponent,
+    SearchMetaComponent,
+    SearchMetaItemComponent,
 
     DynamicActivityComponent, 
     ActivityComponentVote,

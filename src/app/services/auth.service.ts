@@ -13,6 +13,8 @@ export class AuthenticationService {
     auth0 : any;
 
     public userProfile : any;
+
+    requestedUrl : string = "";
       
   constructor(
       private http: HttpClient, 
@@ -22,20 +24,27 @@ export class AuthenticationService {
       private cfg : ConfigService
     ) {
 
-     this.auth0 = new auth0.WebAuth({
-        clientID: cfg.auth_clientId,
-        domain: cfg.auth_domain,
-        responseType: cfg.auth_responseType,
-        audience: cfg.auth_audience,
-        redirectUri: cfg.auth_redirectUri,
-        scope: cfg.auth_scope
-      })
+      this.createAuth0();
 
     }
 
+  createAuth0(){
+
+    this.auth0 = new auth0.WebAuth({
+      clientID: this.cfg.auth_clientId,
+      domain: this.cfg.auth_domain,
+      responseType: this.cfg.auth_responseType,
+      audience: this.cfg.auth_audience,
+      redirectUri: this.cfg.auth_redirectUri,
+      scope: this.cfg.auth_scope
+    });
+
+  }
 
   public login(): void {
+
     this.auth0.authorize();
+    
   }
 
   public handleAuthentication(cb): void {
@@ -96,10 +105,20 @@ export class AuthenticationService {
     }else{
 
         let snapshot = this.activatedRoute.snapshot as any;
+        let requestedUrl = window.location.pathname;
+
+        console.log(requestedUrl);
 
         if (snapshot._routerState.url != '/login'){
+
+              if (requestedUrl != "" && requestedUrl != "/login"){
+                this.requestedUrl = requestedUrl; 
+
+              }
+              
             this.logout();
         }
+
        
     }
   }

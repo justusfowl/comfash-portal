@@ -12,11 +12,12 @@ import {
     MatExpansionModule, 
     MatDividerModule, 
     MatTabsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatAutocompleteModule
 } from '@angular/material';
 
 @NgModule({
-  imports: [MatButtonToggleModule, MatTabsModule, MatDividerModule, MatExpansionModule, MatSliderModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule, MatDialogModule],
-  exports: [MatButtonToggleModule, MatTabsModule, MatDividerModule, MatExpansionModule, MatSliderModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDialogModule]
+  imports: [MatButtonToggleModule, MatTabsModule, MatAutocompleteModule, MatDividerModule, MatExpansionModule, MatSliderModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule, MatDialogModule],
+  exports: [MatButtonToggleModule, MatTabsModule, MatAutocompleteModule, MatDividerModule, MatExpansionModule, MatSliderModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDialogModule]
 })
 export class MaterialAppModule { }

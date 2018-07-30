@@ -1,0 +1,80 @@
+.item-container{
+    display: flex;
+}
+
+.item-col{
+    max-width: 50%; 
+}
+
+.item-col.labels{
+    padding:10px;
+}
+
+.label-row{
+    margin-bottom: 10px; 
+}
+
+.labels-container{
+    display: flex;
+}
+
+.delete-btn{
+    cursor: pointer;
+    margin:5px;
+    padding:5px;
+}
+
+.addlabel-btn{
+    cursor: pointer;
+    margin:5px;
+    padding:15px;
+}
+
+.delete-btn:hover{
+    background-color:rgba(128, 128, 128, 0.274);
+    border-radius: 4px;
+    color: rgba(255, 0, 0, 0.363);
+
+}
+
+.addlabel-btn:hover{
+    background-color: rgba(216, 166, 158, 0.12);
+    border-radius: 4px;
+    color: #d8a69e;
+}
+
+.small-prob{
+    font-size: 10px;
+}
+
+.rectangle{
+    border: 1px solid #FF0000;
+    position: absolute;
+}
+
+.rectangle .label-text{
+    position: absolute; 
+    left: 0;
+    top: 0;
+    background-color: red;
+    font-size: 8px;
+    padding: 0px 5px 0px 5px;
+}
+
+#home-section-meta {
+    max-width: 94rem;
+}
+
+/deep/ .mat-form-field-infix{
+    width: unset !important;
+}
+
+
+.float-left{
+    left: 15px;
+    position: absolute;
+}
+
+.btn-onlytrain.active{
+    border: 1px dashed #d8a69e;
+}

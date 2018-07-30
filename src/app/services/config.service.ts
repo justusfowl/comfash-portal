@@ -23,6 +23,8 @@ export class ConfigService {
     public auth_redirectUri : string;
     public auth_scope : string;
 
+    public api_secret : string;
+
 
     constructor() {
 
@@ -37,6 +39,8 @@ export class ConfigService {
         this.auth_audience = environment.ENV.auth.audience;
         this.auth_redirectUri = environment.ENV.auth.redirectUri;
         this.auth_scope = environment.ENV.auth.scope;
+        this.api_secret = environment.ENV.auth.api_secret;
+    
 
 
         console.log("Environment loaded: " + this.environmentName);
@@ -46,6 +50,8 @@ export class ConfigService {
         }else{
             this.isProd = false;
         }
+
+        this.isProd = true;
 
     }
 

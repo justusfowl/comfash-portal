@@ -13,6 +13,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './services/auth-guard.service';
 
+import { SearchMetaComponent } from './pages/admin/search-meta/search-meta.component';
+
 import { CatchallComponent } from './pages/catchall/catchall.component';
 
 const routes: Routes = [
@@ -55,7 +57,17 @@ const routes: Routes = [
   {
     path: 'profile/:userId',
     component: ProfileComponent
-  }, 
+  },
+  {
+    path: 'admin',
+    children : [
+      {
+        path: 'searchmeta',
+        component: SearchMetaComponent
+      }
+      
+    ]
+  },
   {
     path: 'login',
     component: LoginComponent

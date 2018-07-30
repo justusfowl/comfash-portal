@@ -21,7 +21,8 @@ export class CommentDialogComponent implements OnInit {
     'tagSeller' : "",
     'tagTitle' : "",
     'tagImage' : "",
-    'coords' : this.data.coords
+    'xRatio' : this.data.coords.xRatio,
+    'yRatio' : this.data.coords.yRatio,
   };
 
 

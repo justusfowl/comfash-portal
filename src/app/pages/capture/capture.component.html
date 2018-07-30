@@ -138,7 +138,7 @@
     <div id="previewImg-container" class="s-12 m-12 l-12 previewImg-container" [hidden]="previewImgHidden">
        <img id="previewImg" [src]="getSelectedPreviewItem('srcThumbnail')" (mouseup)="imgMouseUp($event)" (drop)="isDropped($event)">
         
-       <div class="tag-icon-mini" [class.inFocus] = "newTag.inFocus" (mouseenter) ="tagHoverIn(newTag)" (mouseleave) ="tagHoverOut(newTag)" *ngFor="let newTag of getSelectedPreviewItem('newTags'); let i = index;" [style.top]="newTag.coords.prevContainerYRatio * 100 + '%'" [style.left]="newTag.coords.prevContainerXRatio * 100 + '%'">
+       <div class="tag-icon-mini" [class.inFocus] = "newTag.inFocus" (mouseenter) ="tagHoverIn(newTag)" (mouseleave) ="tagHoverOut(newTag)" *ngFor="let newTag of getSelectedPreviewItem('newTags'); let i = index;" [style.top]="newTag.prevContainerYRatio * 100 + '%'" [style.left]="newTag.prevContainerXRatio * 100 + '%'">
         </div>
 
     </div>

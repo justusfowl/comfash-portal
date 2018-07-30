@@ -323,6 +323,29 @@ export class ApiService {
   }
 
 
+
+  // functions for the admin area, only relevant within the development environemnt as posting to index is done via server-side
+
+  getSearchItemMeta(){
+
+    return this.http.get(this.apiURL + "/admin/searchmeta", {headers: {'api_secret' : this.cfg.api_secret} })
+  }
+
+  approveSearchItemMeta(SearchItemMeta){
+    return this.http.post(this.apiURL + "/admin/searchmeta", SearchItemMeta, {headers: {'api_secret' : this.cfg.api_secret} });
+  }
+
+  rejectSearchItemMeta(id : string){
+    return this.http.delete(this.apiURL + "/admin/searchmeta/" + id, {headers: {'api_secret' : this.cfg.api_secret} });
+  }
+
+  getSearchMetaData(){
+    return this.http.get(this.apiURL + '/' + "search/filtermeta")
+  }
+
+
+
+
   handleAPIError(error){
 
     console.log("Error in API call")

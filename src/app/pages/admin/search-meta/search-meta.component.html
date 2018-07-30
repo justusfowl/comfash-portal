@@ -1,0 +1,87 @@
+
+
+<section id="home-section-meta" class="line">
+    <div class="margin">
+                  
+       <div class="s-12 m-12 l-12">
+
+        <button mat-button color="primary" (click)="getSearchItems()">Refresh</button>
+
+        <button mat-button color="primary" (click)="getMetaItems()">Refresh Meta</button>
+
+        
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel *ngFor="let item of searchItems; let j=index;" [expanded]="j==0" hideToggle="true" (opened)="parseItem(item, j)">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                    {{item.path}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                    
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                
+                <div class="item-container">
+
+                    <div class="item-col">
+
+                        <div class="rectangle" *ngFor="let label of myForm.controls._childDocuments_.controls" [style]="getBboxStyle(label)" >
+                            <div class="label-text">
+                                    {{label.value.attr_type}}
+                            </div>
+                        </div>
+
+                        <img class="large-image" [src]="util.wrapHostPath(item.sessionThumbnailPath)" 
+                        (mousemove)="imageMouseMove($event)"
+                        (click)="imageClick($event)">
+                    </div>
+
+                    <div class="item-col labels">
+                        <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
+                            <!-- we will place our fields here -->
+                
+                            <!-- list of addresses -->
+                            <div formArrayName="_childDocuments_">
+                                <div class="label-row" *ngFor="let address of myForm.controls._childDocuments_.controls; let i=index">
+                                    <!-- address header, show remove button when more than one address available -->
+                                    <div>
+                                        <span class="delete-btn" color="primary" (click)="removeAddress(i)" >Delete</span>
+                                        <p class="small-prob"></p>
+                                    </div>
+                
+                                    <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
+                                    <search-meta-item
+                                    (focus)="focusItem(address)"
+                                    [attrTypeOptions] = "attrTypeOptions" 
+                                    [metaData]="metaDataObj"
+                                    [group]="myForm.controls._childDocuments_.controls[i]"></search-meta-item>
+                                </div>
+
+                                <span class="addlabel-btn" (click)="addLabel()" hidden>
+                                    New Label
+                                </span>
+
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                <mat-action-row>
+                    <button class="float-left" mat-button color="warn" (click)="disregardImage(myForm)" tabindex="99">Disregard</button>
+
+                    <button mat-button class="btn-onlytrain" [class.active]="isSetTrainOnly" [disabled]="isSetTrainOnly" (click)="setTrainOnly(true)">TrainOnly</button>
+                    <button mat-button class="btn-onlytrain" [class.active]="!isSetTrainOnly" [disabled]="!isSetTrainOnly" (click)="setTrainOnly(false)">Add2PublicIndex</button>
+
+                    <button mat-button color="primary" 
+                    *ngIf="myForm.controls._childDocuments_.length > 0"
+                    (click)="approveImage(myForm)">Approve</button>
+                </mat-action-row>
+
+            </mat-expansion-panel>
+  
+        </mat-accordion>
+
+  </div>
+</div>
+</section>

@@ -25,6 +25,7 @@
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
+        "dev-comfash": "environments/environment.dev-comfash.ts",
         "prod": "environments/environment.prod.ts"
       }
     }

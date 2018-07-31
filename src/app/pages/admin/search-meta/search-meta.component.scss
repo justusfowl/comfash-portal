@@ -52,6 +52,10 @@
     position: absolute;
 }
 
+.rectangle.select{
+    border: 3px dashed #FF0000;
+}
+
 .rectangle .label-text{
     position: absolute; 
     left: 0;

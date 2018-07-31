@@ -25,7 +25,7 @@
 
                     <div class="item-col">
 
-                        <div class="rectangle" *ngFor="let label of myForm.controls._childDocuments_.controls" [style]="getBboxStyle(label)" >
+                        <div class="rectangle" [class.select]="label == selectedLabel" *ngFor="let label of myForm.controls._childDocuments_.controls" [style]="getBboxStyle(label)" >
                             <div class="label-text">
                                     {{label.value.attr_type}}
                             </div>
@@ -46,12 +46,12 @@
                                     <!-- address header, show remove button when more than one address available -->
                                     <div>
                                         <span class="delete-btn" color="primary" (click)="removeAddress(i)" >Delete</span>
-                                        <p class="small-prob"></p>
                                     </div>
                 
                                     <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
                                     <search-meta-item
-                                    (focus)="focusItem(address)"
+                                    (mouseover)="focusLabel(address)"
+                                    (mouseout)="focusOutLabel()"
                                     [attrTypeOptions] = "attrTypeOptions" 
                                     [metaData]="metaDataObj"
                                     [group]="myForm.controls._childDocuments_.controls[i]"></search-meta-item>

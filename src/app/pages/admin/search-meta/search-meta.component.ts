@@ -36,6 +36,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
     };
     element = null;
 
+    selectedLabel : any = null;
+
     @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(evt: KeyboardEvent) {
         this.detectEscape();
     }
@@ -393,10 +395,6 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         
         let body = {"searchItem" : searchItem };
 
-        console.log(body);
-
-
-        /*
         this.api.approveSearchItemMeta(body).subscribe(
             (data : any) => {
                 
@@ -407,11 +405,15 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
                 this.api.handleAPIError(error);
             }
             )
-            */
+
     }
 
-    focusItem(item){
-        console.log(item)
+    focusLabel(item){
+        this.selectedLabel = item;
+    }
+
+    focusOutLabel(){
+        this.selectedLabel = null;
     }
 
     disregardImage(myForm){

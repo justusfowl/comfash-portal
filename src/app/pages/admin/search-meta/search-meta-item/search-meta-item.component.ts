@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -24,6 +24,9 @@ export class SearchMetaItemComponent implements OnInit {
     @Input('attrTypeOptions')
     public attrTypeOptions : any = [];
 
+    @Output() inFocus: any = new EventEmitter();
+    
+
     boolIsSex = false;
 
     metaDataLabels = []; 
@@ -34,7 +37,7 @@ export class SearchMetaItemComponent implements OnInit {
 
     myControl = new FormControl();
 
-    filteredAttrTypeOptions : Observable<any[]>;
+    filteredAttrTypeOptions = [];
   
     filteredOptionsColor: Observable<any[]>;
 
@@ -74,10 +77,20 @@ export class SearchMetaItemComponent implements OnInit {
               map(value => typeof value === 'string' ? value : value.name),
               map(name => name ? this.filterFabric(name) : this.metaDataFabric.slice())
             );
-            
-            
+
             this.filteredAttrTypeOptions = this.attrTypeOptions
-            /*this.adressForm.controls.attr_type.valueChanges
+             
+            /*
+            this.filteredAttrTypeOptions = this.adressForm.controls.attr_type.valueChanges
+            .pipe(
+              startWith<string | any>(''),
+              map(value => typeof value === 'string' ? value : value.name),
+              map(name => name ? this.filterAttrType(name) : this.attrTypeOptions.slice())
+            );
+            
+             /*
+            this.filteredAttrTypeOptions = this.attrTypeOptions
+           this.adressForm.controls.attr_type.valueChanges
             .pipe(
               startWith<string | any>(''),
               map(value => {
@@ -91,6 +104,8 @@ export class SearchMetaItemComponent implements OnInit {
 
             this.adressForm.controls.attr_type.valueChanges.subscribe(value => {
                 this.selectLabelsForType(value);
+
+                this.filteredAttrTypeOptions = this.filterAttrType(value)
 
                 if (value == "sex"){
                     this.adressForm.controls.sex.setValue("");
@@ -113,6 +128,10 @@ export class SearchMetaItemComponent implements OnInit {
         }
     }
 
+    isInFocus(){
+        console.log("in focus");
+        this.inFocus.emit(this.adressForm)
+    }
 
     subscribeOptionsLabels(){
         if (this.metaDataLabels.length > 0){

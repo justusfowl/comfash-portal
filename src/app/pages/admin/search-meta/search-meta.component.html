@@ -4,16 +4,18 @@
     <div class="margin">
                   
        <div class="s-12 m-12 l-12">
+        <!--
+        <button mat-button color="primary" (click)="getSearchItems()" hidden>Refresh</button>
 
-        <button mat-button color="primary" (click)="getSearchItems()">Refresh</button>
+        <button mat-button color="primary" (click)="getMetaItems()" hidden>Refresh Meta</button>
+        -->
 
-        <button mat-button color="primary" (click)="getMetaItems()">Refresh Meta</button>
 
         
         <mat-accordion class="example-headers-align">
-            <mat-expansion-panel *ngFor="let item of searchItems; let j=index;" [expanded]="j==0" hideToggle="true" (opened)="parseItem(item, j)">
+            <mat-expansion-panel *ngFor="let item of searchItems; let j=index;" disabled="true" expanded="true" hideToggle="true" (opened)="parseItem(item, j)">
                 <mat-expansion-panel-header>
-                    <mat-panel-title>
+                    <mat-panel-title> 
                     {{item.path}}
                     </mat-panel-title>
                     <mat-panel-description>
@@ -51,6 +53,7 @@
                                     <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
                                     <search-meta-item
                                     (mouseover)="focusLabel(address)"
+                                    (inFocus)="focusLabel(address)"
                                     (mouseout)="focusOutLabel()"
                                     [attrTypeOptions] = "attrTypeOptions" 
                                     [metaData]="metaDataObj"

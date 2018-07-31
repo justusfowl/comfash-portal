@@ -6,6 +6,7 @@ import {DomSanitizer} from '@angular/platform-browser'
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 
 import { v1 as uuid } from 'uuid';
+import { NotificationService } from '../../../services/notification.service';
 
 export class User {
     constructor(public name: string) { }
@@ -38,6 +39,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
     selectedLabel : any = null;
 
+    itemDateLoaded : any;
+
     @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(evt: KeyboardEvent) {
         this.detectEscape();
     }
@@ -50,7 +53,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         private api : ApiService,
         public util : UtilService,
         private _fb: FormBuilder,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer, 
+        private notify : NotificationService
     ) { 
         
 
@@ -131,13 +135,14 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
     detectEscape(){
 
-
         this.element = null;
         let canvas = document.getElementsByClassName("large-image")[0] as any;
         canvas.style.cursor = "default";
-        console.log("aborted.");
-
-        document.getElementById("tmp_rect").remove();
+        
+        let tmpBox = document.getElementById("tmp_rect");
+        if (tmpBox){
+            tmpBox.remove();
+        }
 
     }
 
@@ -220,10 +225,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
             this.element = null;
             canvas.style.cursor = "default";
             this.addLabel(bbox);
-            console.log("finsihed.");
             document.getElementById("tmp_rect").remove();
         } else {
-            console.log("begun.");
             this.mouse.startX = this.mouse.x;
             this.mouse.startY = this.mouse.y;
             this.element = document.createElement('div');
@@ -297,6 +300,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
                     this.parseItem(data[0], 0);
 
                     this.searchItems = data;
+
+                    this.itemDateLoaded = new Date();
 
                 }
                 catch(err){
@@ -400,6 +405,13 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
                 
                 console.log("approved!");
                 this.removeActiveItem();
+                let durationMsg = " ("
+                durationMsg += this.util.formatDateDiffToNow(this.itemDateLoaded);
+                durationMsg += ")";
+
+                durationMsg = durationMsg.replace("ago","");
+
+                this.notify.toastInfo("METASEARCH_APPROVE", durationMsg);
             },
             error => {
                 this.api.handleAPIError(error);
@@ -424,7 +436,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         this.api.rejectSearchItemMeta(id).subscribe(
             (data : any) => {
                 console.log("rejected!");
-                this.removeActiveItem()
+                this.removeActiveItem();
+                this.notify.toastInfo("METASEARCH_REJECT");
             },
             error => {
                 this.api.handleAPIError(error);

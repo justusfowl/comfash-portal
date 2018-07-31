@@ -30,7 +30,9 @@
   "NOTIFY" : {
     "COMMENT_ADDED" : "Comment added", 
     "CONTENT_DISPLAY_LIMIT_SESSIONS" : "A maximum of three sessions can be displayed at once.", 
-    "HAS_VOTED" : "A session has been rated"
+    "HAS_VOTED" : "A session has been rated", 
+    "METASEARCH_APPROVE" : "The image has been labeled.", 
+    "METASEARCH_REJECT" : "You have rejected the image."
   },
 
   "ERROR" : {

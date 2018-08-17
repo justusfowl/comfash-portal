@@ -16,7 +16,7 @@
             <mat-expansion-panel *ngFor="let item of searchItems; let j=index;" disabled="true" expanded="true" hideToggle="true" (opened)="parseItem(item, j)">
                 <mat-expansion-panel-header>
                     <mat-panel-title> 
-                    {{item.path}}
+                    {{item.path}} / {{item.owner}} 
                     </mat-panel-title>
                     <mat-panel-description>
                     
@@ -29,7 +29,7 @@
 
                         <div class="rectangle" [class.select]="label == selectedLabel" *ngFor="let label of myForm.controls._childDocuments_.controls" [style]="getBboxStyle(label)" >
                             <div class="label-text">
-                                    {{label.value.attr_type}}
+                                    {{label.value.attr_category}}
                             </div>
                         </div>
 
@@ -71,12 +71,13 @@
                 </div>
 
                 <mat-action-row>
-                    <button class="float-left" mat-button color="warn" (click)="disregardImage(myForm)" tabindex="99">Disregard</button>
+                    <button class="float-left" mat-button color="warn" alt="ALT & '-'" (click)="disregardImage(myForm)" tabindex="99">Disregard</button>
 
                     <button mat-button class="btn-onlytrain" [class.active]="isSetTrainOnly" [disabled]="isSetTrainOnly" (click)="setTrainOnly(true)">TrainOnly</button>
                     <button mat-button class="btn-onlytrain" [class.active]="!isSetTrainOnly" [disabled]="!isSetTrainOnly" (click)="setTrainOnly(false)">Add2PublicIndex</button>
 
                     <button mat-button color="primary" 
+                    alt="ALT & '+'"
                     *ngIf="myForm.controls._childDocuments_.length > 0"
                     (click)="approveImage(myForm)">Approve</button>
                 </mat-action-row>

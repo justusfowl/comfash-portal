@@ -41,13 +41,30 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
     itemDateLoaded : any;
 
-    @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(evt: KeyboardEvent) {
-        this.detectEscape();
+    @HostListener('document:keydown', ['$event']) onKeydownHandler(evt: KeyboardEvent) {
+        
+        console.log(evt)
+
+        if (evt.key == "Escape"){
+            this.detectEscape();
+        }
+
+        if (evt.key == "+" && evt.altKey){
+            if (this.myForm.value.id != ""){
+                this.approveImage(this.myForm);
+            }
+            
+        }
+
+        if (evt.key == "-" && evt.altKey){
+            if (this.myForm.value.id != ""){
+                this.disregardImage(this.myForm);
+            }
+        }
+
     }
 
     isSetTrainOnly : boolean = false;
-
-
 
     constructor(
         private api : ApiService,
@@ -57,9 +74,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         private notify : NotificationService
     ) { 
         
-
     }
-
 
     ngOnInit() {
         this.myForm = this._fb.group({
@@ -77,7 +92,6 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
             ])
         });
 
-
     }
 
     ngAfterViewInit(){
@@ -93,6 +107,13 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         this.activeIndex = index;
 
         if (item){
+
+            if (typeof(item.isSetTrainOnly) != "undefined"){
+                this.setTrainOnly(item.isSetTrainOnly)
+            }else{
+                this.setTrainOnly(false)
+            }
+
            let childDocsArr = [];
 
             for (var i=0;i<item._childDocuments_.length;i++){
@@ -167,16 +188,18 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
         let clientRects = image.getClientRects()[0] as any;
 
-        let width = (bbox.width) ? bbox.width : 0; 
-        let height = (bbox.height) ? bbox.height : 0; 
 
-        let left = ((bbox.x) ? bbox.x : 0) + clientRects.x; 
-        let top = ((bbox.y) ? bbox.y : 0)  + clientRects.y; 
 
-        style += "top: " + top + "px;";
-        style += "left: " + left + "px;";
-        style += "width: " + width + "px;";
-        style += "height: " + height + "px;";
+        let relWidth = (bbox.relWidth) ? bbox.relWidth : 0; 
+        let relHeight = (bbox.relHeight) ? bbox.relHeight : 0; 
+
+        let relX = ((bbox.relX) ? bbox.relX : 0); 
+        let relY = ((bbox.relY) ? bbox.relY : 0); 
+
+        style += "top: " + (relY*clientRects.height + clientRects.y) + "px;";
+        style += "left: " + (relX*clientRects.width + clientRects.x) + "px;";
+        style += "width: " + (relWidth*clientRects.width) + "px;";
+        style += "height: " + (relHeight*clientRects.height) + "px;";
         style += "position:absolute;";
         style += "pointer-events:none !important;";   
 
@@ -190,6 +213,9 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         let parent = canvas.parentNode;
 
         if (this.element !== null) {
+
+            // end of clicking the bounding box
+            // create the coords of left-top corner for x/y (+ in relative terms to image size)
 
             let clientRects = canvas.getClientRects()[0];
 

@@ -29,6 +29,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
     activeIndex : number;
 
+    quickBox : boolean = false;
+
     mouse = {
         x: 0,
         y: 0,
@@ -282,18 +284,38 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
     initLabel(path?, id?, bbox?) {
         // initialize our address
-        return this._fb.group({
-            path: path || '',
-            id: id || '',
-            prob: '',
-            sex : '',
-            attr_color: '',
-            attr_category: '',
-            attr_fabric: '',
-            attr_texture: '',
-            attr_type: '',
-            bbox: bbox || ''
-        });
+
+        if (this.quickBox && this.myForm.value._childDocuments_.length > 0){
+
+            let template = this.myForm.value._childDocuments_[this.myForm.value._childDocuments_.length-1];
+
+            return this._fb.group({
+                path: path || '',
+                id: id || '',
+                prob: '',
+                sex : template.sex || '' ,
+                attr_color: template.attr_color || '',
+                attr_category: template.attr_category || '',
+                attr_fabric: template.attr_fabric || '',
+                attr_texture: template.attr_texture || '',
+                attr_type: template.attr_type || '',
+                bbox: bbox || ''
+            });
+        }else{
+            return this._fb.group({
+                path: path || '',
+                id: id || '',
+                prob: '',
+                sex : '',
+                attr_color: '',
+                attr_category: '',
+                attr_fabric: '',
+                attr_texture: '',
+                attr_type: '',
+                bbox: bbox || ''
+            });
+        }
+        
     }
 
     addLabel(bbox?) {

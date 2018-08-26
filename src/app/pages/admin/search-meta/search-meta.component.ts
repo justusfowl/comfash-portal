@@ -43,6 +43,10 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
     itemDateLoaded : any;
 
+    sessionCount : number = 0;
+
+    totalTimesWorkedOn =  [];
+
 
 
     @HostListener('document:keydown', ['$event']) onKeydownHandler(evt: KeyboardEvent) {
@@ -576,6 +580,12 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
                 this.notify.toastInfo("METASEARCH_APPROVE", durationMsg);
 
+                this.sessionCount++;
+
+                let timeDiffSeconds = (new Date().getTime() - this.itemDateLoaded) / 1000;
+
+                this.totalTimesWorkedOn.push(timeDiffSeconds)
+
                 this.getIsValidatedGroupLabelInfo();
             },
             error => {
@@ -583,6 +593,17 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
             }
             )
 
+    }
+
+    getAverageTime(timesArray){
+        var sum, avg = 0;
+        // dividing by 0 will return Infinity
+        // arr must contain at least 1 element to use reduce
+        if (timesArray.length){
+            sum = timesArray.reduce(function(a, b) { return a + b; });
+            avg = sum / timesArray.length;
+        }
+        return avg;
     }
 
     focusLabel(item){
@@ -603,6 +624,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
                 console.log("rejected!");
                 this.removeActiveItem();
                 this.notify.toastInfo("METASEARCH_REJECT");
+                this.sessionCount++;
             },
             error => {
                 this.api.handleAPIError(error);

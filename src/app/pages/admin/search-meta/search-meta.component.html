@@ -10,19 +10,23 @@
         <button mat-button color="primary" (click)="getMetaItems()" hidden>Refresh Meta</button>
         -->
         <mat-toolbar class="main-toolbar">
-            <mat-form-field>
-                <mat-select placeholder="Available pre-labels" (selectionChange)="groupLabelsInfoChanged($event)">
-                    <mat-option value="all">
-                        All
-                    </mat-option>
-    
-                    <mat-option *ngFor="let label of availableGroupLabels" [value]="label.label">
-                    {{label.label}} ({{label.total}})
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <span class="label-info">{{isValidatedGroupLabelInfo.total}} labels exist</span>
-
+            <mat-toolbar-row> 
+                <mat-form-field>
+                    <mat-select placeholder="Available pre-labels" (selectionChange)="groupLabelsInfoChanged($event)">
+                        <mat-option value="all">
+                            All
+                        </mat-option>
+        
+                        <mat-option *ngFor="let label of availableGroupLabels" [value]="label.label">
+                        {{label.label}} ({{label.total}})
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <span class="label-info">{{isValidatedGroupLabelInfo.total}} labels exist</span>
+            </mat-toolbar-row>
+            <mat-toolbar-row>
+                You have labeled {{sessionCount}} in this session (avg. time: {{getAverageTime(totalTimesWorkedOn)}})
+            </mat-toolbar-row>
         </mat-toolbar>
        
 

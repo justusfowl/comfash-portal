@@ -365,15 +365,11 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         let options;
 
         if (evt.value != "all"){
-            options = {
-                        "attr_category" : evt.value
-                    }
 
             this.groupLabelsInfoChangedItem = evt.value;
 
             this.getIsValidatedGroupLabelInfo();
         }else{
-            options = {};
 
             this.groupLabelInfoSelected = null;
 
@@ -384,7 +380,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
         }
        
-        this.getSearchItems(options);
+        this.getSearchItems();
         
     }
 
@@ -443,7 +439,19 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
 
 
-    getSearchItems(options?){
+    getSearchItems(){
+
+        let options;
+
+        if (this.groupLabelsInfoChangedItem != "all"){
+            options = {
+                "attr_category" : this.groupLabelsInfoChangedItem
+            }
+        }else{
+            options = {};
+        }
+
+
 
         this.api.getSearchItemMeta(options).subscribe(
             (data : any) => {

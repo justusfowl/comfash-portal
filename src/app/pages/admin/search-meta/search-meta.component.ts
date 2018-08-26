@@ -447,7 +447,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
         let options;
 
-        if (this.groupLabelsInfoChangedItem != "all"){
+        if (this.groupLabelsInfoChangedItem != "all" && this.groupLabelsInfoChangedItem ){
             options = {
                 "attr_category" : this.groupLabelsInfoChangedItem
             }
@@ -603,7 +603,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
             sum = timesArray.reduce(function(a, b) { return a + b; });
             avg = sum / timesArray.length;
         }
-        return avg;
+        return avg.toFixed(1);
     }
 
     focusLabel(item){

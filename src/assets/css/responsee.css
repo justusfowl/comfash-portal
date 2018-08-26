@@ -4,11 +4,11 @@
  * Copyright 2016, Vision Design - graphic zoo
  * Free to use under the MIT license.
 */
-* {  
+* {
   -webkit-box-sizing:border-box;
   -moz-box-sizing:border-box;
-  box-sizing:border-box;
-  margin:0;	
+  /* box-sizing:border-box; */
+  margin:0;
 }
 body {
   background:none repeat scroll 0 0 #d3d3d3;

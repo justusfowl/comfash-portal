@@ -89,9 +89,34 @@
     height: 100px;
 }
 
+.sub-toolbar{
+    height: 35px;
+    padding: 0px 0px 0px 16px;
+}
+
 .label-info{
     padding: 0px 50px 0px 50px;
     font-size: 12px;
+}
+
+.label-info.small-right{
+    padding: 35px 50px 0px 50px;
+}
+
+.border-right{
+    border-right: 1px solid #8e8e8e
+}
+
+.label-info.small-right .kpi{
+    font-size: 30px;
+    color: #707070;
+    float:right;
+}
+
+.label-info.small-right .description{
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.87);
+    float:right;
 }
 
 .checkbox{

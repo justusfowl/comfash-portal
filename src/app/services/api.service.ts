@@ -326,9 +326,9 @@ export class ApiService {
 
   // functions for the admin area, only relevant within the development environemnt as posting to index is done via server-side
 
-  getSearchItemMeta(){
+  getSearchItemMeta(options?){
 
-    return this.http.get(this.apiURL + "/admin/searchmeta", {headers: {'api_secret' : this.cfg.api_secret} })
+    return this.http.get(this.apiURL + "/admin/searchmeta", {headers: {'api_secret' : this.cfg.api_secret}, params: options })
   }
 
   approveSearchItemMeta(SearchItemMeta){
@@ -341,6 +341,10 @@ export class ApiService {
 
   getSearchMetaData(){
     return this.http.get(this.apiURL + '/' + "search/filtermeta")
+  }
+
+  getGroupLabelsInfo(options?){ 
+    return this.http.get(this.apiURL + '/' + "admin/searchmeta/grouplabels", {headers: {'api_secret' : this.cfg.api_secret}, params: options})
   }
 
 

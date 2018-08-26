@@ -2,7 +2,6 @@ import { Component, OnInit, AfterViewInit, HostListener } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { UtilService } from '../../../services/util.service';
 import {DomSanitizer} from '@angular/platform-browser'
-
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 
 import { v1 as uuid } from 'uuid';
@@ -30,6 +29,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
     activeIndex : number;
 
     quickBox : boolean = false;
+    replaceInitialLabel : boolean = true;
 
     mouse = {
         x: 0,
@@ -43,15 +43,17 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
     itemDateLoaded : any;
 
+
+
     @HostListener('document:keydown', ['$event']) onKeydownHandler(evt: KeyboardEvent) {
         
-        console.log(evt)
+        // console.log(evt)
 
         if (evt.key == "Escape"){
             this.detectEscape();
         }
 
-        if (evt.key == "+" && evt.altKey){
+        if (evt.key == "s" && evt.altKey){
             if (this.myForm.value.id != ""){
                 this.approveImage(this.myForm);
             }
@@ -67,6 +69,16 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
     }
 
     isSetTrainOnly : boolean = false;
+
+    availableGroupLabels = [];
+
+    isValidatedGroupLabelInfo : any = {
+        "total" : "-"
+    };
+
+    groupLabelInfoSelected : any; 
+
+    groupLabelsInfoChangedItem : any;
 
     constructor(
         private api : ApiService,
@@ -93,6 +105,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
                 this.initLabel()
             ])
         });
+
+        this.getGroupLabelsInfo();
 
     }
 
@@ -252,7 +266,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
             this.element = null;
             canvas.style.cursor = "default";
-            this.addLabel(bbox);
+
+            this.addLabel(bbox,evt.ctrlKey);
             document.getElementById("tmp_rect").remove();
         } else {
             this.mouse.startX = this.mouse.x;
@@ -318,7 +333,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         
     }
 
-    addLabel(bbox?) {
+    addLabel(bbox?, overwriteLastLabel?) {
         // add address to the list
 
         let id = uuid().replace(/-/g, "");
@@ -326,6 +341,13 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
         const control = <FormArray>this.myForm.controls['_childDocuments_'];
         control.push(this.initLabel(path, id, bbox));
+
+        if (this.replaceInitialLabel || overwriteLastLabel){
+            control.removeAt(control.length - 2);
+            if (!overwriteLastLabel){
+                this.replaceInitialLabel = false;
+            }
+        }
     }
 
     removeAddress(i: number) {
@@ -337,10 +359,93 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
     }
 
 
+    groupLabelsInfoChanged(evt){
 
-    getSearchItems(){
+        console.log(evt);
+        let options;
 
-        this.api.getSearchItemMeta().subscribe(
+        if (evt.value != "all"){
+            options = {
+                        "attr_category" : evt.value
+                    }
+
+            this.groupLabelsInfoChangedItem = evt.value;
+
+            this.getIsValidatedGroupLabelInfo();
+        }else{
+            options = {};
+
+            this.groupLabelInfoSelected = null;
+
+            this.isValidatedGroupLabelInfo = {
+                "total" : "-", 
+                "label" : "all"
+            }
+
+        }
+       
+        this.getSearchItems(options);
+        
+    }
+
+
+
+    getGroupLabelsInfo(){
+
+        this.api.getGroupLabelsInfo().subscribe(
+            (data : any) => {
+                
+                try{
+
+                   this.availableGroupLabels = data;
+
+                   
+
+                }
+                catch(err){
+                    console.log(err);
+                } 
+
+            },
+            error => {
+                this.api.handleAPIError(error);
+            }
+            )
+    }
+
+    getIsValidatedGroupLabelInfo(){
+
+        let options = {
+            "isValidated" : true,
+            "attr_category" : this.groupLabelsInfoChangedItem
+        }
+
+        this.api.getGroupLabelsInfo(options).subscribe(
+            (data : any) => {
+                
+                try{
+
+                   this.isValidatedGroupLabelInfo = data[0];
+
+                }
+                catch(err){
+                    console.log(err);
+                } 
+
+            },
+            error => {
+                this.api.handleAPIError(error);
+            }
+            )
+
+        
+    }
+
+
+
+    getSearchItems(options?){
+
+        this.api.getSearchItemMeta(options).subscribe(
             (data : any) => {
                 
                 try{
@@ -350,6 +455,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
                     this.searchItems = data;
 
                     this.itemDateLoaded = new Date();
+
+                    this.replaceInitialLabel = true;
 
                 }
                 catch(err){
@@ -460,6 +567,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
                 durationMsg = durationMsg.replace("ago","");
 
                 this.notify.toastInfo("METASEARCH_APPROVE", durationMsg);
+
+                this.getIsValidatedGroupLabelInfo();
             },
             error => {
                 this.api.handleAPIError(error);

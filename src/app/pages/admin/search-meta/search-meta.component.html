@@ -9,9 +9,28 @@
 
         <button mat-button color="primary" (click)="getMetaItems()" hidden>Refresh Meta</button>
         -->
+        <mat-toolbar class="main-toolbar">
+            <mat-form-field>
+                <mat-select placeholder="Available pre-labels" (selectionChange)="groupLabelsInfoChanged($event)">
+                    <mat-option value="all">
+                        All
+                    </mat-option>
+    
+                    <mat-option *ngFor="let label of availableGroupLabels" [value]="label.label">
+                    {{label.label}} ({{label.total}})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <span class="label-info">{{isValidatedGroupLabelInfo.total}} labels exist</span>
+
+        </mat-toolbar>
+       
+
+            
 
 
-        
+       
+
         <mat-accordion class="example-headers-align">
             <mat-expansion-panel *ngFor="let item of searchItems; let j=index;" disabled="true" expanded="true" hideToggle="true" (opened)="parseItem(item, j)">
                 <mat-expansion-panel-header>
@@ -19,7 +38,8 @@
                     {{item.path}} / {{item.owner}} 
                     </mat-panel-title>
 
-                    <mat-checkbox class="example-margin" [(ngModel)]="quickBox">Quick Label</mat-checkbox>
+                    <mat-checkbox class="checkbox" [(ngModel)]="replaceInitialLabel">Replace Initial Label</mat-checkbox>
+                    <mat-checkbox class="checkbox" [(ngModel)]="quickBox">Quick Label</mat-checkbox>
 
                     <mat-panel-description>
                     

@@ -72,6 +72,8 @@
 
                         <img class="large-image" [src]="util.wrapHostPath(item.sessionThumbnailPath)" 
                         (mousemove)="imageMouseMove($event)"
+                        (mouseenter)="enterImageMouse($event)"
+                        (mouseleave)="exitImageMouse($event)"
                         (click)="imageClick($event)">
                     </div>
 

@@ -131,3 +131,20 @@
 ::-webkit-scrollbar-thumb {
     background: transparent;
 }
+
+.crosshair{
+    position: absolute;
+    border: 1px solid red;
+}
+
+.crosshair.horizontal{
+    width: 30px;
+    height: 2px;
+
+}
+
+.crosshair.vertical{
+    width: 2px;
+    height: 30px;
+
+}

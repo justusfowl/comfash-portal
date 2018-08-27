@@ -37,7 +37,10 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         startX: 0,
         startY: 0
     };
+
     element = null;
+    crossHairHorizontal = null;
+    crossHairVertical = null; 
 
     selectedLabel : any = null;
 
@@ -291,15 +294,67 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
     }
 
+    enterImageMouse(evt){
+        let canvas = evt.target;
+        let parent = canvas.parentNode;
+
+        let imgRects = canvas.getClientRects()[0]; 
+
+        this.crossHairHorizontal = document.createElement('div');
+        this.crossHairHorizontal.id = 'crosshair_hor';
+        this.crossHairHorizontal.className = 'crosshair horizontal';
+        this.crossHairHorizontal.style.left = this.mouse.x + 'px';
+        this.crossHairHorizontal.style.top = this.mouse.y + 'px';
+        this.crossHairHorizontal.style.position = "absolute";
+        this.crossHairHorizontal.style.width = imgRects.width + "px";
+        this.crossHairHorizontal.style.height = "1px";
+        this.crossHairHorizontal.style.border = "0.5px dashed red";
+
+        this.crossHairVertical = document.createElement('div');
+        this.crossHairVertical.id = 'crosshair_ver';
+        this.crossHairVertical.className = 'crosshair vertical';
+        this.crossHairVertical.style.left = this.mouse.x + 'px';
+        this.crossHairVertical.style.top = this.mouse.y + 'px';
+        this.crossHairVertical.style.position = "absolute";
+        this.crossHairVertical.style.height = imgRects.height + "px";
+        this.crossHairVertical.style.width = "1px";
+        this.crossHairVertical.style.border = "0.5px dashed red";
+
+        parent.appendChild(this.crossHairHorizontal);
+        parent.appendChild(this.crossHairVertical);
+    }
+
+    exitImageMouse(evt){
+        this.crossHairHorizontal = null;
+        this.crossHairVertical = null;
+
+        document.getElementById("crosshair_hor").remove();
+        document.getElementById("crosshair_ver").remove();
+    }
+
     imageMouseMove(evt){
+
         this.setMousePosition(evt);
+
         if (this.element !== null) {
             this.element.style.width = Math.abs(this.mouse.x - this.mouse.startX) + 'px';
             this.element.style.height = Math.abs(this.mouse.y - this.mouse.startY) + 'px';
             this.element.style.left = (this.mouse.x - this.mouse.startX < 0) ? this.mouse.x + 'px' : this.mouse.startX + 'px';
             this.element.style.top = (this.mouse.y - this.mouse.startY < 0) ? this.mouse.y + 'px' : this.mouse.startY + 'px';
         }
+
+        let canvas = evt.target;
+        let imgRects = canvas.getClientRects()[0]; 
+
+        this.crossHairHorizontal.style.left = imgRects.left + 'px' ;
+        this.crossHairHorizontal.style.top = (this.mouse.y - 2) + 'px' ;
+
+        this.crossHairVertical.style.left = (this.mouse.x - 2) + 'px' ;
+        this.crossHairVertical.style.top = imgRects.top + 'px' ;
+
     }
+
+
 
     initLabel(path?, id?, bbox?) {
         // initialize our address

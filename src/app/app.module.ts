@@ -15,6 +15,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CatchallComponent } from './pages/catchall/catchall.component';
 
+import { AdminAnalysisComponent } from './pages/admin/analysis/analysis.component';
 import { SearchMetaComponent } from './pages/admin/search-meta/search-meta.component';
 import { SearchMetaItemComponent } from './pages/admin/search-meta/search-meta-item/search-meta-item.component';
 
@@ -64,6 +65,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -93,6 +96,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProfileComponent,
     LoginComponent,
     CatchallComponent,
+
+    AdminAnalysisComponent,
     SearchMetaComponent,
     SearchMetaItemComponent,
 
@@ -131,7 +136,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     PopoverModule,
     InfiniteScrollModule,
-    SimpleNotificationsModule.forRoot()
+    SimpleNotificationsModule.forRoot(),
+    Ng2GoogleChartsModule
     
   ],
   providers: [

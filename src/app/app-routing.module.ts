@@ -14,6 +14,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './services/auth-guard.service';
 
 import { SearchMetaComponent } from './pages/admin/search-meta/search-meta.component';
+import { AdminAnalysisComponent } from './pages/admin/analysis/analysis.component';
 
 import { CatchallComponent } from './pages/catchall/catchall.component';
 
@@ -64,7 +65,13 @@ const routes: Routes = [
       {
         path: 'searchmeta',
         component: SearchMetaComponent
-      }
+      }, 
+      {
+        path: 'analysis',
+        component: AdminAnalysisComponent
+      }, 
+
+      
       
     ]
   },

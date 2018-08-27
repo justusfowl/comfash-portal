@@ -50,6 +50,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
     totalTimesWorkedOn =  [];
 
+    sessionStartedDate : number;
+
 
 
     @HostListener('document:keydown', ['$event']) onKeydownHandler(evt: KeyboardEvent) {
@@ -114,6 +116,8 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         });
 
         this.getGroupLabelsInfo();
+
+        this.sessionStartedDate = new Date().getTime();
 
     }
 

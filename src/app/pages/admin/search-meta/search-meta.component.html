@@ -9,9 +9,15 @@
 
         <button mat-button color="primary" (click)="getMetaItems()" hidden>Refresh Meta</button>
         -->
+
+        
         <mat-toolbar >
+            <mat-toolbar-row >
+                    <button class="mode-button" mat-button [class.active]="getImageMode == 'pre'" (click)="setMode('pre')">Pre-Labeled</button>
+                    <button class="mode-button" mat-button [class.active]="getImageMode == 'crawl'"  (click)="setMode('crawl')">Crawled</button>
+            </mat-toolbar-row>
             <mat-toolbar-row class="main-toolbar"> 
-                <mat-form-field>
+                <mat-form-field *ngIf="getImageMode == 'pre'">
                     <mat-select placeholder="Available pre-labels" (selectionChange)="groupLabelsInfoChanged($event)">
                         <mat-option value="all">
                             All
@@ -22,7 +28,20 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <span class="label-info border-right">{{isValidatedGroupLabelInfo.total}} labels exist</span>
+
+                <span class="label-info border-right" *ngIf="getImageMode == 'pre'">{{isValidatedGroupLabelInfo.total}} labels exist</span>
+                
+                <mat-form-field *ngIf="getImageMode == 'crawl'">
+                    <mat-select placeholder="Available crawled images" (selectionChange)="crawlGroupLabelsInfoChanged($event)">
+                        <mat-option value="all">
+                            All
+                        </mat-option>
+        
+                        <mat-option *ngFor="let label of availableCrawlGroupLabels" [value]="label.label">
+                        {{label.label}} ({{label.total}})
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
                 <span class="label-info small-right">
                     <span class="kpi">
@@ -96,6 +115,7 @@
                                     <!-- address header, show remove button when more than one address available -->
                                     <div>
                                         <span class="delete-btn" color="primary" (click)="removeAddress(i)" >Delete</span>
+                                        <span class="template-btn" [class.selected]="checkIfIsTemplate(address)" color="primary" (click)="toggleLabelAsTemplate(address)" >Set as Template</span>
                                     </div>
                 
                                     <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->

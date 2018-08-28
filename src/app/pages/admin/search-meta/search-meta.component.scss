@@ -1,3 +1,7 @@
+.mode-button.active{
+    background-color: primary;
+}
+
 .item-container{
     display: flex;
 }
@@ -20,7 +24,8 @@
     display: flex;
 }
 
-.delete-btn{
+.delete-btn,
+.template-btn{
     cursor: pointer;
     margin:5px;
     padding:5px;
@@ -32,11 +37,17 @@
     padding:15px;
 }
 
-.delete-btn:hover{
+.delete-btn:hover,
+.template-btn:hover{
     background-color:rgba(128, 128, 128, 0.274);
     border-radius: 4px;
     color: rgba(255, 0, 0, 0.363);
+}
 
+.template-btn.selected{
+    background-color:#d8a69e;
+    border-radius: 4px;
+    color: white;
 }
 
 .addlabel-btn:hover{

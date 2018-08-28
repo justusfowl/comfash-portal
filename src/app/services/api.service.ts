@@ -327,7 +327,6 @@ export class ApiService {
   // functions for the admin area, only relevant within the development environemnt as posting to index is done via server-side
 
   getSearchItemMeta(options?){
-
     return this.http.get(this.apiURL + "/admin/searchmeta", {headers: {'api_secret' : this.cfg.api_secret}, params: options })
   }
 
@@ -347,6 +346,17 @@ export class ApiService {
     return this.http.get(this.apiURL + '/' + "admin/searchmeta/grouplabels", {headers: {'api_secret' : this.cfg.api_secret}, params: options})
   }
 
+  getCrawledLabelsInfo(){
+    return this.http.get(this.apiURL + "/admin/searchmeta/labelcrawl/grouplabels",{headers: {'api_secret' : this.cfg.api_secret}})
+  }
+
+  issueCrawlRequest(searchPhrase){
+
+    let postObj = {
+      "searchPhrase" : searchPhrase
+    }
+    return this.http.post(this.apiURL + "/admin/searchmeta/labelcrawl", postObj, {headers: {'api_secret' : this.cfg.api_secret}});
+  }
 
 
 

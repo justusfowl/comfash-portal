@@ -33,6 +33,8 @@ export class AdminAnalysisComponent implements OnInit {
 
   private labelCountLimit : number = 200;
 
+  searchPhrase : any = ""; 
+
   constructor(
     private api: ApiService
   ) {
@@ -100,7 +102,28 @@ export class AdminAnalysisComponent implements OnInit {
             this.api.handleAPIError(error);
         }
         )
-}
+  }
+
+  issueCrawlRequest(){
+
+    this.api.issueCrawlRequest(this.searchPhrase).subscribe(
+      (data : any) => {
+          
+          try{
+            this.searchPhrase = ""; 
+            alert("On the way...")
+
+          }
+          catch(err){
+              console.log(err);
+          } 
+
+      },
+      error => {
+          this.api.handleAPIError(error);
+      }
+      )
+  }
 
 
 }

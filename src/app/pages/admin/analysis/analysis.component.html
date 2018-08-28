@@ -2,7 +2,19 @@
       <div class="margin">
          <!-- ARTICLES -->             
 
-         <button class="float-left" mat-button  (click)="getGroupLabelsInfo()" tabindex="99">Refresh</button>
+         <mat-toolbar >
+            <mat-toolbar-row class="main-toolbar"> 
+                <button class="float-left" mat-button  (click)="getGroupLabelsInfo()" tabindex="99">Refresh</button>
+
+         <mat-form-field class="example-full-width">
+            <input matInput placeholder="Type search phrase..." [(ngModel)]="searchPhrase" [value]="searchPhrase">
+          </mat-form-field>
+  
+          <button class="float-left" mat-button  (click)="issueCrawlRequest()">Issue Request</button>
+            </mat-toolbar-row>
+        </mat-toolbar>
+
+        
 
          <div class="s-12 m-12 l-12">
             <google-chart [data]="columnChartData"></google-chart>

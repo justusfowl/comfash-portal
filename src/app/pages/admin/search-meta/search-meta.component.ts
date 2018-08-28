@@ -52,7 +52,11 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
     sessionStartedDate : number;
 
+    // withdraw images with different preconditions (pre-labeled, crawled, uploaded, ...)
+    getImageMode = "pre";
 
+    templateAttrCategory = ""; 
+    templateAttrType = ""; 
 
     @HostListener('document:keydown', ['$event']) onKeydownHandler(evt: KeyboardEvent) {
         
@@ -80,6 +84,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
     isSetTrainOnly : boolean = false;
 
     availableGroupLabels = [];
+    availableCrawlGroupLabels = [];
 
     isValidatedGroupLabelInfo : any = {
         "total" : "-"
@@ -116,6 +121,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         });
 
         this.getGroupLabelsInfo();
+        this.getCrawledLabelsInfo(); 
 
         this.sessionStartedDate = new Date().getTime();
 
@@ -124,6 +130,11 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(){
         
         this.getMetaItems();
+    }
+
+    setMode(mode){
+        this.getImageMode = mode; 
+        this.getSearchItems();
     }
 
     setTrainOnly(isSetTrainOnly){
@@ -161,6 +172,10 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
                     bbox: child.bbox,
                 }));
 
+            }
+
+            if (childDocsArr.length == 0){
+                this.replaceInitialLabel = false;
             }
 
             let formObj = {
@@ -363,9 +378,17 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
     initLabel(path?, id?, bbox?) {
         // initialize our address
 
-        if (this.quickBox && this.myForm.value._childDocuments_.length > 0){
+        let cntExistingBboxes;
+        try{
+            cntExistingBboxes  = this.myForm.value._childDocuments_.length; 
+        }catch(err){
+            cntExistingBboxes  = 0;
+        }
+        
 
-            let template = this.myForm.value._childDocuments_[this.myForm.value._childDocuments_.length-1];
+        if (this.quickBox && cntExistingBboxes > 0){
+
+            let template = this.myForm.value._childDocuments_[cntExistingBboxes-1];
 
             return this._fb.group({
                 path: path || '',
@@ -373,7 +396,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
                 prob: '',
                 sex : template.sex || '' ,
                 attr_color: template.attr_color || '',
-                attr_category: template.attr_category || '',
+                attr_category:  template.attr_category  || '',
                 attr_fabric: template.attr_fabric || '',
                 attr_texture: template.attr_texture || '',
                 attr_type: template.attr_type || '',
@@ -386,10 +409,10 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
                 prob: '',
                 sex : '',
                 attr_color: '',
-                attr_category: '',
+                attr_category: (cntExistingBboxes == 0) ? this.templateAttrCategory : '' || '',
                 attr_fabric: '',
                 attr_texture: '',
-                attr_type: '',
+                attr_type: (cntExistingBboxes == 0) ? this.templateAttrType : '' || '',
                 bbox: bbox || ''
             });
         }
@@ -405,7 +428,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         const control = <FormArray>this.myForm.controls['_childDocuments_'];
         control.push(this.initLabel(path, id, bbox));
 
-        if (this.replaceInitialLabel || overwriteLastLabel){
+        if ((this.replaceInitialLabel || overwriteLastLabel) && control.length > 1){
             control.removeAt(control.length - 2);
             if (!overwriteLastLabel){
                 this.replaceInitialLabel = false;
@@ -419,6 +442,50 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         // remove address from the list
         const control = <FormArray>this.myForm.controls['_childDocuments_'];
         control.removeAt(i);
+    }
+
+    toggleLabelAsTemplate(label){
+        if (this.templateAttrCategory == label.value.attr_category && this.templateAttrType == label.value.attr_type){
+            this.templateAttrCategory = ""; 
+            this.templateAttrType = ""; 
+        }else{
+            this.templateAttrCategory = label.value.attr_category;
+            this.templateAttrType = label.value.attr_type;
+        }
+    }
+
+    checkIfIsTemplate(label){
+        if (this.templateAttrCategory == label.value.attr_category &&
+            this.templateAttrType == label.value.attr_type &&
+            this.templateAttrCategory != "" &&
+            this.templateAttrType != ""  ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    crawlGroupLabelsInfoChanged(evt){
+        console.log(evt);
+        let options;
+
+        if (evt.value != "all"){
+
+            this.groupLabelsInfoChangedItem = evt.value;
+
+            // this.getIsValidatedGroupLabelInfo();
+        }else{
+
+            this.groupLabelInfoSelected = null;
+
+            this.isValidatedGroupLabelInfo = {
+                "total" : "-", 
+                "label" : "all"
+            }
+
+        }
+       
+        this.getSearchItems();
     }
 
 
@@ -447,7 +514,26 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         
     }
 
+    getCrawledLabelsInfo(){
 
+        this.api.getCrawledLabelsInfo().subscribe(
+            (data : any) => {
+                
+                try{
+
+                   this.availableCrawlGroupLabels = data;
+
+                }
+                catch(err){
+                    console.log(err);
+                } 
+
+            },
+            error => {
+                this.api.handleAPIError(error);
+            }
+            )
+    }
 
     getGroupLabelsInfo(){
 
@@ -506,14 +592,29 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
         let options;
 
-        if (this.groupLabelsInfoChangedItem != "all" && this.groupLabelsInfoChangedItem ){
-            options = {
-                "attr_category" : this.groupLabelsInfoChangedItem
+        if (this.getImageMode == "pre"){
+
+            if (this.groupLabelsInfoChangedItem != "all" && this.groupLabelsInfoChangedItem ){
+                options = {
+                    "mode" : "pre",
+                    "attr_category" : this.groupLabelsInfoChangedItem
+                }
+            }else{
+                options = {};
             }
-        }else{
-            options = {};
+    
+        }else if (this.getImageMode == "crawl"){
+            if (this.groupLabelsInfoChangedItem != "all" && this.groupLabelsInfoChangedItem ){
+                options = {
+                    "mode" : "crawl",
+                    "keywords" : this.groupLabelsInfoChangedItem
+                }
+            }else{
+                options = {};
+            }
         }
 
+       
 
 
         this.api.getSearchItemMeta(options).subscribe(

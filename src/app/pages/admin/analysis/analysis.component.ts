@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
+import { NotificationService } from '../../../services/notification.service';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class AdminAnalysisComponent implements OnInit {
   searchPhrase : any = ""; 
 
   constructor(
-    private api: ApiService
+    private api: ApiService, 
+    private notify : NotificationService
   ) {
 
 
@@ -111,7 +113,7 @@ export class AdminAnalysisComponent implements OnInit {
           
           try{
             this.searchPhrase = ""; 
-            alert("On the way...")
+            this.notify.toastInfo("METASEARCH_CRAWL_ACCEPT", "", 5000);
 
           }
           catch(err){

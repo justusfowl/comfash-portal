@@ -32,7 +32,9 @@
     "CONTENT_DISPLAY_LIMIT_SESSIONS" : "A maximum of three sessions can be displayed at once.", 
     "HAS_VOTED" : "A session has been rated", 
     "METASEARCH_APPROVE" : "The image has been labeled.", 
-    "METASEARCH_REJECT" : "You have rejected the image."
+    "METASEARCH_REJECT" : "You have rejected the image.",
+    "METASEARCH_CRAWL_ACCEPT" : "Your request has been accepted and is now being processed.", 
+    "METASEARCH_CRAWL_REJECT" : "Unfortunately, your request could not been processed."
   },
 
   "ERROR" : {

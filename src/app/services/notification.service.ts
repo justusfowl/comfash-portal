@@ -13,12 +13,12 @@ export class NotificationService {
     private translate : TranslateService
   ) { }
 
-  toastInfo(messageKey : string, suffix?){
+  toastInfo(messageKey : string, suffix?, timeout=2000){
     let key = "NOTIFY." + messageKey;
     let translatedMsg = this.translate.instant(key); 
  
     const toast = this._service.info('Info', translatedMsg + suffix , {
-      timeOut: 2000,
+      timeOut: timeout,
       showProgressBar: true,
       pauseOnHover: true,
       clickToClose: true,

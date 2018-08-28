@@ -21,6 +21,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
     public myForm: FormGroup;
 
     searchItems : any[] = [];
+    activeSearchItem : any;
 
     metaDataObj : any;
 
@@ -82,7 +83,6 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
     }
 
     isSetTrainOnly : boolean = false;
-
     availableGroupLabels = [];
     availableCrawlGroupLabels = [];
 
@@ -134,6 +134,13 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
     setMode(mode){
         this.getImageMode = mode; 
+        
+        if (mode == "pre"){
+            this.getGroupLabelsInfo();
+        }else if (mode == "crawl"){
+            this.getCrawledLabelsInfo(); 
+        }
+        
         this.getSearchItems();
     }
 
@@ -621,13 +628,10 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
             (data : any) => {
                 
                 try{
-
-                    this.parseItem(data[0], 0);
-
+                    this.activeSearchItem = data[0];
+                    this.parseItem(this.activeSearchItem, 0);
                     this.searchItems = data;
-
                     this.itemDateLoaded = new Date();
-
                     this.replaceInitialLabel = true;
 
                 }
@@ -724,7 +728,14 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
         }
 
         searchItem["isSetTrainOnly"] = this.isSetTrainOnly;
-        
+
+        // make sure that no information gets lost
+        Object.keys(this.activeSearchItem).forEach(e => {
+            if (typeof(searchItem[e]) == "undefined"){
+                searchItem[e] = this.activeSearchItem[e]
+            }
+        });
+
         let body = {"searchItem" : searchItem };
 
         this.api.approveSearchItemMeta(body).subscribe(
@@ -783,7 +794,7 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
             (data : any) => {
                 console.log("rejected!");
                 this.removeActiveItem();
-                this.notify.toastInfo("METASEARCH_REJECT");
+                this.notify.toastInfo("METASEARCH_REJECT", '');
                 this.sessionCount++;
             },
             error => {

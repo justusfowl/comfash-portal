@@ -3,14 +3,29 @@
          <!-- ARTICLES -->             
 
          <mat-toolbar >
-            <mat-toolbar-row class="main-toolbar"> 
-                <button class="float-left" mat-button  (click)="getGroupLabelsInfo()" tabindex="99">Refresh</button>
 
-         <mat-form-field class="example-full-width">
-            <input matInput placeholder="Type search phrase..." [(ngModel)]="searchPhrase" [value]="searchPhrase">
-          </mat-form-field>
-  
-          <button class="float-left" mat-button  (click)="issueCrawlRequest()">Issue Request</button>
+           
+            <mat-toolbar-row class="main-toolbar"> 
+                <span class="analysis">
+                    <button class="float-left" mat-button  (click)="getGroupLabelsInfo()" tabindex="99">Refresh</button>
+
+                    <mat-select placeholder="Available attribute types" (selectionChange)="handleAttrTypeChanged($event)">       
+                        <mat-option *ngFor="let type of availableAttrTypes" [value]="type">
+                            {{type}}
+                        </mat-option>
+                    </mat-select>
+                        
+                </span>
+                
+                <span class="crawl-input">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Type search phrase..." [(ngModel)]="searchPhrase" [value]="searchPhrase">
+                    </mat-form-field>
+            
+                    <button class="float-left" mat-button  (click)="issueCrawlRequest()">Issue Request</button>
+
+                </span>
+
             </mat-toolbar-row>
         </mat-toolbar>
 

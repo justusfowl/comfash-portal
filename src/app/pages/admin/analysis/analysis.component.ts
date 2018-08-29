@@ -30,11 +30,17 @@ export class AdminAnalysisComponent implements OnInit {
       }
   };
 
+  public availableAttrTypes = [
+    "clothing", "footwear", "accessory"
+  ]
+
   private aggGroupLabelsInfoData;
 
   private labelCountLimit : number = 200;
 
   searchPhrase : any = ""; 
+
+  attr_type : any = "clothing"
 
   constructor(
     private api: ApiService, 
@@ -79,12 +85,18 @@ export class AdminAnalysisComponent implements OnInit {
 
   }
 
+  handleAttrTypeChanged(evt){
+    this.attr_type = evt.value;
+    this.getGroupLabelsInfo();
+  }
+
   getGroupLabelsInfo(){
 
     let options = {
       "isValidated" : true, 
       "sortby" : "total", 
-      "sort" : -1
+      "sort" : -1, 
+      "attr_type" : this.attr_type
     };
 
     this.api.getGroupLabelsInfo(options).subscribe(

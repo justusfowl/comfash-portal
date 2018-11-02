@@ -256,6 +256,18 @@ export class SearchMetaComponent implements OnInit, AfterViewInit {
 
     }
 
+    dragImage(event){
+        this.imageClick(event)
+        return false;
+    }
+
+    imageDblClick(evt){
+
+        evt.stopPropagation()
+
+        return false;
+    }
+
     imageClick(evt){
 
         let canvas = evt.target;

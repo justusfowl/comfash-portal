@@ -102,7 +102,11 @@
                         (mousemove)="imageMouseMove($event)"
                         (mouseenter)="enterImageMouse($event)"
                         (mouseleave)="exitImageMouse($event)"
-                        (click)="imageClick($event)">
+                        (click)="imageClick($event)"
+                        (dragstart)="dragImage($event)"
+                        (dragover)="dragImage($event)"
+                        (dblclick)="imageDblClick($event)"
+                        >
                     </div>
 
                     <div class="item-col labels">
